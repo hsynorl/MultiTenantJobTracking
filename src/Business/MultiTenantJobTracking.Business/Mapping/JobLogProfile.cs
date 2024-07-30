@@ -8,7 +8,7 @@ namespace MultiTenantJobTracking.Business.Mapping
     {
         public JobLogProfile()
         {
-            CreateMap<JobLog,GetJobLogsByJobId >();
+            CreateMap<JobLog,GetJobLogsByJobIdQuery >();
         }
     }
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MultiTenantJobTracking.Common.Models.JobLog.Query
 {
-    public class GetJobLogsByJobId
+    public class GetJobLogsByJobIdQuery
     {
         public Guid  JobId { get; set; }
     }
