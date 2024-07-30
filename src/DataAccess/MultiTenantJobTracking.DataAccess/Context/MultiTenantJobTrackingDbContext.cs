@@ -30,8 +30,8 @@ namespace MultiTenantJobTracking.DataAccess.Context
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseNpgsql(Configuration.Configurations.ConnectionString);
-                // optionsBuilder.UseSqlServer(Configuration.Configurations.ConnectionString);
+               // optionsBuilder.UseNpgsql(Configuration.Configurations.ConnectionString);
+                 optionsBuilder.UseSqlServer(Configuration.Configurations.ConnectionString);
             }
         }
 

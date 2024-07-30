@@ -7,15 +7,6 @@ services:
       context: .
       dockerfile: src/WebApi/MultiTenantJobTracking.WebApi/Dockerfile
 
-  s_pdb:
-    container_name: c_pdb
-    image: postgres:latest
-    restart: always
-
-  s_sqlserver:
-    container_name:  c_sqlserver
-    image:  mcr.microsoft.com/mssql/server:latest
-    restart: always
 
 networks:
   net_multitenantjobtracking:

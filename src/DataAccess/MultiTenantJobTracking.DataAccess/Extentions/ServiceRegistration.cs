@@ -20,7 +20,8 @@ namespace MultiTenantJobTracking.DataAccess.Extentions
 
             services.AddDbContext<MultiTenantJobTrackingDbContext>(options =>
             {
-                options.UseNpgsql(Configurations.ConnectionString);
+                //options.UseNpgsql(Configurations.ConnectionString);
+                options.UseSqlServer(Configurations.ConnectionString);
 
             });
          

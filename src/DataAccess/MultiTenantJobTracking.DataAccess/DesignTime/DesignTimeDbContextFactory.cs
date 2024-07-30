@@ -16,9 +16,9 @@ namespace MultiTenantJobTracking.DataAccess.DesignTime
             DbContextOptionsBuilder<MultiTenantJobTrackingDbContext> dbContextOptionsBuilder = new();
 
             //TODO Değişecek.
-            string connectionString = "Server=c_sqlserver;Database=MultiTenantJobTrackingDb;User Id=sa;Password=targe*+1507!.QpAiSwRdQdv;";
+            string connectionString = "Server=localhost;Database=MultiTenantJobTrackingDb;User Id=sa;Password=targe*+1507!.QpAiSwRdQdv;TrustServerCertificate=True;";
 
-           // string connectionString = "User ID=postgres;Password=targe*+1507!.QpAiSwRdQdv;Host=localhost;Port=5432; Database=MultiTenantJobTracking;";
+            // string connectionString = "User ID=postgres;Password=targe*+1507!.QpAiSwRdQdv;Host=localhost;Port=5432; Database=MultiTenantJobTracking;";
             dbContextOptionsBuilder.UseSqlServer(connectionString);
             return new(dbContextOptionsBuilder.Options);
         }

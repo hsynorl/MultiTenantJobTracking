@@ -7,39 +7,23 @@ services:
     ports:
       - "80"
 
-  s_pdb:
-   ports:
-    - "5432:5432"
-   environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: targe*+1507!.QpAiSwRdQdv
-      POSTGRES_DB: MultiTenantJobTrackingDb
-      PGDATA: /var/lib/postgresql/data/pgdata
-      TZ: "Europe/Istanbul"
-
-   volumes:
-     - /opt/app_data/neomax_postgres:/var/lib/postgresql/data/pgdata
-   networks:
-     - net_multitenantjobtracking
-
-
-  s_sqlserver:
-    ports:
-      - "1433:1433"
+  mssql:
+    container_name: sql-server
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    restart: always
     environment:
-      SA_PASSWORD: "targe*+1507!.QpAiSwRdQdv"
       ACCEPT_EULA: "Y"
-      MSSQL_PID: "Express"
-      TZ: "Europe/Istanbul"      
-
+      SA_PASSWORD: "targe*+1507!.QpAiSwRdQdv"
+    ports:
+      - 1433:1433
     volumes:
-      - /opt/app_data/MultiTenantJobTracking_sqlserver:/var/opt/mssql
-
+      - my-volume:/var/opt/mssql
     networks:
-      - net_multitenantjobtracking
-
-
+      - net_multitenantjobtracking   
+   
 networks:
   net_multitenantjobtracking:
     driver: bridge
     external: true
+volumes:
+  my-volume:
