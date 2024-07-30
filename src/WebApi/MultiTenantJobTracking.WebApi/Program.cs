@@ -1,4 +1,5 @@
-
+using MultiTenantJobTracking.Business.Extentions;
+using MultiTenantJobTracking.DataAccess.Extentions;
 namespace MultiTenantJobTracking.WebApi
 {
     public class Program
@@ -10,6 +11,8 @@ namespace MultiTenantJobTracking.WebApi
             // Add services to the container.
 
             builder.Services.AddControllers();
+            builder.Services.AddBusinessService();
+            builder.Services.AddDataAccessService();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

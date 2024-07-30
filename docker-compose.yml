@@ -1,0 +1,19 @@
+version: '3.4'
+
+services:
+  multitenantjobtracking.webapi:
+    image: ${DOCKER_REGISTRY-}multitenantjobtrackingwebapi
+    build:
+      context: .
+      dockerfile: src/WebApi/MultiTenantJobTracking.WebApi/Dockerfile
+
+  s_pdb:
+    container_name: c_pdb
+    image: postgres:latest
+    restart: always
+
+
+networks:
+  net_multitenantjobtracking:
+    driver: bridge
+    external: true

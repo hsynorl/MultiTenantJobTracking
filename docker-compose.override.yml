@@ -1,0 +1,28 @@
+version: '3.4'
+
+services:
+  multitenantjobtracking.webapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "80"
+
+  s_pdb:
+   ports:
+    - "5432:5432"
+   environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: targe*+1507!.QpAiSwRdQdv
+      POSTGRES_DB: MultiTenantJobTrackingDb
+      PGDATA: /var/lib/postgresql/data/pgdata
+      TZ: "Europe/Istanbul"
+
+   volumes:
+     - /opt/app_data/neomax_postgres:/var/lib/postgresql/data/pgdata
+   networks:
+     - net_multitenantjobtracking
+
+networks:
+  net_multitenantjobtracking:
+    driver: bridge
+    external: true
