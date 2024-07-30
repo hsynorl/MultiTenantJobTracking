@@ -1,0 +1,55 @@
+﻿using Microsoft.EntityFrameworkCore;
+using MultiTenantJobTracking.Entities.Concrete;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MultiTenantJobTracking.DataAccess.Context
+{
+    public class MultiTenantJobTrackingDbContext: DbContext
+    {
+        public MultiTenantJobTrackingDbContext()
+        {
+          //  Database.Migrate();
+        }
+        public MultiTenantJobTrackingDbContext(DbContextOptions contextOptions) : base(contextOptions)
+        {
+         //   Database.Migrate();
+        }
+
+
+        public DbSet<User> Users { get; set; }
+        public DbSet<Tenant> Tenants { get; set; }
+        public DbSet<Job> Jobs{ get; set; }
+        public DbSet<Department> Departments { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseNpgsql(Configuration.Configurations.ConnectionString);
+                // optionsBuilder.UseSqlServer(Configuration.Configurations.ConnectionString);
+            }
+        }
+
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.DepartmentUser)
+                .WithOne(du => du.User)
+                .HasForeignKey<DepartmentUser>(du => du.Id); // DepartmentUser'daki Id, User Id'ye referans verir
+
+            // DepartmentUser için composite key tanımla
+            modelBuilder.Entity<DepartmentUser>()
+                .HasKey(du => new { du.Id, du.DepartmentId });
+
+
+            base.OnModelCreating(modelBuilder);
+        }
+        }
+    }
