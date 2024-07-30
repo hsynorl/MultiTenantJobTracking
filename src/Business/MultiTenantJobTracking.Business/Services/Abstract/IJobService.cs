@@ -1,5 +1,4 @@
 ﻿using MultiTenantJobTracking.Common.Models.Job.Command;
-using MultiTenantJobTracking.Common.Models.Job.Query;
 
 namespace MultiTenantJobTracking.Business.Services.Abstract
 {

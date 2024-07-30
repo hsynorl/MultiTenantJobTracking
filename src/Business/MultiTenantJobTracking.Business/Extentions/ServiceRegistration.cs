@@ -21,13 +21,14 @@ namespace MultiTenantJobTracking.Business.Extentions
             services.AddAutoMapper(assm);
 
 
-            services.AddScoped<ITenantService, TenantService>();
-            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IDepartmentAdminService, DepartmentAdminService>();
             services.AddScoped<IDepartmentService, DepartmentService>();
             services.AddScoped<IDepartmentUserService, DepartmentUserService>();
-            services.AddScoped<IDepartmentAdminService, DepartmentAdminService>();
-            services.AddScoped<IJobLogService, JobLogService>();
             services.AddScoped<IJobCommentService, JobCommentService>();
+            services.AddScoped<IJobLogService, JobLogService>();
+            services.AddScoped<IJobService,JobService>();
+            services.AddScoped<ITenantService, TenantService>();
+            services.AddScoped<IUserService, UserService>();
             return services;
         }
     }

@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MultiTenantJobTracking.Business.Services.Abstract;
+using MultiTenantJobTracking.Common.Models.User.Command;
 
 namespace MultiTenantJobTracking.WebApi.Controllers
 {
@@ -15,10 +17,18 @@ namespace MultiTenantJobTracking.WebApi.Controllers
             this.userService = userService;
         }
         [HttpPost("create-user")]
-        public async Task<IActionResult> CreateUser()
+        public async Task<IActionResult> CreateUser(CreateUserCommand createUserCommand)
         {
-            var result = await userService.CreateUser();
+            var result = await userService.CreateUser(createUserCommand);
             return Ok(result);  
+        }
+
+        [HttpPost("login")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Login(LoginCommand loginCommand)
+        {
+            var result = await userService.Login(loginCommand);
+            return Ok(result);
         }
     }
 }

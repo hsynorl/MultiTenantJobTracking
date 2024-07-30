@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using MultiTenantJobTracking.Common.Models.Depatment.Command;
-using MultiTenantJobTracking.Common.Models.Depatment.ViewModel;
+using MultiTenantJobTracking.Common.Models.Department.Command;
+using MultiTenantJobTracking.Common.Models.Department.ViewModel;
 using MultiTenantJobTracking.Entities.Concrete;
 using System;
 using System.Collections.Generic;

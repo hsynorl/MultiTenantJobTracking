@@ -19,7 +19,7 @@ namespace MultiTenantJobTracking.WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateTenant(CreateTenantCommand createTenantCommand) {
 
-            var result = await tenantService.CreateTenant();
+            var result = await tenantService.CreateTenant(createTenantCommand);
             return Ok(result);
         }
     }
