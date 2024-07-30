@@ -10,4 +10,8 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\DataAccess\MultiTenantJobTracking.DataAccess\MultiTenantJobTracking.DataAccess.csproj" />
+  </ItemGroup>
+
 </Project>
