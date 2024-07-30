@@ -1,5 +1,8 @@
-﻿using MultiTenantJobTracking.Business.Services.Abstract;
+﻿using AutoMapper;
+using MultiTenantJobTracking.Business.Services.Abstract;
+using MultiTenantJobTracking.Common.Models.Tenant.Command;
 using MultiTenantJobTracking.DataAccess.Repositories.Abstract;
+using MultiTenantJobTracking.Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,28 +11,48 @@ using System.Threading.Tasks;
 
 namespace MultiTenantJobTracking.Business.Services.Concrete
 {
-    public class TenantService:ITenantService
+    public class TenantService : ITenantService
     {
-        private readonly ITenantRepository _tenantRepository;
+        private readonly ITenantRepository tenantRepository;
+        private readonly IMapper mapper;
 
-        public TenantService(ITenantRepository tenantRepository)
+        public TenantService(ITenantRepository tenantRepository, IMapper mapper)
         {
-            _tenantRepository = tenantRepository;
+            this.tenantRepository = tenantRepository;
+            this.mapper = mapper;
         }
 
-        public Task<bool> CheckLicenceExpireTime()
+        public async Task<bool> CheckLicenceExpireTime(Guid TenantId)
         {
-            throw new NotImplementedException();
+            var result=await tenantRepository.GetSingleAsync(p=>p.Id== TenantId);   
+            if (result == null)
+            {
+                throw new Exception("Not Found");
+            }
+            if (result.ExpireDate>DateTime.Now)
+            {
+                return true;
+            }
+            return false;
         }
 
-        public Task<bool> CreateTenant()
+        public async Task<bool> CreateTenant(CreateTenantCommand createTenantCommand)
         {
-            throw new NotImplementedException();
+            var tenant=mapper.Map<Tenant>(createTenantCommand);
+            var result=await tenantRepository.AddAsync(tenant);
+            return result > 0;
         }
 
-        public Task<bool> UpdateLicence()
+        public async Task<bool> UpdateLicence(UpdateTenantLicenceCommand updateTenantLicenceCommand)
         {
-            throw new NotImplementedException();
+            var updateLicenceTenant = await tenantRepository.GetSingleAsync(p => p.Id == updateTenantLicenceCommand.TenantId);
+            if (updateLicenceTenant is null)
+            {
+                throw new Exception("Not Found!");
+            }
+            updateLicenceTenant.ExpireDate = updateTenantLicenceCommand.ExpireDate;
+            var result = await tenantRepository.UpdateAsync(updateLicenceTenant);
+            return result > 0;  
         }
     }
 

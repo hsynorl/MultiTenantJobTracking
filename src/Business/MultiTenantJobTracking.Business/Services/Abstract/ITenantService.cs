@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MultiTenantJobTracking.Common.Models.Tenant.Command;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +9,9 @@ namespace MultiTenantJobTracking.Business.Services.Abstract
 {
     public interface ITenantService
     {
-        Task<bool> CreateTenant();
-        Task<bool> CheckLicenceExpireTime();
-        Task<bool> UpdateLicence();
+        Task<bool> CreateTenant(CreateTenantCommand createTenantCommand);
+        Task<bool> CheckLicenceExpireTime(Guid TenantId);
+        Task<bool> UpdateLicence(UpdateTenantLicenceCommand updateTenantLicenceCommand);
 
     }
 

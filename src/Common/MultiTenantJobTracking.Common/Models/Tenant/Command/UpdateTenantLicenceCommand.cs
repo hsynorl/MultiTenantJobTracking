@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MultiTenantJobTracking.Common.Models.Tenant.Command
 {
-    public class UpdateTenantLicence
+    public class UpdateTenantLicenceCommand
     {
         public Guid TenantId { get; set; }
         public DateTime ExpireDate { get; set; }
