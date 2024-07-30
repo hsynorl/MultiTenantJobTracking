@@ -8,5 +8,6 @@ namespace MultiTenantJobTracking.Common.Models.Tenant.Command
 {
     public class CreateTenantCommand
     {
+        public string Name { get; set; }
     }
 }

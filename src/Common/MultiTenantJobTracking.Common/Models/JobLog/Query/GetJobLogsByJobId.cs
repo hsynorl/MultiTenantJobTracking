@@ -8,5 +8,6 @@ namespace MultiTenantJobTracking.Common.Models.JobLog.Query
 {
     public class GetJobLogsByJobId
     {
+        public Guid  JobId { get; set; }
     }
 }

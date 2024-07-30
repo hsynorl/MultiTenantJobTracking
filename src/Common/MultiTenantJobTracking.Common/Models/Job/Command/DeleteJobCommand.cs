@@ -2,5 +2,6 @@
 {
     public class DeleteJobCommand
     {
+        public Guid JobId { get; set; }
     }
 }

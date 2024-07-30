@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MultiTenantJobTracking.Common.Models.JobComment.Query
 {
-    public class GetJubCommentByJobId
+    public class GetJobCommentByJobId
     {
         public Guid JobId { get; set; }
     }

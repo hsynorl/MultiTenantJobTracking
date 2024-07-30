@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MultiTenantJobTracking.Common.Models.Depatment.Query
 {
-    public class GetDepatmentQuery
+    public class GetDepartmentQuery
     {
     }
 }

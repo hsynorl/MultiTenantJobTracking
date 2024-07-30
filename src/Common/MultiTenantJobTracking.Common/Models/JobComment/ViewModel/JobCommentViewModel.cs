@@ -8,5 +8,8 @@ namespace MultiTenantJobTracking.Common.Models.JobComment.ViewModel
 {
     public class JobCommentViewModel
     {
+        public Guid UserId { get; set; }
+        public Guid JobId { get; set; }
+        public string Comment { get; set; }
     }
 }
