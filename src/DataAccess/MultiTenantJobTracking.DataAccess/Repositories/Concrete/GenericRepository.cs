@@ -58,31 +58,6 @@ namespace MultiTenantJobTracking.DataAccess.Repositories.Concrete
             return dbContext.SaveChangesAsync();
         }
 
-       
-        public virtual async Task<int> AddOrUpdateAsync(TEntity entity)
-        {
-            //// check the entity with the id already tracked
-            //if (!this._entity.Local.Any(i => EqualityComparer<Guid>.Default.Equals(i.Id, entity.Id)))
-            //    dbContext.Update(entity);
-
-            var existingEntity = await dbContext.Set<TEntity>().FindAsync(entity.Id);
-
-            if (existingEntity == null)
-            {
-                // Entity mevcut değilse, yeni entity ekle
-                await dbContext.AddAsync(entity);
-            }
-            else
-            {
-                // Entity mevcutsa, entity'yi güncelle
-                dbContext.Entry(existingEntity).CurrentValues.SetValues(entity);
-            }
-
-            return await dbContext.SaveChangesAsync();
-
-
-        }
-
         public virtual IQueryable<TEntity> AsQueryable() => _entity.AsQueryable();
      
    
@@ -143,6 +118,24 @@ namespace MultiTenantJobTracking.DataAccess.Repositories.Concrete
             }
 
             return await query.ToListAsync();
+        }
+        public virtual async Task<TEntity> GetSingleAsync(Expression<Func<TEntity, bool>> predicate, bool noTracking = true, params Expression<Func<TEntity, object>>[] includes)
+        {
+            IQueryable<TEntity> query = _entity;
+
+            if (predicate != null)
+            {
+                query = query.Where(predicate);
+            }
+
+            query = ApplyIncludes(query, includes);
+
+            if (noTracking)
+                query = query.AsNoTracking();
+
+            return await query.SingleOrDefaultAsync();
+
+
         }
 
     }
