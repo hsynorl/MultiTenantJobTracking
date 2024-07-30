@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using MultiTenantJobTracking.Business.Services.Abstract;
 using MultiTenantJobTracking.Business.Services.Concrete;
+using MultiTenantJobTracking.DataAccess.Extentions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace MultiTenantJobTracking.Business.Extentions
             services.AddScoped<IDepartmentAdminService, DepartmentAdminService>();
             services.AddScoped<IJobLogService, JobLogService>();
             services.AddScoped<IJobCommentService, JobCommentService>();
-
+            services.AddDataAccessService();
             return services;
         }
     }

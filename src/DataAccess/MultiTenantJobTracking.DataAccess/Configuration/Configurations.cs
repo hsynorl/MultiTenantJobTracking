@@ -8,7 +8,8 @@ namespace MultiTenantJobTracking.DataAccess.Configuration
 {
     public static class Configurations
     {
-        static public string ConnectionString = "User ID=postgres;Password=targe*+1507!.QpAiSwRdQdv;Host=c_pdb;Port=5432;Database=MultiTenantJobTracking;";
+        //  static public string ConnectionString = "User ID=postgres;Password=targe*+1507!.QpAiSwRdQdv;Host=c_pdb;Port=5432;Database=MultiTenantJobTracking;";
+        static public string ConnectionString = "Server=c_sqlserver;Database=MultiTenantJobTrackingDb;User Id=sa;Password=targe*+1507!.QpAiSwRdQdv;";
 
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MultiTenantJobTracking.WebApi.Controllers
@@ -7,5 +8,10 @@ namespace MultiTenantJobTracking.WebApi.Controllers
     [ApiController]
     public class CommentsController : ControllerBase
     {
+        [HttpGet]
+        public async Task<IActionResult> GetComments()
+        {
+            return Ok();
+        }
     }
 }
