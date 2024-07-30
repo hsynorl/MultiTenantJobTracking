@@ -12,7 +12,7 @@ using MultiTenantJobTracking.DataAccess.Context;
 namespace MultiTenantJobTracking.DataAccess.Migrations
 {
     [DbContext(typeof(MultiTenantJobTrackingDbContext))]
-    [Migration("20240730104612_mig_init")]
+    [Migration("20240730141606_mig_init")]
     partial class mig_init
     {
         /// <inheritdoc />
@@ -63,7 +63,7 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("DepartmentAdmin");
+                    b.ToTable("DepartmentAdmins");
                 });
 
             modelBuilder.Entity("MultiTenantJobTracking.Entities.Concrete.DepartmentUser", b =>
@@ -81,7 +81,7 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
                     b.HasIndex("Id")
                         .IsUnique();
 
-                    b.ToTable("DepartmentUser");
+                    b.ToTable("DepartmentUsers");
                 });
 
             modelBuilder.Entity("MultiTenantJobTracking.Entities.Concrete.Job", b =>
@@ -121,7 +121,7 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("JobComment");
+                    b.ToTable("JobComments");
                 });
 
             modelBuilder.Entity("MultiTenantJobTracking.Entities.Concrete.JobLog", b =>
@@ -145,7 +145,7 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("JobLog");
+                    b.ToTable("JobLogs");
                 });
 
             modelBuilder.Entity("MultiTenantJobTracking.Entities.Concrete.Tenant", b =>
@@ -184,7 +184,7 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("TenantUser");
+                    b.ToTable("TenantUsers");
                 });
 
             modelBuilder.Entity("MultiTenantJobTracking.Entities.Concrete.User", b =>
@@ -242,7 +242,7 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserJob");
+                    b.ToTable("UserJobs");
                 });
 
             modelBuilder.Entity("MultiTenantJobTracking.Entities.Concrete.Department", b =>

@@ -26,6 +26,7 @@ namespace MultiTenantJobTracking.DataAccess.Extentions
             });
          
             services.AddScoped<ITenantRepository,TenantRepository>();   
+            services.AddScoped<IUserRepository,UserRepository>();   
 
 
             return services;

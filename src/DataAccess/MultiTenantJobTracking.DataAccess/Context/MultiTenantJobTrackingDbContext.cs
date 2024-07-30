@@ -13,18 +13,24 @@ namespace MultiTenantJobTracking.DataAccess.Context
     {
         public MultiTenantJobTrackingDbContext()
         {
-          //  Database.Migrate();
+           // Database.Migrate();
         }
         public MultiTenantJobTrackingDbContext(DbContextOptions contextOptions) : base(contextOptions)
         {
-         //   Database.Migrate();
+            //Database.Migrate();
         }
 
 
-        public DbSet<User> Users { get; set; }
-        public DbSet<Tenant> Tenants { get; set; }
-        public DbSet<Job> Jobs{ get; set; }
         public DbSet<Department> Departments { get; set; }
+        public DbSet<DepartmentAdmin> DepartmentAdmins { get; set; }
+        public DbSet<DepartmentUser> DepartmentUsers{ get; set; }
+        public DbSet<Job> Jobs{ get; set; }
+        public DbSet<JobComment> JobComments{ get; set; }
+        public DbSet<JobLog> JobLogs { get; set; }
+        public DbSet<Tenant> Tenants { get; set; }
+        public DbSet<TenantUser> TenantUsers { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<UserJob> UserJobs { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

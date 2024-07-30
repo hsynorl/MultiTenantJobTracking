@@ -74,7 +74,7 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "JobComment",
+                name: "JobComments",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -84,15 +84,15 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_JobComment", x => x.Id);
+                    table.PrimaryKey("PK_JobComments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_JobComment_Jobs_JobId",
+                        name: "FK_JobComments_Jobs_JobId",
                         column: x => x.JobId,
                         principalTable: "Jobs",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_JobComment_Users_UserId",
+                        name: "FK_JobComments_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -100,7 +100,7 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "JobLog",
+                name: "JobLogs",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -110,15 +110,15 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_JobLog", x => x.Id);
+                    table.PrimaryKey("PK_JobLogs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_JobLog_Jobs_JobId",
+                        name: "FK_JobLogs_Jobs_JobId",
                         column: x => x.JobId,
                         principalTable: "Jobs",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_JobLog_Users_UserId",
+                        name: "FK_JobLogs_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -126,7 +126,7 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TenantUser",
+                name: "TenantUsers",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -135,15 +135,15 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TenantUser", x => x.Id);
+                    table.PrimaryKey("PK_TenantUsers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TenantUser_Tenants_TenantId",
+                        name: "FK_TenantUsers_Tenants_TenantId",
                         column: x => x.TenantId,
                         principalTable: "Tenants",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_TenantUser_Users_UserId",
+                        name: "FK_TenantUsers_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -151,7 +151,7 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserJob",
+                name: "UserJobs",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -160,15 +160,15 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserJob", x => x.Id);
+                    table.PrimaryKey("PK_UserJobs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UserJob_Jobs_JobId",
+                        name: "FK_UserJobs_Jobs_JobId",
                         column: x => x.JobId,
                         principalTable: "Jobs",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserJob_Users_UserId",
+                        name: "FK_UserJobs_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -176,7 +176,7 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DepartmentAdmin",
+                name: "DepartmentAdmins",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -185,15 +185,15 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DepartmentAdmin", x => x.Id);
+                    table.PrimaryKey("PK_DepartmentAdmins", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_DepartmentAdmin_Departments_DepartmentId",
+                        name: "FK_DepartmentAdmins_Departments_DepartmentId",
                         column: x => x.DepartmentId,
                         principalTable: "Departments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_DepartmentAdmin_Users_UserId",
+                        name: "FK_DepartmentAdmins_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -201,7 +201,7 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DepartmentUser",
+                name: "DepartmentUsers",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -209,15 +209,15 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DepartmentUser", x => new { x.Id, x.DepartmentId });
+                    table.PrimaryKey("PK_DepartmentUsers", x => new { x.Id, x.DepartmentId });
                     table.ForeignKey(
-                        name: "FK_DepartmentUser_Departments_DepartmentId",
+                        name: "FK_DepartmentUsers_Departments_DepartmentId",
                         column: x => x.DepartmentId,
                         principalTable: "Departments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_DepartmentUser_Users_Id",
+                        name: "FK_DepartmentUsers_Users_Id",
                         column: x => x.Id,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -225,13 +225,13 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_DepartmentAdmin_DepartmentId",
-                table: "DepartmentAdmin",
+                name: "IX_DepartmentAdmins_DepartmentId",
+                table: "DepartmentAdmins",
                 column: "DepartmentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DepartmentAdmin_UserId",
-                table: "DepartmentAdmin",
+                name: "IX_DepartmentAdmins_UserId",
+                table: "DepartmentAdmins",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -240,54 +240,54 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
                 column: "TenantId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DepartmentUser_DepartmentId",
-                table: "DepartmentUser",
+                name: "IX_DepartmentUsers_DepartmentId",
+                table: "DepartmentUsers",
                 column: "DepartmentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DepartmentUser_Id",
-                table: "DepartmentUser",
+                name: "IX_DepartmentUsers_Id",
+                table: "DepartmentUsers",
                 column: "Id",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_JobComment_JobId",
-                table: "JobComment",
+                name: "IX_JobComments_JobId",
+                table: "JobComments",
                 column: "JobId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_JobComment_UserId",
-                table: "JobComment",
+                name: "IX_JobComments_UserId",
+                table: "JobComments",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_JobLog_JobId",
-                table: "JobLog",
+                name: "IX_JobLogs_JobId",
+                table: "JobLogs",
                 column: "JobId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_JobLog_UserId",
-                table: "JobLog",
+                name: "IX_JobLogs_UserId",
+                table: "JobLogs",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TenantUser_TenantId",
-                table: "TenantUser",
+                name: "IX_TenantUsers_TenantId",
+                table: "TenantUsers",
                 column: "TenantId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TenantUser_UserId",
-                table: "TenantUser",
+                name: "IX_TenantUsers_UserId",
+                table: "TenantUsers",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserJob_JobId",
-                table: "UserJob",
+                name: "IX_UserJobs_JobId",
+                table: "UserJobs",
                 column: "JobId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserJob_UserId",
-                table: "UserJob",
+                name: "IX_UserJobs_UserId",
+                table: "UserJobs",
                 column: "UserId");
         }
 
@@ -295,22 +295,22 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "DepartmentAdmin");
+                name: "DepartmentAdmins");
 
             migrationBuilder.DropTable(
-                name: "DepartmentUser");
+                name: "DepartmentUsers");
 
             migrationBuilder.DropTable(
-                name: "JobComment");
+                name: "JobComments");
 
             migrationBuilder.DropTable(
-                name: "JobLog");
+                name: "JobLogs");
 
             migrationBuilder.DropTable(
-                name: "TenantUser");
+                name: "TenantUsers");
 
             migrationBuilder.DropTable(
-                name: "UserJob");
+                name: "UserJobs");
 
             migrationBuilder.DropTable(
                 name: "Departments");
