@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MultiTenantJobTracking.Common.Models.Depatment.ViewModel
+namespace MultiTenantJobTracking.Common.Models.Department.ViewModel
 {
     public class DepartmentViewModel
     {
-        public string DepartmentName { get; set; }
+        public string Name { get; set; }
     }
 }
