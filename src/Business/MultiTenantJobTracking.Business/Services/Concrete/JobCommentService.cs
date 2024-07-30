@@ -1,22 +1,43 @@
-﻿using MultiTenantJobTracking.Business.Services.Abstract;
+﻿using AutoMapper;
+using MultiTenantJobTracking.Business.Services.Abstract;
+using MultiTenantJobTracking.Common.Models.Job.Command;
+using MultiTenantJobTracking.Common.Models.JobComment.ViewModel;
+using MultiTenantJobTracking.DataAccess.Repositories.Abstract;
+using MultiTenantJobTracking.Entities.Concrete;
+using System.Collections.Generic;
 
 namespace MultiTenantJobTracking.Business.Services.Concrete
 {
     public class JobCommentService : IJobCommentService
     {
-        public Task<bool> CreateJobComment()
+        private readonly IMapper mapper;
+        private readonly IJobCommentRepository jobCommentRepository;
+
+        public JobCommentService(IMapper mapper, IJobCommentRepository jobCommentRepository)
         {
-            throw new NotImplementedException();
+            this.mapper = mapper;
+            this.jobCommentRepository = jobCommentRepository;
         }
 
-        public Task<bool> GetJobCommentsByJobId(Guid jobId)
+        public async Task<bool> CreateJobComment(CreateJobCommand createJobCommand)
         {
-            throw new NotImplementedException();
+            var jobComment = mapper.Map<JobComment>(createJobCommand);
+            var result=await jobCommentRepository.AddAsync(jobComment);
+            return result > 0;
         }
 
-        public Task<bool> GetJobCommentsByUserId(Guid UserId)
+        public async Task<List<JobCommentViewModel>> GetJobCommentsByJobId(Guid jobId)
         {
-            throw new NotImplementedException();
+            var result = await jobCommentRepository.GetList(p => p.JobId == jobId);
+            var jobComments = mapper.Map<List<JobCommentViewModel>>(result);
+            return jobComments; 
+        }
+
+        public async Task<List<JobCommentViewModel>> GetJobCommentsByUserId(Guid UserId)
+        {
+            var result =await jobCommentRepository.GetList(p => p.UserId == UserId);
+            var jobComments = mapper.Map<List<JobCommentViewModel>>(result);
+            return jobComments;
         }
     }
 
