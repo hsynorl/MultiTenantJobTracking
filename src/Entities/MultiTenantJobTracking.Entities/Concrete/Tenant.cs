@@ -8,6 +8,8 @@ namespace MultiTenantJobTracking.Entities.Concrete
         public DateTime ExpireDate { get; set; }
         public virtual ICollection<Department> Departments{ get; set; }
         public virtual ICollection< TenantUser>  TenantAdmins{ get; set; }
+        public virtual Licence Licence { get; set; }
+
     }
 
 

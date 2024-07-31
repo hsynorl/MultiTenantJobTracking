@@ -12,24 +12,14 @@ using MultiTenantJobTracking.DataAccess.Configuration;
 
 namespace MultiTenantJobTracking.DataAccess.DesignTime
 {
-    public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<MultiTenantJobTrackingDbContext>
-    {
-        private readonly IConfiguration configuration;
+    //public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<MultiTenantJobTrackingDbContext>
+    //{
+    //    public MultiTenantJobTrackingDbContext CreateDbContext(string[] args)
+    //    {
+    //        DbContextOptionsBuilder<MultiTenantJobTrackingDbContext> dbContextOptionsBuilder = new();
 
-        public DesignTimeDbContextFactory(IConfiguration configuration)
-        {
-            this.configuration = configuration;
-        }
-
-        public MultiTenantJobTrackingDbContext CreateDbContext(string[] args)
-        {
-            DbContextOptionsBuilder<MultiTenantJobTrackingDbContext> dbContextOptionsBuilder = new();
-
-            var connectionString = configuration.GetConnectionString("sqlServer");
-            //TODO Değişecek.
-            //string connectionString = "Server=sql-server;Database=MultiTenantJobTrackingDb;User Id=sa;Password=targe*+1507!.QpAiSwRdQdv;TrustServerCertificate=True;";
-            dbContextOptionsBuilder.UseSqlServer(connectionString);
-            return new(dbContextOptionsBuilder.Options);
-        }
-    }
+    //        dbContextOptionsBuilder.UseSqlServer(Configurations.ConnectionString);
+    //        return new(dbContextOptionsBuilder.Options);
+    //    }
+    //}
 }

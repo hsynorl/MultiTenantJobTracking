@@ -10,6 +10,6 @@ namespace MultiTenantJobTracking.Entities.Concrete
     public class Licence:BaseEntity
     {
         public DateTime ExpireDate { get; set; }
-        public virtual User User { get; set; }
+        public virtual Tenant Tenant { get; set; }
     }
 }

@@ -5,17 +5,17 @@ VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5D6DC3A4-2019-4E94-B9FB-5E850A8CE978}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiTenantJobTracking.Entities", "src\Entities\MultiTenantJobTracking.Entities\MultiTenantJobTracking.Entities.csproj", "{93606BF2-C21B-4008-9393-4DCBAFB65FC5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiTenantJobTracking.Entities", "src\Entities\MultiTenantJobTracking.Entities\MultiTenantJobTracking.Entities.csproj", "{93606BF2-C21B-4008-9393-4DCBAFB65FC5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiTenantJobTracking.DataAccess", "src\DataAccess\MultiTenantJobTracking.DataAccess\MultiTenantJobTracking.DataAccess.csproj", "{E0C8D393-4B98-4CAA-84A3-A4E0799A1BEB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiTenantJobTracking.DataAccess", "src\DataAccess\MultiTenantJobTracking.DataAccess\MultiTenantJobTracking.DataAccess.csproj", "{E0C8D393-4B98-4CAA-84A3-A4E0799A1BEB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiTenantJobTracking.WebApi", "src\WebApi\MultiTenantJobTracking.WebApi\MultiTenantJobTracking.WebApi.csproj", "{D3EE2A7C-6CAC-4DE6-BFBF-FCA982B38EFB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiTenantJobTracking.WebApi", "src\WebApi\MultiTenantJobTracking.WebApi\MultiTenantJobTracking.WebApi.csproj", "{D3EE2A7C-6CAC-4DE6-BFBF-FCA982B38EFB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiTenantJobTracking.Common", "src\Common\MultiTenantJobTracking.Common\MultiTenantJobTracking.Common.csproj", "{34055615-C680-4F8D-A47E-BFF2D0A64228}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiTenantJobTracking.Common", "src\Common\MultiTenantJobTracking.Common\MultiTenantJobTracking.Common.csproj", "{34055615-C680-4F8D-A47E-BFF2D0A64228}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiTenantJobTracking.Business", "src\Business\MultiTenantJobTracking.Business\MultiTenantJobTracking.Business.csproj", "{40518636-15FB-430D-AB4A-CAA649A96BF2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiTenantJobTracking.Business", "src\Business\MultiTenantJobTracking.Business\MultiTenantJobTracking.Business.csproj", "{40518636-15FB-430D-AB4A-CAA649A96BF2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiTenantJobTracking.Client", "src\Client\MultiTenantJobTracking.Client\MultiTenantJobTracking.Client.csproj", "{6CA62EED-8E54-4FB5-90AE-02ACDB9DE4AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiTenantJobTracking.Client", "src\Client\MultiTenantJobTracking.Client\MultiTenantJobTracking.Client.csproj", "{6CA62EED-8E54-4FB5-90AE-02ACDB9DE4AB}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{44C2BA67-2E06-4D71-8B37-87D0EE709BC8}"
 EndProject

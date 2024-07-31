@@ -13,7 +13,10 @@ namespace MultiTenantJobTracking.DataAccess.Context
 {
     public class MultiTenantJobTrackingDbContext: DbContext
     {
-        private readonly IConfiguration configuration;     
+        public MultiTenantJobTrackingDbContext()
+        {
+                
+        }
         public MultiTenantJobTrackingDbContext(DbContextOptions contextOptions) : base(contextOptions)
         {
         }
@@ -34,9 +37,7 @@ namespace MultiTenantJobTracking.DataAccess.Context
         {
             if (!optionsBuilder.IsConfigured)
             {
-                var connectionString = configuration.GetConnectionString("sqlServer");
-                optionsBuilder.UseSqlServer(connectionString);
-                //optionsBuilder.UseSqlServer(Configuration.Configurations.ConnectionString);
+                optionsBuilder.UseSqlServer(Configurations.ConnectionString);
             }
         }
 
@@ -49,9 +50,9 @@ namespace MultiTenantJobTracking.DataAccess.Context
                 .WithOne(du => du.User)
                 .HasForeignKey<DepartmentUser>(du => du.Id); 
 
-            modelBuilder.Entity<User>()
+            modelBuilder.Entity<Tenant>()
               .HasOne(u => u.Licence)
-              .WithOne(du => du.User)
+              .WithOne(du => du.Tenant)
               .HasForeignKey<Licence>(du => du.Id);
 
             modelBuilder.Entity<DepartmentUser>()

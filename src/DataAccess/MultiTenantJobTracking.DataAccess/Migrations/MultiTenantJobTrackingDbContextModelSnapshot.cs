@@ -87,7 +87,20 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DeadLine")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("JobStatus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -143,6 +156,19 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("JobLogs");
+                });
+
+            modelBuilder.Entity("MultiTenantJobTracking.Entities.Concrete.Licence", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("ExpireDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Licence");
                 });
 
             modelBuilder.Entity("MultiTenantJobTracking.Entities.Concrete.Tenant", b =>
@@ -329,6 +355,17 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("MultiTenantJobTracking.Entities.Concrete.Licence", b =>
+                {
+                    b.HasOne("MultiTenantJobTracking.Entities.Concrete.Tenant", "Tenant")
+                        .WithOne("Licence")
+                        .HasForeignKey("MultiTenantJobTracking.Entities.Concrete.Licence", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Tenant");
+                });
+
             modelBuilder.Entity("MultiTenantJobTracking.Entities.Concrete.TenantUser", b =>
                 {
                     b.HasOne("MultiTenantJobTracking.Entities.Concrete.Tenant", "Tenant")
@@ -384,6 +421,9 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
             modelBuilder.Entity("MultiTenantJobTracking.Entities.Concrete.Tenant", b =>
                 {
                     b.Navigation("Departments");
+
+                    b.Navigation("Licence")
+                        .IsRequired();
 
                     b.Navigation("TenantAdmins");
                 });

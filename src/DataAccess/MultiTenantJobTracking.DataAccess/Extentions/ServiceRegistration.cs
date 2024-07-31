@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MultiTenantJobTracking.DataAccess.Configuration;
 using MultiTenantJobTracking.DataAccess.Context;
@@ -20,7 +21,6 @@ namespace MultiTenantJobTracking.DataAccess.Extentions
 
             services.AddDbContext<MultiTenantJobTrackingDbContext>(options =>
             {
-                //options.UseNpgsql(Configurations.ConnectionString);
                 options.UseSqlServer(Configurations.ConnectionString);
 
             });

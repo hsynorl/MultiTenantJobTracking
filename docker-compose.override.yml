@@ -15,7 +15,7 @@ services:
     restart: always
     environment:
       ACCEPT_EULA: "Y"
-      SA_PASSWORD: "targe*+1507!.QpAiSwRdQdv"
+      MSSQL_SA_PASSWORD: "og~8O+nwAT%5c0a8V8G]G+tEi"
     ports:
       - 1433:1433
     volumes:

@@ -9,7 +9,7 @@ namespace MultiTenantJobTracking.Common.Models.Licence.Command
 {
     public class CreateLicenceCommand
     {
-        public Guid UserId { get; set; }
+        public Guid TenantId { get; set; }
         public LicenceTime LicenceTime { get; set; }
     }
 }

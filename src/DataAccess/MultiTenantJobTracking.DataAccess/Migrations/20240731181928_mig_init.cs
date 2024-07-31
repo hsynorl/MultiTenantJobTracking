@@ -16,6 +16,10 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeadLine = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    JobStatus = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -68,6 +72,24 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
                     table.ForeignKey(
                         name: "FK_Departments_Tenants_TenantId",
                         column: x => x.TenantId,
+                        principalTable: "Tenants",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Licence",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ExpireDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Licence", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Licence_Tenants_Id",
+                        column: x => x.Id,
                         principalTable: "Tenants",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -305,6 +327,9 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "JobLogs");
+
+            migrationBuilder.DropTable(
+                name: "Licence");
 
             migrationBuilder.DropTable(
                 name: "TenantUsers");
