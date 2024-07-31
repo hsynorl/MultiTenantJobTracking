@@ -27,7 +27,10 @@ namespace MultiTenantJobTracking.Business.Extentions
             services.AddScoped<IJobCommentService, JobCommentService>();
             services.AddScoped<IJobLogService, JobLogService>();
             services.AddScoped<IJobService,JobService>();
-            services.AddScoped<ITenantService, TenantUserService>();
+            services.AddScoped<ITenantService, TenantService>();
+            services.AddScoped<ITenantUserService,TenantUserService>();
+            services.AddScoped<ILicenceService,LicenceService>();
+            services.AddScoped<IUserJobService,UserJobService>();
             services.AddScoped<IUserService, UserService>();
             return services;
         }
