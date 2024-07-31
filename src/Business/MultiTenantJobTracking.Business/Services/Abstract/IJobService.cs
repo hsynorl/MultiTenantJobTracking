@@ -1,4 +1,5 @@
 ﻿using MultiTenantJobTracking.Common.Models.Job.Command;
+using MultiTenantJobTracking.Common.Models.Job.ViewModel;
 
 namespace MultiTenantJobTracking.Business.Services.Abstract
 {
@@ -8,7 +9,7 @@ namespace MultiTenantJobTracking.Business.Services.Abstract
         Task<bool> UpdateJob(UpdateJobCommand updateJobCommand);
         Task<bool> DeleteJob(DeleteJobCommand deleteJobCommand);
         Task<bool> UpdateJobStatus(UpdateStatusJobCommand updateStatusJobCommand);
-
+        Task<JobViewModel> GetJobsByUserId(Guid userId);
     }
 
 }

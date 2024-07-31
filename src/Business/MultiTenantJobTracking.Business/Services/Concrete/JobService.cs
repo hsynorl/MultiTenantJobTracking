@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using MultiTenantJobTracking.Business.Services.Abstract;
 using MultiTenantJobTracking.Common.Models.Job.Command;
+using MultiTenantJobTracking.Common.Models.Job.ViewModel;
 using MultiTenantJobTracking.DataAccess.Repositories.Abstract;
 using MultiTenantJobTracking.Entities.Concrete;
 using System;
@@ -14,15 +15,17 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
 {
     public class JobService : IJobService
     {
+        private readonly IUserJobRepository userJobRepository;
         private readonly IJobLogService jobLogService;
         private readonly IJobRepository jobRepository;
         private readonly IMapper mapper;
 
-        public JobService(IJobRepository jobRepository, IMapper mapper, IJobLogService jobLogService)
+        public JobService(IJobRepository jobRepository, IMapper mapper, IJobLogService jobLogService, IUserJobRepository userJobRepository)
         {
             this.jobRepository = jobRepository;
             this.mapper = mapper;
             this.jobLogService = jobLogService;
+            this.userJobRepository = userJobRepository;
         }
 
         public async Task<bool> CreateJob(CreateJobCommand createJobCommand)
@@ -41,7 +44,17 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
             return result > 0;
         }
 
-    
+        public async Task<JobViewModel> GetJobsByUserId(Guid userId)
+        {
+            var result = await userJobRepository.AsQueryable().Include(p => p.Job).Where(p => p.UserId == userId).ToListAsync();
+            if (result is null)
+            {
+                throw new Exception("Kullanıcıya atanmış job bulunmadı");
+            }
+            var jobs=mapper.Map<JobViewModel>(result);  
+            return jobs;    
+        }
+
         public async Task<bool> UpdateJob(UpdateJobCommand updateJobCommand)
         {
             var updateJob = await jobRepository.GetSingleAsync(p => p.Id == updateJobCommand.JobId);
