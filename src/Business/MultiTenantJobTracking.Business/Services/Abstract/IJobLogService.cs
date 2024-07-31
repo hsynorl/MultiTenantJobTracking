@@ -8,7 +8,7 @@ namespace MultiTenantJobTracking.Business.Services.Abstract
     public interface IJobLogService
     {
         Task<bool> CreateJobLog(CreateJobLogCommand createJobLogCommand);
-        Task<List<GetJobLogsViewModel>> GetJobLogsByUserId(GetJobLogsByJobIdQuery getJobLogsByJobIdQuery);
+        Task<List<GetJobLogsViewModel>> GetJobLogsByJobId(GetJobLogsByJobIdQuery getJobLogsByJobIdQuery);
         Task<List<GetJobLogsViewModel>> GetJobLogsByUserId(GetJobLogsByUserIdQuery getJobLogsByUserIdQuery);
 
     }

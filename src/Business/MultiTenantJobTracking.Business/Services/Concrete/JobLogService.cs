@@ -29,7 +29,7 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
 
         }
 
-        public async Task<List<GetJobLogsViewModel>> GetJobLogsByUserId(GetJobLogsByJobIdQuery getJobLogsByJobIdQuery)
+        public async Task<List<GetJobLogsViewModel>> GetJobLogsByJobId(GetJobLogsByJobIdQuery getJobLogsByJobIdQuery)
         {
             var jobLogs=await jobLogRepository.GetList(p=>p.JobId==getJobLogsByJobIdQuery.JobId);
             var result=mapper.Map<List<GetJobLogsViewModel>>(jobLogs);
