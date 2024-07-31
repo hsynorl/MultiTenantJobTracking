@@ -1,4 +1,4 @@
-﻿using MultiTenantJobTracking.Common.Models.Tenant.Command;
+﻿using MultiTenantJobTracking.Common.Models.UserJob.Command;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,11 +7,8 @@ using System.Threading.Tasks;
 
 namespace MultiTenantJobTracking.Business.Services.Abstract
 {
-    public interface ITenantService
+    public interface IUserJobService
     {
-        Task<bool> CreateTenant(CreateTenantCommand createTenantCommand);
-
+        Task<bool> CreateUserJob(CreateUserJobCommand createUserJobCommand);
     }
-
-
 }
