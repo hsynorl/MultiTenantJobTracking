@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using MultiTenantJobTracking.DataAccess.Configuration;
 using MultiTenantJobTracking.Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -11,13 +13,9 @@ namespace MultiTenantJobTracking.DataAccess.Context
 {
     public class MultiTenantJobTrackingDbContext: DbContext
     {
-        public MultiTenantJobTrackingDbContext()
-        {
-           // Database.Migrate();
-        }
+        private readonly IConfiguration configuration;     
         public MultiTenantJobTrackingDbContext(DbContextOptions contextOptions) : base(contextOptions)
         {
-            //Database.Migrate();
         }
 
 
@@ -36,8 +34,9 @@ namespace MultiTenantJobTracking.DataAccess.Context
         {
             if (!optionsBuilder.IsConfigured)
             {
-               // optionsBuilder.UseNpgsql(Configuration.Configurations.ConnectionString);
-                 optionsBuilder.UseSqlServer(Configuration.Configurations.ConnectionString);
+                var connectionString = configuration.GetConnectionString("sqlServer");
+                optionsBuilder.UseSqlServer(connectionString);
+                //optionsBuilder.UseSqlServer(Configuration.Configurations.ConnectionString);
             }
         }
 
