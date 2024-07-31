@@ -1,4 +1,5 @@
-﻿using MultiTenantJobTracking.Common.Models.DepartmentUser.Command;
+﻿using MultiTenantJobTracking.Common.Models.Department.ViewModel;
+using MultiTenantJobTracking.Common.Models.DepartmentUser.Command;
 using MultiTenantJobTracking.Common.Models.DepartmentUser.ViewModel;
 
 namespace MultiTenantJobTracking.Business.Services.Abstract
@@ -6,8 +7,7 @@ namespace MultiTenantJobTracking.Business.Services.Abstract
     public interface IDepartmentUserService
     {
         Task<bool> CreateDepartmentUser(CreateDepartmentUserCommand createDepartmentUserCommand);
-        Task<bool> DeleteDepartmentUser(Guid UserId);
-        Task<DepartmentUserViewModel> GetDepartmentUsers(Guid UserId);
+        Task<DepartmentViewModel> GetUserDepartment(Guid UserId);
 
     }
 

@@ -24,9 +24,9 @@ namespace MultiTenantJobTracking.WebApi.Controllers
         }
         
         [HttpGet("get-department-user")]
-        public async Task<IActionResult> GetDepartmentUser([FromQuery] Guid UserId)
+        public async Task<IActionResult> GetUserDepartment([FromQuery] Guid UserId)
         {
-            var result = await departmentUserService.GetDepartmentUsers(UserId);
+            var result = await departmentUserService.GetUserDepartment(UserId);
             return Ok(result);
         }
 
