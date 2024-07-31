@@ -12,7 +12,7 @@ using MultiTenantJobTracking.DataAccess.Context;
 namespace MultiTenantJobTracking.DataAccess.Migrations
 {
     [DbContext(typeof(MultiTenantJobTrackingDbContext))]
-    [Migration("20240731181928_mig_init")]
+    [Migration("20240731204811_mig_init")]
     partial class mig_init
     {
         /// <inheritdoc />

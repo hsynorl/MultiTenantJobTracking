@@ -19,7 +19,7 @@ services:
     ports:
       - 1433:1433
     volumes:
-      - my-volume:/var/opt/mssql
+      - sqlserver-volume:/var/opt/mssql
     networks:
       - net_multitenantjobtracking   
    
@@ -28,4 +28,4 @@ networks:
     driver: bridge
     external: true
 volumes:
-  my-volume:
+  sqlserver-volume:

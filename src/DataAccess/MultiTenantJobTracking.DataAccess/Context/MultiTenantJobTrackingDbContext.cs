@@ -13,9 +13,10 @@ namespace MultiTenantJobTracking.DataAccess.Context
 {
     public class MultiTenantJobTrackingDbContext: DbContext
     {
+        IConfiguration configuration;
         public MultiTenantJobTrackingDbContext()
         {
-                
+            Database.Migrate();
         }
         public MultiTenantJobTrackingDbContext(DbContextOptions contextOptions) : base(contextOptions)
         {
@@ -37,7 +38,8 @@ namespace MultiTenantJobTracking.DataAccess.Context
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(Configurations.ConnectionString);
+                var connectionString = configuration.GetConnectionString("sqlServer");
+                optionsBuilder.UseSqlServer(connectionString);
             }
         }
 
