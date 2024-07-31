@@ -22,19 +22,7 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
             this.mapper = mapper;
         }
 
-        public async Task<bool> CheckLicenceExpireTime(Guid TenantId)
-        {
-            var result=await tenantRepository.GetSingleAsync(p=>p.Id== TenantId);   
-            if (result == null)
-            {
-                throw new Exception("Not Found");
-            }
-            if (result.ExpireDate>DateTime.Now)
-            {
-                return true;
-            }
-            return false;
-        }
+      
 
         public async Task<bool> CreateTenant(CreateTenantCommand createTenantCommand)
         {

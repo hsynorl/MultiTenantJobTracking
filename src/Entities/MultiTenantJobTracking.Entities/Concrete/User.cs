@@ -24,6 +24,7 @@ namespace MultiTenantJobTracking.Entities.Concrete
         public virtual ICollection< UserJob>  UserJobs { get; set; }
         public virtual ICollection< JobComment>  JobComments { get; set; }
         public virtual  DepartmentUser  DepartmentUser{ get; set; }
+        public virtual  Licence  Licence{ get; set; }
     }
 
 

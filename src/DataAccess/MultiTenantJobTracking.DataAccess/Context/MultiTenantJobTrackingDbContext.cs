@@ -47,9 +47,13 @@ namespace MultiTenantJobTracking.DataAccess.Context
             modelBuilder.Entity<User>()
                 .HasOne(u => u.DepartmentUser)
                 .WithOne(du => du.User)
-                .HasForeignKey<DepartmentUser>(du => du.Id); // DepartmentUser'daki Id, User Id'ye referans verir
+                .HasForeignKey<DepartmentUser>(du => du.Id); 
 
-            // DepartmentUser için composite key tanımla
+            modelBuilder.Entity<User>()
+              .HasOne(u => u.Licence)
+              .WithOne(du => du.User)
+              .HasForeignKey<Licence>(du => du.Id);
+
             modelBuilder.Entity<DepartmentUser>()
                 .HasKey(du => new { du.Id, du.DepartmentId });
 
