@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using MultiTenantJobTracking.Common.CustomExceptions;
+using System.Net;
 using System.Security.Authentication;
 
 namespace MultiTenantJobTracking.WebApi.Middleware.ExcepitonHandling
@@ -19,7 +20,15 @@ namespace MultiTenantJobTracking.WebApi.Middleware.ExcepitonHandling
             {
 
                 await next.Invoke(context);
-            }       
+            }
+            catch (InvalidCredentialsException ex)
+            {
+                await WriteResponse(context, HttpStatusCode.BadRequest, ex.Message);
+            }
+
+
+
+
             catch (Exception ex)
             {
                 logger.LogError($"Unexpected error: {ex.Message}. StackTrace: {ex.StackTrace}");

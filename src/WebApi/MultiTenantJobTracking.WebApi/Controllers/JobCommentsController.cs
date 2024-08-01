@@ -24,9 +24,9 @@ namespace MultiTenantJobTracking.WebApi.Controllers
             return Ok(result);
         }
         [HttpPost("create-job-comment")]
-        public async Task<IActionResult> CreateJobComment(CreateJobCommand createJobCommand)
+        public async Task<IActionResult> CreateJobComment(CreateJobCommentCommand createJobCommentCommand)
         {
-            var result = await jobCommentService.CreateJobComment(createJobCommand);
+            var result = await jobCommentService.CreateJobComment(createJobCommentCommand);
             return Ok(result);
         }
     }

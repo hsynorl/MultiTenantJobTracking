@@ -13,12 +13,17 @@ namespace MultiTenantJobTracking.DataAccess.Context
     public class MultiTenantJobTrackingDbContext: DbContext
     {
         IConfiguration configuration;
-        public MultiTenantJobTrackingDbContext()
+        public MultiTenantJobTrackingDbContext(IConfiguration configuration)
         {
+            configuration = configuration;
             Database.Migrate();
         }
-        public MultiTenantJobTrackingDbContext(DbContextOptions contextOptions) : base(contextOptions)
+
+        public MultiTenantJobTrackingDbContext(DbContextOptions<MultiTenantJobTrackingDbContext> options, IConfiguration configuration)
+            : base(options)
         {
+            configuration = configuration;
+            Database.Migrate();
         }
 
 
