@@ -33,6 +33,7 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
                 throw new ExistingRecordException("Aynı isime sahip tenant var");
             }
             var tenant=mapper.Map<Tenant>(createTenantCommand);
+            tenant.CreateDate = DateTime.Now;
             var result=await tenantRepository.AddAsync(tenant);
             return result > 0;
         }

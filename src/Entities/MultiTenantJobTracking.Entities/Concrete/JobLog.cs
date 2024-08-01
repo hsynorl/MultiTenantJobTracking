@@ -7,6 +7,7 @@ namespace MultiTenantJobTracking.Entities.Concrete
     {
         public Guid JobId { get; set; }
         public Guid UserId { get; set; }
+        public DateTime CreateDate{ get; set; }
         public JobStatus JobStatus{ get; set; }
         public virtual Job Job { get; set; }
         public virtual User User { get; set; }

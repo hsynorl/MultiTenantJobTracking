@@ -35,7 +35,7 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
         public async Task<bool> DeleteDepartmentAdmin(DeleteDepartmentAdminCommand deleteDepartmentAdminCommand)
         {
             var departmentAdmin=await departmentAdminRepository.GetSingleAsync(p=>p.DepartmentId==deleteDepartmentAdminCommand.DepartmentId);
-            if (departmentAdmin == null)
+            if (departmentAdmin is null)
             {
                 throw new NotFoundException("Department admin bulunamadı");
             }
@@ -46,7 +46,7 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
         public async Task<List<DepartmentAdminViewModel>> GetDepartmentAdminsByDepartmentId(GetDepartmentAdminsByDepartmentIdQuery getDepartmentAdminsByDepartmentIdQuery)
         {
             var result = await departmentAdminRepository.GetList(p => p.DepartmentId == getDepartmentAdminsByDepartmentIdQuery.DepartmentId);
-            if (result == null)
+            if (result is null)
             {
                 throw new NotFoundException("Department admin bulunamadı");
             }
@@ -57,7 +57,7 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
         public async Task<bool> UpdateDepartmentAdmin(UpdateDepartmentAdminCommand updateDepartmentAdminCommand)
         {
             var updateDepartmentAdmin = await departmentAdminRepository.GetSingleAsync(p => p.Id == updateDepartmentAdminCommand.UpdateDepartmentId);
-            if (updateDepartmentAdmin == null)
+            if (updateDepartmentAdmin is null)
             {
                 throw new NotFoundException("Department admin bulunamadı");
             }

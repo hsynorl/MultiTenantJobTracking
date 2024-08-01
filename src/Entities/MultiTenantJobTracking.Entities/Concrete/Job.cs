@@ -5,7 +5,6 @@ namespace MultiTenantJobTracking.Entities.Concrete
 {
     public class  Job : BaseEntity
     {
-        // Her iş; başlık, açıklama, oluşturulma tarihi, son teslim tarihi, atanmış kullanıcı ve durum bilgilerine sahip olmalıdır.
         public string Title { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime DeadLine { get; set; }

@@ -25,6 +25,7 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
         public async Task<bool> CreateJobLog(CreateJobLogCommand createJobLogCommand)
         {
             var jobLog = mapper.Map<JobLog>(createJobLogCommand);
+            jobLog.CreateDate = DateTime.Now;
             var result=await jobLogRepository.AddAsync(jobLog);
             return result > 0;
 
