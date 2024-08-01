@@ -30,7 +30,7 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
         public async Task<JobViewModel> GetUserJobsByUserId(GetUserJobsByUserIdQuery getUserJobsByUserIdQuery)
         {
             var result=await userJobRepository.GetList(p=>p.UserId== getUserJobsByUserIdQuery.UserId);
-            if (result is null)
+            if (result.Count<1)
             {
                 throw new NotFoundException("Kayıt bulunamadı");
             }

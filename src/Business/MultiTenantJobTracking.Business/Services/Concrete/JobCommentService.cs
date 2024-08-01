@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MultiTenantJobTracking.Business.Services.Abstract;
+using MultiTenantJobTracking.Common.CustomExceptions;
 using MultiTenantJobTracking.Common.Models.Commands;
 using MultiTenantJobTracking.Common.Models.ViewModels;
 using MultiTenantJobTracking.DataAccess.Repositories.Abstract;
@@ -29,6 +30,10 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
         public async Task<List<JobCommentViewModel>> GetJobCommentsByJobId(Guid jobId)
         {
             var result = await jobCommentRepository.GetList(p => p.JobId == jobId);
+            if (result.Count<1)
+            {
+                throw new NotFoundException("Seçilen işe ait yorum bulunamadı");
+            }
             var jobComments = mapper.Map<List<JobCommentViewModel>>(result);
             return jobComments; 
         }
@@ -36,6 +41,10 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
         public async Task<List<JobCommentViewModel>> GetJobCommentsByUserId(Guid UserId)
         {
             var result =await jobCommentRepository.GetList(p => p.UserId == UserId);
+            if (result.Count < 1)
+            {
+                throw new NotFoundException("Kullanıcıya ait yorum bulunamadı");
+            }
             var jobComments = mapper.Map<List<JobCommentViewModel>>(result);
             return jobComments;
         }

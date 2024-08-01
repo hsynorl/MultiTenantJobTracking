@@ -9,17 +9,12 @@ namespace MultiTenantJobTracking.Common.Models.Commands
 {
     public class CreateUserCommand
     {
-        private UserType _userType;
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string PhoneNumber { get; set; }
         public string Password { get; set; }
         public string EmailAddress { get; set; }
-        public UserType UserType
-        {
-            get => _userType;
-            private set => _userType = UserType.User;
-        }
         public bool IsActive { get; set; }
+        
     }
 }

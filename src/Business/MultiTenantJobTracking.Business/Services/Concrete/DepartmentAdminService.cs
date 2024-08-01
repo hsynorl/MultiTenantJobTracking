@@ -22,6 +22,11 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
 
         public async Task<bool> CreateDepartmentAdmin(CreateDepartmentAdminCommand createDepartmentAdminCommand)
         {
+            var existDepartmentAdmin=await departmentAdminRepository.GetSingleAsync(p=>p.UserId == createDepartmentAdminCommand.UserId);
+            if (existDepartmentAdmin is not null)
+            {
+                throw new ExistingRecordException();
+            }
             var departmentAdmin=mapper.Map<DepartmentAdmin>(createDepartmentAdminCommand);
             var result=await departmentAdminRepository.AddAsync(departmentAdmin);
             return result > 0;

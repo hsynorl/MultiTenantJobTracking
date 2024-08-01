@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using MultiTenantJobTracking.Business.Services.Abstract;
@@ -15,6 +16,7 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
 {
     public class UserService : IUserService
     {
+
         private readonly IUserRepository userRepository;
         private readonly IMapper mapper;
         readonly IConfiguration configuration;
@@ -28,25 +30,39 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
 
         public async Task<bool> CreateUser(CreateUserCommand createUserCommand)
         {
+            var existEmail=await userRepository.GetSingleAsync(p=>p.EmailAddress==createUserCommand.EmailAddress);
+            if (existEmail is not null )
+            {
+                throw new ExistingRecordException("Bu email adresine sahip bir kullanıcı var");
+            }
             var user = mapper.Map<User>(createUserCommand);
-            var result=await userRepository.AddAsync(user);
+            var result = await userRepository.AddAsync(user);
             return result > 0;
         }
 
         public async Task<LoginViewModel> Login(LoginCommand loginCommand)
         {
 
-            var user=await userRepository.GetSingleAsync(p=>p.EmailAddress== loginCommand.EmailAddress);
+            var user = await userRepository.AsQueryable()
+                .Include(p => p.DepartmentUser)
+                .ThenInclude(p => p.Department)
+                .ThenInclude(p => p.Tenant)
+                .ThenInclude(p => p.Licence)
+                .FirstOrDefaultAsync(p => p.EmailAddress == loginCommand.EmailAddress && p.IsActive);
             if (user is null)
             {
                 throw new NotFoundException("Kullanıcı bulunamadı!");
             }
-            if (user.Password!=loginCommand.Password)
+            if (user.Password != loginCommand.Password)
             {
                 throw new InvalidCredentialsException("Hatalı Şifre!");
             }
-            LoginViewModel loginViewModel = new LoginViewModel();   
-           
+            if (user.DepartmentUser.Department.Tenant.Licence.ExpireDate < DateTime.Now)
+            {
+                throw new LicenseExpiredException();
+            }
+            LoginViewModel loginViewModel = new LoginViewModel();
+
             var claims = new Claim[]
           {
             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),

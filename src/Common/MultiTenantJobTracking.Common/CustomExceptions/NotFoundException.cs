@@ -16,7 +16,5 @@ namespace MultiTenantJobTracking.Common.CustomExceptions
         public NotFoundException(string message) : base(message)
         {
         }
-     
     }
-
 }

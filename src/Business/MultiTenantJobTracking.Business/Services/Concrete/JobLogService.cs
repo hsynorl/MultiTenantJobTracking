@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MultiTenantJobTracking.Business.Services.Abstract;
+using MultiTenantJobTracking.Common.CustomExceptions;
 using MultiTenantJobTracking.Common.Enums;
 using MultiTenantJobTracking.Common.Models.Commands;
 using MultiTenantJobTracking.Common.Models.Queries;
@@ -32,6 +33,10 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
         public async Task<List<GetJobLogsViewModel>> GetJobLogsByJobId(GetJobLogsByJobIdQuery getJobLogsByJobIdQuery)
         {
             var jobLogs=await jobLogRepository.GetList(p=>p.JobId==getJobLogsByJobIdQuery.JobId);
+            if (jobLogs.Count<1)
+            { 
+                    throw new NotFoundException("İşe ait kayıt bulunamadı");
+             }
             var result=mapper.Map<List<GetJobLogsViewModel>>(jobLogs);
             return result;
         }
@@ -39,6 +44,10 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
         public async Task<List<GetJobLogsViewModel>> GetJobLogsByUserId(GetJobLogsByUserIdQuery getJobLogsByUserIdQuery)
         {
             var jobLogs = await jobLogRepository.GetList(p => p.UserId == getJobLogsByUserIdQuery.UserId);
+            if (jobLogs.Count < 1)
+            {
+                throw new NotFoundException("Kullanıcıya ait iş kaydı bulunamadı");
+            }
             var result = mapper.Map<List<GetJobLogsViewModel>>(jobLogs);
             return result;
         }

@@ -26,7 +26,7 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
         public async Task<bool> CheckLicenceExpireTime(Guid TenantId)
         {
             var result = await licenceRepository.GetSingleAsync(p => p.Id == TenantId);
-            if (result == null)
+            if (result is null)
             {
                 throw new NotFoundException();
             }
@@ -48,6 +48,10 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
         public async Task<bool> RenewLicense(RenewLicenceCommand renewLicenceCommand)
         {
             var licence= await licenceRepository.GetSingleAsync(p => p.Id == renewLicenceCommand.TenantId);
+            if (licence is null)
+            {
+                throw new NotFoundException("Lisans bulunamdı");
+            }
             licence.ExpireDate = DateTime.Now.AddDays((int)renewLicenceCommand.LicenceTime);
             var result=await licenceRepository.UpdateAsync(licence);
             return result > 0;  

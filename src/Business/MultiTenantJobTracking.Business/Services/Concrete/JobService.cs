@@ -48,7 +48,7 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
         public async Task<List<JobViewModel>> GetJobsByUserId(Guid userId)
         {
             var result = await userJobRepository.AsQueryable().Include(p => p.Job).Where(p => p.UserId == userId).ToListAsync();
-            if (result is null)
+            if (result.Count < 1)
             {
                 throw new NotFoundException("Kullanıcıya atanmış iş bulunmadı");
             }
@@ -59,6 +59,10 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
         public async Task<bool> UpdateJob(UpdateJobCommand updateJobCommand)
         {
             var updateJob = await jobRepository.GetSingleAsync(p => p.Id == updateJobCommand.JobId);
+            if (updateJob is null)
+            {
+                throw new NotFoundException();
+            }
             var job = mapper.Map<Job>(updateJobCommand);
             var result = await jobRepository.UpdateAsync(job);
             return result > 0;

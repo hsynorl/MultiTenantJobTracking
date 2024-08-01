@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using MultiTenantJobTracking.Business.Services.Abstract;
+using MultiTenantJobTracking.Common.CustomExceptions;
 using MultiTenantJobTracking.Common.Models.Commands;
 using MultiTenantJobTracking.Common.Models.ViewModels;
 using MultiTenantJobTracking.DataAccess.Repositories.Abstract;
@@ -28,6 +29,10 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
         public async Task<DepartmentViewModel> GetUserDepartment(Guid UserId)
         {
             var result=await departmentUserRepository.AsQueryable().Include(p=>p.Department).FirstOrDefaultAsync(p=>p.Id==UserId);
+            if (result is null)
+            {
+                throw new NotFoundException();
+            }
             var departmentViewModel=mapper.Map<DepartmentViewModel>(result.Department);    
             return departmentViewModel;
         }

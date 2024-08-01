@@ -8,7 +8,7 @@ namespace MultiTenantJobTracking.Common.Models.Commands
 {
     public class LoginCommand
     {
-        public string Password { get; set; }
         public string EmailAddress { get; set; }
+        public string Password { get; set; }
     }
 }
