@@ -14,8 +14,8 @@ namespace MultiTenantJobTracking.Business.Mapping
     {
         public DepartmentAdminProfile()
         {
-            CreateMap<DepartmentAdmin, CreateDepartmentAdminCommand>();
-            CreateMap<DepartmentAdmin, UpdateDepartmentAdminCommand>();
+            CreateMap<CreateDepartmentAdminCommand, DepartmentAdmin>();
+            CreateMap<UpdateDepartmentAdminCommand, DepartmentAdmin>();
             CreateMap<DepartmentAdmin, DepartmentAdminViewModel>()
                 .ForMember(p=>p.FirstName ,y=>y.MapFrom(z=>z.User.FirstName)).ReverseMap();
         }

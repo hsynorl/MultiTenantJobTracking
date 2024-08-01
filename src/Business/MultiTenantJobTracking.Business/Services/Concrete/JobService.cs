@@ -66,13 +66,13 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
         public async Task<bool> UpdateJobStatus(UpdateStatusJobCommand updateStatusJobCommand)
         {
             var updateJob = await jobRepository.GetSingleAsync(p => p.Id == updateStatusJobCommand.JobId);
-            var job = mapper.Map<Job>(updateStatusJobCommand);
-            var result = await jobRepository.UpdateAsync(job);
+            updateJob.JobStatus = updateStatusJobCommand.JobStatus;
+            var result = await jobRepository.UpdateAsync(updateJob);
             if( result > 0)
             {
               var logResult= await jobLogService.CreateJobLog(new()
                 {
-                    JobId = job.Id,
+                    JobId = updateJob.Id,
                     JobStatus = updateStatusJobCommand.JobStatus,
                     UserId = updateStatusJobCommand.UserId
                 });

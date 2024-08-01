@@ -13,7 +13,7 @@ namespace MultiTenantJobTracking.Business.Mapping
     {
         public TenantUserProfile()
         {
-            CreateMap<TenantUser, CreateTenantCommand>();
+            CreateMap<CreateTenantCommand, TenantUser>();
         }
     }
 }

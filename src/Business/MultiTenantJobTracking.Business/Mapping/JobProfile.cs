@@ -9,7 +9,11 @@ namespace MultiTenantJobTracking.Business.Mapping
     {
         public JobProfile()
         {
-            CreateMap<Job, CreateJobCommand>();
+            CreateMap<CreateJobCommand, Job>();
+            CreateMap<UpdateJobCommand, Job>()
+                .ForMember(p=>p.Id,y=>y.MapFrom(z=>z.JobId));
+            CreateMap<UpdateStatusJobCommand, Job>()
+                .ForMember(p => p.Id, y => y.MapFrom(z => z.JobId));
             CreateMap<Job, JobViewModel>();
         }
     }

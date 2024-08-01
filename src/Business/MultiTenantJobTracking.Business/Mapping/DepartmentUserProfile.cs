@@ -15,7 +15,8 @@ namespace MultiTenantJobTracking.Business.Mapping
         public DepartmentUserProfile()
         {
             CreateMap<DepartmentUser, DepartmentUserViewModel>().ReverseMap();
-            CreateMap<DepartmentUser, CreateDepartmentUserCommand>();
+            CreateMap<CreateDepartmentUserCommand, DepartmentUser>()
+                .ForMember(p=>p.Id,y=>y.MapFrom(z=>z.UserId));
         }
     }
 }

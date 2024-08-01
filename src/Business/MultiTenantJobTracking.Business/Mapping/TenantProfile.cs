@@ -8,7 +8,7 @@ namespace MultiTenantJobTracking.Business.Mapping
     {
         public TenantProfile()
         {
-            CreateMap<Tenant, CreateTenantCommand>().ReverseMap();
+            CreateMap<CreateTenantCommand, Tenant>().ReverseMap();
         }
     }
 

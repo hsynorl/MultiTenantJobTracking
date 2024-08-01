@@ -8,7 +8,7 @@ namespace MultiTenantJobTracking.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+  //  [Authorize]
 
     public class UsersController : ControllerBase
     {
@@ -26,7 +26,7 @@ namespace MultiTenantJobTracking.WebApi.Controllers
         }
 
         [HttpPost("login")]
-        [Authorize(Roles = "User")]
+       // [Authorize(Roles = "User")]
         public async Task<IActionResult> Login(LoginCommand loginCommand)
         {
             var result = await userService.Login(loginCommand);

@@ -11,7 +11,7 @@ namespace MultiTenantJobTracking.Business.Mapping
         public JobLogProfile()
         {
             CreateMap<JobLog, GetJobLogsViewModel>().ReverseMap();
-            CreateMap<JobLog,CreateJobLogCommand >();
+            CreateMap<CreateJobLogCommand, JobLog>();
         }
     }
 
