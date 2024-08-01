@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using MultiTenantJobTracking.Business.Services.Abstract;
+using MultiTenantJobTracking.Common.CustomExceptions;
 using MultiTenantJobTracking.Common.Models.Commands;
 using MultiTenantJobTracking.Common.Models.ViewModels;
 using MultiTenantJobTracking.DataAccess.Repositories.Abstract;
@@ -49,7 +50,7 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
             var result = await userJobRepository.AsQueryable().Include(p => p.Job).Where(p => p.UserId == userId).ToListAsync();
             if (result is null)
             {
-                throw new Exception("Kullanıcıya atanmış job bulunmadı");
+                throw new NotFoundException("Kullanıcıya atanmış iş bulunmadı");
             }
             var jobs=mapper.Map<List<JobViewModel>>(result);  
             return jobs;    
@@ -77,7 +78,6 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
                     UserId = updateStatusJobCommand.UserId
                 });
                 return logResult;
-                //TODO roll back yapılabilir
             }
             return false;   
         }

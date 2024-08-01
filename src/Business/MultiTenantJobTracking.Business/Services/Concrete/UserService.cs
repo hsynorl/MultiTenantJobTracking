@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using MultiTenantJobTracking.Business.Services.Abstract;
+using MultiTenantJobTracking.Common.CustomExceptions;
 using MultiTenantJobTracking.Common.Models.Commands;
 using MultiTenantJobTracking.Common.Models.ViewModels;
 using MultiTenantJobTracking.DataAccess.Repositories.Abstract;
@@ -37,11 +38,11 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
             var user=await userRepository.GetSingleAsync(p=>p.EmailAddress== loginCommand.EmailAddress);
             if (user is null)
             {
-                throw new Exception("Kullanıcı bulunamadı!");
+                throw new NotFoundException("Kullanıcı bulunamadı!");
             }
             if (user.Password!=loginCommand.Password)
             {
-                throw new Exception("Hatalı Şifre!");
+                throw new InvalidCredentialsException("Hatalı Şifre!");
             }
             LoginViewModel loginViewModel = new LoginViewModel();   
            

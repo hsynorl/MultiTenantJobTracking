@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MultiTenantJobTracking.Business.Services.Abstract;
+using MultiTenantJobTracking.Common.CustomExceptions;
 using MultiTenantJobTracking.Common.Models.Commands;
 using MultiTenantJobTracking.Common.Models.Queries;
 using MultiTenantJobTracking.Common.Models.ViewModels;
@@ -31,7 +32,7 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
             var result=await userJobRepository.GetList(p=>p.UserId== getUserJobsByUserIdQuery.UserId);
             if (result is null)
             {
-                throw new Exception("Kayıt bulunamadı");
+                throw new NotFoundException("Kayıt bulunamadı");
             }
             var userJobs=mapper.Map<JobViewModel>(result);
             return userJobs;
