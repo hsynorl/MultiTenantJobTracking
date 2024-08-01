@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MultiTenantJobTracking.Business.Services.Abstract;
+using MultiTenantJobTracking.Common.CustomExceptions;
 using MultiTenantJobTracking.Common.Models.Commands;
 using MultiTenantJobTracking.DataAccess.Repositories.Abstract;
 using MultiTenantJobTracking.DataAccess.Repositories.Concrete;
@@ -22,12 +23,12 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
             this.mapper = mapper;
         }
 
-        public async Task<bool> CheckLicenceExpireTime(Guid UserId)
+        public async Task<bool> CheckLicenceExpireTime(Guid TenantId)
         {
-            var result = await licenceRepository.GetSingleAsync(p => p.Id == UserId);
+            var result = await licenceRepository.GetSingleAsync(p => p.Id == TenantId);
             if (result == null)
             {
-                throw new Exception("Not Found");
+                throw new NotFoundException();
             }
             if (result.ExpireDate > DateTime.Now)
             {

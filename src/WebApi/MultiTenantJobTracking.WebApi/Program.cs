@@ -18,8 +18,7 @@ namespace MultiTenantJobTracking.WebApi
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
-         
+
             builder.Services.ConfigureAuth(builder.Configuration);
 
             var app = builder.Build();

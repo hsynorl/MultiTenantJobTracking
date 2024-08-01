@@ -15,8 +15,6 @@ namespace MultiTenantJobTracking.Common.CustomExceptions
         public InvalidCredentialsException(string message) : base(message)
         {
         }
-        public InvalidCredentialsException(string username, string password) : base($"Geçersiz kimlik bilgileri hatası. Kullanıcı adı: {username} Şifre: {password}")
-        {
-        }
+      
     }
 }
