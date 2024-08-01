@@ -10,7 +10,7 @@ namespace MultiTenantJobTracking.Business.Mapping
         public JobCommentProfile()
         {
             CreateMap<JobComment, CreateJobCommentCommand>();
-            CreateMap<JobComment, JobCommentViewModel>();
+            CreateMap<JobComment, JobCommentViewModel>().ReverseMap() ;
         }
     }
 

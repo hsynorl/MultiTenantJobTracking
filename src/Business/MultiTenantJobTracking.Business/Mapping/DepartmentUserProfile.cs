@@ -10,14 +10,12 @@ using System.Threading.Tasks;
 
 namespace MultiTenantJobTracking.Business.Mapping
 {
-    public class DepartmentProfile:Profile
+    public class DepartmentUserProfile:Profile
     {
-        public DepartmentProfile()
+        public DepartmentUserProfile()
         {
-            CreateMap<Department,CreateDepartmentCommand>();
-            CreateMap<Department,DepartmentViewModel>().ReverseMap();
-
+            CreateMap<DepartmentUser, DepartmentUserViewModel>().ReverseMap();
+            CreateMap<DepartmentUser, CreateDepartmentUserCommand>();
         }
     }
-
 }

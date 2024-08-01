@@ -10,7 +10,8 @@ namespace MultiTenantJobTracking.Business.Mapping
         public UserProfile()
         {
             CreateMap<User,CreateUserCommand>();
-            CreateMap<User,UserViewModel>();
+            CreateMap<User,LoginCommand>();
+            CreateMap<User,UserViewModel>().ReverseMap();
 
         }
     }

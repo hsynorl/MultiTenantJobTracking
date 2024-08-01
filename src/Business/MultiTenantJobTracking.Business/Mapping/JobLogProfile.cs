@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using MultiTenantJobTracking.Common.Models.Commands;
 using MultiTenantJobTracking.Common.Models.Queries;
+using MultiTenantJobTracking.Common.Models.ViewModels;
 using MultiTenantJobTracking.Entities.Concrete;
 
 namespace MultiTenantJobTracking.Business.Mapping
@@ -8,7 +10,8 @@ namespace MultiTenantJobTracking.Business.Mapping
     {
         public JobLogProfile()
         {
-            CreateMap<JobLog,GetJobLogsByJobIdQuery >();
+            CreateMap<JobLog, GetJobLogsViewModel>().ReverseMap();
+            CreateMap<JobLog,CreateJobLogCommand >();
         }
     }
 

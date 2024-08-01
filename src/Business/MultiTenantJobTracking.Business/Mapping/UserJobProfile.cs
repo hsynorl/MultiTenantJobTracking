@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using MultiTenantJobTracking.Common.Models.Commands;
-using MultiTenantJobTracking.Common.Models.ViewModels;
 using MultiTenantJobTracking.Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -10,14 +9,11 @@ using System.Threading.Tasks;
 
 namespace MultiTenantJobTracking.Business.Mapping
 {
-    public class DepartmentProfile:Profile
+    public class UserJobProfile:Profile
     {
-        public DepartmentProfile()
+        public UserJobProfile()
         {
-            CreateMap<Department,CreateDepartmentCommand>();
-            CreateMap<Department,DepartmentViewModel>().ReverseMap();
-
+            CreateMap<UserJob,CreateUserJobCommand>();  
         }
     }
-
 }

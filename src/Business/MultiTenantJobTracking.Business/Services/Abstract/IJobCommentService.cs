@@ -5,7 +5,7 @@ namespace MultiTenantJobTracking.Business.Services.Abstract
 {
     public interface IJobCommentService
     {
-        Task<bool> CreateJobComment(CreateJobCommand createJobCommand);
+        Task<bool> CreateJobComment(CreateJobCommentCommand createJobCommand);
         Task<List<JobCommentViewModel>> GetJobCommentsByJobId(Guid jobId);
         Task<List<JobCommentViewModel>> GetJobCommentsByUserId(Guid UserId);
 

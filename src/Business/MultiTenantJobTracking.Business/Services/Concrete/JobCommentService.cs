@@ -19,7 +19,7 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
             this.jobCommentRepository = jobCommentRepository;
         }
 
-        public async Task<bool> CreateJobComment(CreateJobCommand createJobCommand)
+        public async Task<bool> CreateJobComment(CreateJobCommentCommand createJobCommand)
         {
             var jobComment = mapper.Map<JobComment>(createJobCommand);
             var result=await jobCommentRepository.AddAsync(jobComment);
