@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using MultiTenantJobTracking.Business.Services.Abstract;
-using MultiTenantJobTracking.Common.Models.Job.Command;
-using MultiTenantJobTracking.Common.Models.Job.ViewModel;
+using MultiTenantJobTracking.Common.Models.Commands;
+using MultiTenantJobTracking.Common.Models.ViewModels;
 using MultiTenantJobTracking.DataAccess.Repositories.Abstract;
 using MultiTenantJobTracking.Entities.Concrete;
 using System;

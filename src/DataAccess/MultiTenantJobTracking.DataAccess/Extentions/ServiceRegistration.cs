@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MultiTenantJobTracking.DataAccess.Configuration;
 using MultiTenantJobTracking.DataAccess.Context;
 using MultiTenantJobTracking.DataAccess.Repositories.Abstract;
 using MultiTenantJobTracking.DataAccess.Repositories.Concrete;
@@ -16,12 +15,12 @@ namespace MultiTenantJobTracking.DataAccess.Extentions
 {
     public static class ServiceRegistration
     {
-        public static IServiceCollection AddDataAccessService(this IServiceCollection services)
+        public static IServiceCollection AddDataAccessService(this IServiceCollection services,IConfiguration configuration)
         {
 
             services.AddDbContext<MultiTenantJobTrackingDbContext>(options =>
             {
-                options.UseSqlServer(Configurations.ConnectionString);
+                options.UseSqlServer(configuration.GetConnectionString("sqlServer"));
 
             });
          

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MultiTenantJobTracking.Business.Services.Abstract;
-using MultiTenantJobTracking.Common.Models.UserJob.Command;
+using MultiTenantJobTracking.Common.Models.Commands;
 using MultiTenantJobTracking.DataAccess.Repositories.Abstract;
 using MultiTenantJobTracking.Entities.Concrete;
 

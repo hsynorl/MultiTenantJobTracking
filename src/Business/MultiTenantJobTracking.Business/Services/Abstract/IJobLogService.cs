@@ -1,7 +1,7 @@
 ﻿using MultiTenantJobTracking.Common.Enums;
-using MultiTenantJobTracking.Common.Models.JobLog.Command;
-using MultiTenantJobTracking.Common.Models.JobLog.Query;
-using MultiTenantJobTracking.Common.Models.JobLog.ViewModel;
+using MultiTenantJobTracking.Common.Models.Commands;
+using MultiTenantJobTracking.Common.Models.Queries;
+using MultiTenantJobTracking.Common.Models.ViewModels;
 
 namespace MultiTenantJobTracking.Business.Services.Abstract
 {

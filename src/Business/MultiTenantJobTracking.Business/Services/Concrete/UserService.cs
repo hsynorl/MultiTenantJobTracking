@@ -2,8 +2,8 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using MultiTenantJobTracking.Business.Services.Abstract;
-using MultiTenantJobTracking.Common.Models.User.Command;
-using MultiTenantJobTracking.Common.Models.User.ViewModel;
+using MultiTenantJobTracking.Common.Models.Commands;
+using MultiTenantJobTracking.Common.Models.ViewModels;
 using MultiTenantJobTracking.DataAccess.Repositories.Abstract;
 using MultiTenantJobTracking.Entities.Concrete;
 using System.IdentityModel.Tokens.Jwt;

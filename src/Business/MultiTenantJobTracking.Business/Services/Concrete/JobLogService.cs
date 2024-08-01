@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using MultiTenantJobTracking.Business.Services.Abstract;
 using MultiTenantJobTracking.Common.Enums;
-using MultiTenantJobTracking.Common.Models.JobLog.Command;
-using MultiTenantJobTracking.Common.Models.JobLog.Query;
-using MultiTenantJobTracking.Common.Models.JobLog.ViewModel;
+using MultiTenantJobTracking.Common.Models.Commands;
+using MultiTenantJobTracking.Common.Models.Queries;
+using MultiTenantJobTracking.Common.Models.ViewModels;
 using MultiTenantJobTracking.DataAccess.Repositories.Abstract;
 using MultiTenantJobTracking.Entities.Concrete;
 using System.Collections.Generic;

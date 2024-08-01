@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using MultiTenantJobTracking.Business.Services.Abstract;
-using MultiTenantJobTracking.Common.Models.DepartmentAdmin.Command;
-using MultiTenantJobTracking.Common.Models.DepartmentAdmin.Query;
-using MultiTenantJobTracking.Common.Models.DepartmentAdmin.ViewModel;
+using MultiTenantJobTracking.Common.Models.Commands;
+using MultiTenantJobTracking.Common.Models.Queries;
+using MultiTenantJobTracking.Common.Models.ViewModels;
 using MultiTenantJobTracking.DataAccess.Repositories.Abstract;
 using MultiTenantJobTracking.Entities.Concrete;
 

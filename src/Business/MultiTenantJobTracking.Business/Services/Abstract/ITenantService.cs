@@ -1,4 +1,4 @@
-﻿using MultiTenantJobTracking.Common.Models.Tenant.Command;
+﻿using MultiTenantJobTracking.Common.Models.Commands;
 using System;
 using System.Collections.Generic;
 using System.Linq;

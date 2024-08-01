@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using MultiTenantJobTracking.Common.Models.Job.Command;
-using MultiTenantJobTracking.Common.Models.Job.ViewModel;
+using MultiTenantJobTracking.Common.Models.Commands;
+using MultiTenantJobTracking.Common.Models.ViewModels;
 using MultiTenantJobTracking.Entities.Concrete;
 
 namespace MultiTenantJobTracking.Business.Mapping

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using MultiTenantJobTracking.Common.Models.Tenant.Command;
+using MultiTenantJobTracking.Common.Models.Commands;
 using MultiTenantJobTracking.Entities.Concrete;
 
 namespace MultiTenantJobTracking.Business.Mapping
@@ -8,7 +8,7 @@ namespace MultiTenantJobTracking.Business.Mapping
     {
         public TenantProfile()
         {
-            CreateMap<Tenant, CreateTenantCommand>();
+            CreateMap<Tenant, CreateTenantCommand>().ReverseMap();
         }
     }
 

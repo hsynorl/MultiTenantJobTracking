@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using MultiTenantJobTracking.DataAccess.Configuration;
 using MultiTenantJobTracking.Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -52,14 +51,14 @@ namespace MultiTenantJobTracking.DataAccess.Context
                 .WithOne(du => du.User)
                 .HasForeignKey<DepartmentUser>(du => du.Id); 
 
+            modelBuilder.Entity<DepartmentUser>()
+                .HasKey(du => new { du.Id, du.DepartmentId });
+
+
             modelBuilder.Entity<Tenant>()
               .HasOne(u => u.Licence)
               .WithOne(du => du.Tenant)
               .HasForeignKey<Licence>(du => du.Id);
-
-            modelBuilder.Entity<DepartmentUser>()
-                .HasKey(du => new { du.Id, du.DepartmentId });
-
 
             base.OnModelCreating(modelBuilder);
         }

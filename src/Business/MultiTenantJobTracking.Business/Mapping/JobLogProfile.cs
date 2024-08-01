@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using MultiTenantJobTracking.Common.Models.JobLog.Query;
+using MultiTenantJobTracking.Common.Models.Queries;
 using MultiTenantJobTracking.Entities.Concrete;
 
 namespace MultiTenantJobTracking.Business.Mapping

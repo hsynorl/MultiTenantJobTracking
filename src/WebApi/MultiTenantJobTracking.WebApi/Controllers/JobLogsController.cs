@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MultiTenantJobTracking.Business.Services.Abstract;
-using MultiTenantJobTracking.Common.Models.JobLog.Query;
+using MultiTenantJobTracking.Common.Models.Queries;
 
 namespace MultiTenantJobTracking.WebApi.Controllers
 {

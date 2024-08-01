@@ -1,5 +1,5 @@
-﻿using MultiTenantJobTracking.Common.Models.User.Command;
-using MultiTenantJobTracking.Common.Models.User.ViewModel;
+﻿using MultiTenantJobTracking.Common.Models.Commands;
+using MultiTenantJobTracking.Common.Models.ViewModels;
 
 namespace MultiTenantJobTracking.Business.Services.Abstract
 {
