@@ -1,4 +1,6 @@
 ﻿using MultiTenantJobTracking.Common.Models.Commands;
+using MultiTenantJobTracking.Common.Models.Queries;
+using MultiTenantJobTracking.Common.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +12,6 @@ namespace MultiTenantJobTracking.Business.Services.Abstract
     public interface IUserJobService
     {
         Task<bool> CreateUserJob(CreateUserJobCommand createUserJobCommand);
+        Task<JobViewModel> GetUserJobsByUserId(GetUserJobsByUserIdQuery getUserJobsByUserIdQuery);
     }
 }

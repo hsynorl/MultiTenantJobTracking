@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MultiTenantJobTracking.Business.Services.Abstract;
 using MultiTenantJobTracking.Common.Models.Commands;
+using MultiTenantJobTracking.Common.Models.Queries;
 
 namespace MultiTenantJobTracking.WebApi.Controllers
 {
@@ -17,10 +18,15 @@ namespace MultiTenantJobTracking.WebApi.Controllers
         }
 
         [HttpPost("create-user-job")]
-        public async Task<IActionResult> CreateUserJob(CreateUserJobCommand createUserJobCommand) { 
-        var result=await userJobService.CreateUserJob(createUserJobCommand);    
-            return Ok(result);  
+        public async Task<IActionResult> CreateUserJob(CreateUserJobCommand createUserJobCommand) {
+            var result = await userJobService.CreateUserJob(createUserJobCommand);
+            return Ok(result);
         }
-
+        [HttpGet("get-user-jobs-by-user-id")]
+        public async Task<IActionResult> GetUserJobsByUserId([FromQuery] Guid UserId)
+        {
+            var result = await userJobService.GetUserJobsByUserId(new GetUserJobsByUserIdQuery { UserId=UserId});
+            return Ok(result);
+        }
     }
 }
