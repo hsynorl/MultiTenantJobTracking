@@ -44,14 +44,14 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
             return result > 0;
         }
 
-        public async Task<JobViewModel> GetJobsByUserId(Guid userId)
+        public async Task<List<JobViewModel>> GetJobsByUserId(Guid userId)
         {
             var result = await userJobRepository.AsQueryable().Include(p => p.Job).Where(p => p.UserId == userId).ToListAsync();
             if (result is null)
             {
                 throw new Exception("Kullanıcıya atanmış job bulunmadı");
             }
-            var jobs=mapper.Map<JobViewModel>(result);  
+            var jobs=mapper.Map<List<JobViewModel>>(result);  
             return jobs;    
         }
 

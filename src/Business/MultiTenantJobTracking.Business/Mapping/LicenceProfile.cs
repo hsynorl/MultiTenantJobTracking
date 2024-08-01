@@ -13,7 +13,8 @@ namespace MultiTenantJobTracking.Business.Mapping
     {
         public LicenceProfile()
         {
-            CreateMap<CreateLicenceCommand, Licence>();
+            CreateMap<CreateLicenceCommand, Licence>()
+                .ForMember(p => p.Id, y => y.MapFrom(z => z.TenantId));
         }
     }
 }

@@ -9,7 +9,7 @@ namespace MultiTenantJobTracking.Business.Services.Abstract
         Task<bool> UpdateJob(UpdateJobCommand updateJobCommand);
         Task<bool> DeleteJob(DeleteJobCommand deleteJobCommand);
         Task<bool> UpdateJobStatus(UpdateStatusJobCommand updateStatusJobCommand);
-        Task<JobViewModel> GetJobsByUserId(Guid userId);
+        Task<List<JobViewModel>> GetJobsByUserId(Guid userId);
     }
 
 }
