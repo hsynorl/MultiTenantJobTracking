@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MultiTenantJobTracking.Business.Services.Abstract;
+using MultiTenantJobTracking.Common.Enums;
 using MultiTenantJobTracking.Common.Models.Commands;
 using MultiTenantJobTracking.Common.Models.Queries;
 
@@ -8,6 +10,8 @@ namespace MultiTenantJobTracking.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
+
     public class DepartmentsController : ControllerBase
     {
         private readonly IDepartmentService departmentService;
@@ -26,6 +30,7 @@ namespace MultiTenantJobTracking.WebApi.Controllers
 
 
         [HttpPost("create-department")]
+        [Authorize(nameof(UserType.TenantAdmin))]
         public async Task<IActionResult> CreateDepartment(CreateDepartmentCommand createDepartmentCommand)
         {
 

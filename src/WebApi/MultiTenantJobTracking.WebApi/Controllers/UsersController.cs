@@ -2,13 +2,14 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MultiTenantJobTracking.Business.Services.Abstract;
+using MultiTenantJobTracking.Common.Enums;
 using MultiTenantJobTracking.Common.Models.Commands;
 
 namespace MultiTenantJobTracking.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-  //  [Authorize]
+    [Authorize]
 
     public class UsersController : ControllerBase
     {
@@ -19,7 +20,7 @@ namespace MultiTenantJobTracking.WebApi.Controllers
             this.userService = userService;
         }
         [HttpPost("create-user")]
-     //   [Authorize(Roles = "TenantAdmin")]
+        [Authorize(Roles = $"{nameof(UserType.TenantAdmin)},{nameof(UserType.DepartmanAdmin)}")]
         public async Task<IActionResult> CreateUser(CreateUserCommand createUserCommand)
         {
             var result = await userService.CreateUser(createUserCommand);

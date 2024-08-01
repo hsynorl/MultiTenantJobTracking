@@ -10,7 +10,7 @@ namespace MultiTenantJobTracking.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-   // [Authorize(Roles = "GeneralAdmin,TenantAdmin,DepartmanAdmin,User")]
+    [Authorize]
     public class JobsController : ControllerBase
     {
         private readonly IJobService jobService;
@@ -20,14 +20,14 @@ namespace MultiTenantJobTracking.WebApi.Controllers
             this.jobService = jobService;
         }
         [HttpGet("get-jobs-by-user-id")]
-     //   [Authorize(Roles = nameof(UserType.User))]
+        [Authorize(Roles = nameof(UserType.User))]
         public async Task<ActionResult> GetJobsByUserId([FromQuery] Guid UserId)
         {
             var result = await jobService.GetJobsByUserId(UserId);
             return Ok(result);
         }
         [HttpPost("crate-job")]
-     //   [Authorize(Roles = $"{nameof(UserType.TenantAdmin)},{nameof(UserType.DepartmanAdmin)}")]
+        [Authorize(Roles = $"{nameof(UserType.TenantAdmin)},{nameof(UserType.DepartmanAdmin)}")]
         
         public async Task<ActionResult> CreateJob(CreateJobCommand createJobCommand)
         {
@@ -35,7 +35,7 @@ namespace MultiTenantJobTracking.WebApi.Controllers
             return Ok(result);
         }
         [HttpPut("update-job")]
-  //      [Authorize(Roles = $"{nameof(UserType.TenantAdmin)},{nameof(UserType.DepartmanAdmin)}")]
+        [Authorize(Roles = $"{nameof(UserType.TenantAdmin)},{nameof(UserType.DepartmanAdmin)}")]
         public async Task<ActionResult> UpdateJob(UpdateJobCommand updateJobCommand)
         {
 
@@ -43,6 +43,7 @@ namespace MultiTenantJobTracking.WebApi.Controllers
             return Ok(result);
         }
         [HttpPut("update-job-status")]
+        [Authorize(nameof(UserType.User))]
         public async Task<ActionResult> UpdateJobStatus(UpdateStatusJobCommand updateStatusJobCommand)
         {
 
@@ -50,6 +51,7 @@ namespace MultiTenantJobTracking.WebApi.Controllers
             return Ok(result);
         }
         [HttpDelete("delete-job")]
+        [Authorize(Roles = $"{nameof(UserType.TenantAdmin)},{nameof(UserType.DepartmanAdmin)}")]
         public async Task<ActionResult> DeleteJob(DeleteJobCommand deleteJobCommand)
         {
 

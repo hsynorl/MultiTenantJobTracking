@@ -1,12 +1,15 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MultiTenantJobTracking.Business.Services.Abstract;
+using MultiTenantJobTracking.Common.Enums;
 using MultiTenantJobTracking.Common.Models.Commands;
 
 namespace MultiTenantJobTracking.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(nameof(UserType.TenantAdmin))]
     public class DepartmentAdminsController : ControllerBase
     {
         private readonly IDepartmentAdminService departmentAdminService;

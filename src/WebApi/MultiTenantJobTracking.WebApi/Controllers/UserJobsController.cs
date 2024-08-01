@@ -10,6 +10,7 @@ namespace MultiTenantJobTracking.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UserJobsController : ControllerBase
     {
         private readonly IUserJobService userJobService;
@@ -20,11 +21,13 @@ namespace MultiTenantJobTracking.WebApi.Controllers
         }
 
         [HttpPost("create-user-job")]
+        [Authorize(Roles = $"{nameof(UserType.TenantAdmin)},{nameof(UserType.DepartmanAdmin)}")]
         public async Task<IActionResult> CreateUserJob(CreateUserJobCommand createUserJobCommand) {
             var result = await userJobService.CreateUserJob(createUserJobCommand);
             return Ok(result);
         }
         [HttpGet("get-user-jobs-by-user-id")]
+        [Authorize(nameof(UserType.User))]
         public async Task<IActionResult> GetUserJobsByUserId([FromQuery] Guid UserId)
         {
             var result = await userJobService.GetUserJobsByUserId(new GetUserJobsByUserIdQuery { UserId=UserId});
