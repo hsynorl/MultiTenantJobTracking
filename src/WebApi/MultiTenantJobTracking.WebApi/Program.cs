@@ -1,3 +1,4 @@
+using Microsoft.OpenApi.Models;
 using MultiTenantJobTracking.Business.Extentions;
 using MultiTenantJobTracking.DataAccess.Extentions;
 using MultiTenantJobTracking.WebApi.Extentions;
@@ -12,12 +13,13 @@ namespace MultiTenantJobTracking.WebApi
 
             // Add services to the container.
 
-            builder.Services.AddControllers();
             builder.Services.AddBusinessService();
             builder.Services.AddDataAccessService(builder.Configuration);
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+         
             builder.Services.ConfigureAuth(builder.Configuration);
 
             var app = builder.Build();
@@ -29,10 +31,10 @@ namespace MultiTenantJobTracking.WebApi
                 app.UseSwaggerUI();
             }
 
-            app.UseMiddleware<ExceptionHandlerMiddleware>();
-            app.UseAuthorization();
             app.UseAuthentication();
+            app.UseAuthorization();
 
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
             app.MapControllers();
 
             app.Run();

@@ -8,7 +8,7 @@ namespace MultiTenantJobTracking.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-  //  [Authorize]
+    [Authorize]
 
     public class UsersController : ControllerBase
     {
@@ -19,6 +19,7 @@ namespace MultiTenantJobTracking.WebApi.Controllers
             this.userService = userService;
         }
         [HttpPost("create-user")]
+        [Authorize(Roles = "TenantAdmin")]
         public async Task<IActionResult> CreateUser(CreateUserCommand createUserCommand)
         {
             var result = await userService.CreateUser(createUserCommand);
@@ -26,7 +27,7 @@ namespace MultiTenantJobTracking.WebApi.Controllers
         }
 
         [HttpPost("login")]
-       // [Authorize(Roles = "User")]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(LoginCommand loginCommand)
         {
             var result = await userService.Login(loginCommand);

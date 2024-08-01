@@ -10,7 +10,7 @@ namespace MultiTenantJobTracking.Common.Enums
     {
         GeneralAdmin,
         TenantAdmin,
-        DepertmanAdmin,
+        DepartmanAdmin,
         User
 
     }
