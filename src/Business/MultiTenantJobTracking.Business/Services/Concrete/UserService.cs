@@ -46,8 +46,10 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
             var result = await userRepository.AddAsync(user);
             if (result > 0)
             {
-                var deartmentAdminResult = await departmentAdminService.CreateDepartmentAdmin(new() { DepartmentId = createDepartmentAdminUserCommand.DepartmentId, UserId = user.Id });
-                return deartmentAdminResult;
+                var departmentAdminResult = await departmentAdminService.CreateDepartmentAdmin(new() { DepartmentId = createDepartmentAdminUserCommand.DepartmentId, UserId = user.Id });
+                var tenantUserResult = await tenantUserService.CreateTenantUser(new() { TenantId =createDepartmentAdminUserCommand.TenantId, UserId = user.Id });
+
+                return tenantUserResult && departmentAdminResult;
             }
             return false;
         }

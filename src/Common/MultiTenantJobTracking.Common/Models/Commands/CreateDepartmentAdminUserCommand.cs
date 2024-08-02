@@ -8,5 +8,6 @@
         public string Password { get; set; }
         public string EmailAddress { get; set; }
         public Guid DepartmentId { get; set; }
+        public Guid TenantId { get; set; }
     }
 }

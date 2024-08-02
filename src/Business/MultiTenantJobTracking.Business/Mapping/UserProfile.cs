@@ -17,7 +17,9 @@ namespace MultiTenantJobTracking.Business.Mapping
             CreateMap<CreateTenantAdminUserCommand, User>()
              .ForMember(p => p.UserType, y => y.MapFrom(z => UserType.TenantAdmin));
             CreateMap<LoginCommand, User>();
-            CreateMap<User,UserViewModel>().ReverseMap();
+            CreateMap<User,UserViewModel>()
+                .ForMember(p=>p.UserId,y=>y.MapFrom(z=>z.Id))
+                .ReverseMap();
 
         }
     }
