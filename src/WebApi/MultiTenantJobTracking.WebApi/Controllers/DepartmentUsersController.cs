@@ -34,6 +34,12 @@ namespace MultiTenantJobTracking.WebApi.Controllers
             var result = await departmentUserService.GetUserDepartment(UserId);
             return Ok(result);
         }
-
+        [HttpGet("get-users-by-department-id")]
+        [Authorize(Roles = $"{nameof(UserType.TenantAdmin)},{nameof(UserType.DepartmanAdmin)}")]
+        public async Task<IActionResult> GetUsersByDepartmentId([FromQuery] Guid DepartmentId)
+        {
+            var result = await departmentUserService.GetUsersByDepartmentId(DepartmentId);
+            return Ok(result);
+        }
     }
 }

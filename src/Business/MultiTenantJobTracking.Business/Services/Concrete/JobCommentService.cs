@@ -37,17 +37,6 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
             var jobComments = mapper.Map<List<JobCommentViewModel>>(result);
             return jobComments; 
         }
-
-        public async Task<List<JobCommentViewModel>> GetJobCommentsByUserId(Guid UserId)
-        {
-            var result =await jobCommentRepository.GetList(p => p.UserId == UserId);
-            if (result.Count < 1)
-            {
-                throw new NotFoundException("Kullanıcıya ait yorum bulunamadı");
-            }
-            var jobComments = mapper.Map<List<JobCommentViewModel>>(result);
-            return jobComments;
-        }
     }
 
 }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using MultiTenantJobTracking.Business.Services.Abstract;
 using MultiTenantJobTracking.Common.CustomExceptions;
 using MultiTenantJobTracking.Common.Models.Commands;
@@ -43,27 +44,5 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
             return result > 0;
         }
 
-        public async Task<List<DepartmentAdminViewModel>> GetDepartmentAdminsByDepartmentId(GetDepartmentAdminsByDepartmentIdQuery getDepartmentAdminsByDepartmentIdQuery)
-        {
-            var result = await departmentAdminRepository.GetList(p => p.DepartmentId == getDepartmentAdminsByDepartmentIdQuery.DepartmentId);
-            if (result is null)
-            {
-                throw new NotFoundException("Department admin bulunamadı");
-            }
-            var departmentAdmins=mapper.Map<List<DepartmentAdminViewModel>>(result);
-            return departmentAdmins;
-        }
-
-        public async Task<bool> UpdateDepartmentAdmin(UpdateDepartmentAdminCommand updateDepartmentAdminCommand)
-        {
-            var updateDepartmentAdmin = await departmentAdminRepository.GetSingleAsync(p => p.Id == updateDepartmentAdminCommand.UpdateDepartmentId);
-            if (updateDepartmentAdmin is null)
-            {
-                throw new NotFoundException("Department admin bulunamadı");
-            }
-            var departmentAdmin = mapper.Map<DepartmentAdmin>(updateDepartmentAdminCommand);
-            var result = await departmentAdminRepository.UpdateAsync(departmentAdmin);
-            return result > 0;
-        }
     }
 }

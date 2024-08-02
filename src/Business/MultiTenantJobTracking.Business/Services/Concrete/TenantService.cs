@@ -2,6 +2,7 @@
 using MultiTenantJobTracking.Business.Services.Abstract;
 using MultiTenantJobTracking.Common.CustomExceptions;
 using MultiTenantJobTracking.Common.Models.Commands;
+using MultiTenantJobTracking.Common.Models.ViewModels;
 using MultiTenantJobTracking.DataAccess.Repositories.Abstract;
 using MultiTenantJobTracking.Entities.Concrete;
 using System;
@@ -36,6 +37,17 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
             tenant.CreateDate = DateTime.Now;
             var result=await tenantRepository.AddAsync(tenant);
             return result > 0;
+        }
+
+        public async Task<TenantViewModel> GetTenantByTenantId(Guid TenantId)
+        {
+            var result=await tenantRepository.GetSingleAsync(p=>p.Id==TenantId);
+            if (result is null)
+            {
+                throw new NotFoundException("Kayıt bulunamadı");
+            }
+            var tenant=mapper.Map<TenantViewModel>(result);
+            return tenant;
         }
     }
 

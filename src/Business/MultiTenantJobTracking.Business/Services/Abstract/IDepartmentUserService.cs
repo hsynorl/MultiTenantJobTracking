@@ -7,6 +7,7 @@ namespace MultiTenantJobTracking.Business.Services.Abstract
     {
         Task<bool> CreateDepartmentUser(CreateDepartmentUserCommand createDepartmentUserCommand);
         Task<DepartmentViewModel> GetUserDepartment(Guid UserId);
+        Task<List<UserViewModel>> GetUsersByDepartmentId(Guid DepartmentId);
 
     }
 

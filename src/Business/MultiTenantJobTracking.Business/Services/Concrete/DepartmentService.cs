@@ -32,7 +32,7 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
             return result > 0;
         }
 
-        public async Task<List<DepartmentViewModel>> GetDepartments(GetDepartmentsQuery getDepartmentsQuery)
+        public async Task<List<DepartmentViewModel>> GetDepartmentsByTenantId(GetDepartmentsQuery getDepartmentsQuery)
         {
             var result = await departmentRepository.GetList(p => p.TenantId == getDepartmentsQuery.TenantId);
             if (result.Count < 1)

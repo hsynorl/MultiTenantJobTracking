@@ -36,6 +36,16 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
             var departmentViewModel=mapper.Map<DepartmentViewModel>(result.Department);    
             return departmentViewModel;
         }
-              
+
+        public async Task<List<UserViewModel>> GetUsersByDepartmentId(Guid DepartmentId)
+        {
+            var result = await departmentUserRepository.AsQueryable().Include(p => p.User).Where(p => p.DepartmentId == DepartmentId).ToListAsync();;
+            if (result.Count<1)
+            {
+                throw new NotFoundException();
+            }
+            var users = mapper.Map<List<UserViewModel>>(result);
+            return users;
+        }
     }
 }

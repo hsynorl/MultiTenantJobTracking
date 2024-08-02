@@ -24,7 +24,7 @@ namespace MultiTenantJobTracking.WebApi.Controllers
         [HttpGet("get-departments")]
         public async Task<IActionResult> GetDepartments([FromQuery]Guid TenantId) {
 
-            var result = await departmentService.GetDepartments(new GetDepartmentsQuery { TenantId=TenantId});
+            var result = await departmentService.GetDepartmentsByTenantId(new GetDepartmentsQuery { TenantId=TenantId});
             return Ok(result);
         }
 

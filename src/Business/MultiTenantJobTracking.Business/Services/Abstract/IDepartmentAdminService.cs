@@ -7,9 +7,7 @@ namespace MultiTenantJobTracking.Business.Services.Abstract
     public interface IDepartmentAdminService
     {
         Task<bool> CreateDepartmentAdmin(CreateDepartmentAdminCommand createDepartmentAdminCommand);
-        Task<bool> UpdateDepartmentAdmin(UpdateDepartmentAdminCommand updateDepartmentAdminCommand);
         Task<bool> DeleteDepartmentAdmin(DeleteDepartmentAdminCommand deleteDepartmentAdminCommand);
-        Task<List<DepartmentAdminViewModel>> GetDepartmentAdminsByDepartmentId(GetDepartmentAdminsByDepartmentIdQuery getDepartmentAdminsByDepartmentIdQuery);
     }
 
 }

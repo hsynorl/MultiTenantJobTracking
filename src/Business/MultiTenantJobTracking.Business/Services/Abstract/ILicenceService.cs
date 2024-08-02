@@ -9,7 +9,6 @@ namespace MultiTenantJobTracking.Business.Services.Abstract
 {
     public interface ILicenceService
     {
-        Task<bool> CheckLicenceExpireTime(Guid UserId);
         Task<bool> CreateLicence(CreateLicenceCommand createLicenceCommand);
         Task<bool> RenewLicense(RenewLicenceCommand renewLicenceCommand);
     }

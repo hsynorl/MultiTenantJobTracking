@@ -7,7 +7,6 @@ namespace MultiTenantJobTracking.Business.Services.Abstract
     {
         Task<bool> CreateJobComment(CreateJobCommentCommand createJobCommand);
         Task<List<JobCommentViewModel>> GetJobCommentsByJobId(Guid jobId);
-        Task<List<JobCommentViewModel>> GetJobCommentsByUserId(Guid UserId);
 
     }
 }
