@@ -35,6 +35,7 @@ namespace MultiTenantJobTracking.DataAccess.Extentions
             services.AddScoped<IJobCommentRepository,JobCommentRepository>();   
             services.AddScoped<IJobLogRepository,JobLogRepository>();   
             services.AddScoped<IJobRepository,JobRepository>();   
+            services.AddScoped<IMessageRepository,MessageRepository>();   
 
 
 

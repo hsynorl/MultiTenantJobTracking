@@ -171,6 +171,34 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
                     b.ToTable("Licence");
                 });
 
+            modelBuilder.Entity("MultiTenantJobTracking.Entities.Concrete.Message", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("ReceiverUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("SendDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("SenderUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReceiverUserId");
+
+                    b.HasIndex("SenderUserId");
+
+                    b.ToTable("Messages");
+                });
+
             modelBuilder.Entity("MultiTenantJobTracking.Entities.Concrete.Tenant", b =>
                 {
                     b.Property<Guid>("Id")
@@ -243,7 +271,7 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("8829f8a0-b286-46c8-ad7a-d73ba2e7135f"),
+                            Id = new Guid("0263447b-0447-4e98-9282-e11e508478f3"),
                             EmailAddress = "admin@gmail.com",
                             FirstName = "Hüseyin",
                             LastName = "ORAL",
@@ -372,10 +400,29 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
                     b.Navigation("Tenant");
                 });
 
+            modelBuilder.Entity("MultiTenantJobTracking.Entities.Concrete.Message", b =>
+                {
+                    b.HasOne("MultiTenantJobTracking.Entities.Concrete.User", "ReceiverUser")
+                        .WithMany("ReceivedMessages")
+                        .HasForeignKey("ReceiverUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("MultiTenantJobTracking.Entities.Concrete.User", "SenderUser")
+                        .WithMany("SentMessages")
+                        .HasForeignKey("SenderUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ReceiverUser");
+
+                    b.Navigation("SenderUser");
+                });
+
             modelBuilder.Entity("MultiTenantJobTracking.Entities.Concrete.TenantUser", b =>
                 {
                     b.HasOne("MultiTenantJobTracking.Entities.Concrete.User", "User")
-                        .WithOne("TenantAdmin")
+                        .WithOne("TenantUser")
                         .HasForeignKey("MultiTenantJobTracking.Entities.Concrete.TenantUser", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -446,7 +493,11 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
 
                     b.Navigation("JobLogs");
 
-                    b.Navigation("TenantAdmin")
+                    b.Navigation("ReceivedMessages");
+
+                    b.Navigation("SentMessages");
+
+                    b.Navigation("TenantUser")
                         .IsRequired();
 
                     b.Navigation("UserJobs");

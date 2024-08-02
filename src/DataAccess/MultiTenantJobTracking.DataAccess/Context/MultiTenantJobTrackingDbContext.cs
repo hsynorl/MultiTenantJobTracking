@@ -38,6 +38,7 @@ namespace MultiTenantJobTracking.DataAccess.Context
         public DbSet<TenantUser> TenantUsers { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserJob> UserJobs { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -97,6 +98,21 @@ namespace MultiTenantJobTracking.DataAccess.Context
           
             modelBuilder.Entity<DepartmentAdmin>()
            .HasKey(du => new { du.Id, du.DepartmentId });
+
+
+
+            modelBuilder.Entity<Message>()
+                .HasOne(m => m.ReceiverUser)
+                .WithMany(u => u.ReceivedMessages)
+                .HasForeignKey(m => m.ReceiverUserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Message>()
+                .HasOne(m => m.SenderUser)
+                .WithMany(u => u.SentMessages)
+                .HasForeignKey(m => m.SenderUserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
 
             base.OnModelCreating(modelBuilder);
         }

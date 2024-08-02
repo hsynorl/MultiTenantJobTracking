@@ -148,6 +148,33 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Messages",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ReceiverUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SenderUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SendDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Messages", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Messages_Users_ReceiverUserId",
+                        column: x => x.ReceiverUserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Messages_Users_SenderUserId",
+                        column: x => x.SenderUserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TenantUsers",
                 columns: table => new
                 {
@@ -247,7 +274,7 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "EmailAddress", "FirstName", "LastName", "Password", "PhoneNumber", "UserType" },
-                values: new object[] { new Guid("8829f8a0-b286-46c8-ad7a-d73ba2e7135f"), "admin@gmail.com", "Hüseyin", "ORAL", "admin", "05360596086", 0 });
+                values: new object[] { new Guid("0263447b-0447-4e98-9282-e11e508478f3"), "admin@gmail.com", "Hüseyin", "ORAL", "admin", "05360596086", 0 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_DepartmentAdmins_DepartmentId",
@@ -297,6 +324,16 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Messages_ReceiverUserId",
+                table: "Messages",
+                column: "ReceiverUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Messages_SenderUserId",
+                table: "Messages",
+                column: "SenderUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TenantUsers_Id",
                 table: "TenantUsers",
                 column: "Id",
@@ -335,6 +372,9 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "Licence");
+
+            migrationBuilder.DropTable(
+                name: "Messages");
 
             migrationBuilder.DropTable(
                 name: "TenantUsers");
