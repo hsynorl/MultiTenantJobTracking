@@ -15,12 +15,11 @@ namespace MultiTenantJobTracking.Entities.Concrete
         public string PhoneNumber { get; set; }
         public string Password { get; set; }
         public string EmailAddress { get; set; }
-        public bool IsActive { get; set; }
         public UserType UserType { get; set; }
 
-        public virtual ICollection< TenantUser>  TenantAdmin { get; set; }
+        public virtual TenantUser TenantAdmin { get; set; }
         public virtual ICollection< JobLog>  JobLogs { get; set; }
-        public virtual ICollection< DepartmentAdmin>  DepartmentAdmins { get; set; }
+        public virtual DepartmentAdmin  DepartmentAdmin { get; set; }
         public virtual ICollection< UserJob>  UserJobs { get; set; }
         public virtual ICollection< JobComment>  JobComments { get; set; }
         public virtual  DepartmentUser  DepartmentUser{ get; set; }

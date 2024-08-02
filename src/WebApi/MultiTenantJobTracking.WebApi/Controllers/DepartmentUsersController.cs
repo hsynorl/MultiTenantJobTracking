@@ -21,7 +21,7 @@ namespace MultiTenantJobTracking.WebApi.Controllers
         }
 
         [HttpPost("create-department-user")]
-        [Authorize(nameof(UserType.TenantAdmin))]
+        [Authorize(Roles = nameof(UserType.TenantAdmin))]
         public async Task<IActionResult> CreateDepartmentUser(CreateDepartmentUserCommand createDepartmentUserCommand)
         {
             var result=await departmentUserService.CreateDepartmentUser(createDepartmentUserCommand);

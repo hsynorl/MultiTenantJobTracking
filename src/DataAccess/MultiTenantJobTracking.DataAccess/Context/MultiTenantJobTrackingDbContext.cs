@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using MultiTenantJobTracking.Common.Enums;
 using MultiTenantJobTracking.Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -50,6 +51,19 @@ namespace MultiTenantJobTracking.DataAccess.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            modelBuilder.Entity<User>().HasData(new User()
+            {
+                EmailAddress = "admin@gmail.com",
+                FirstName = "Hüseyin",
+                LastName = "ORAL",
+                Password = "admin",
+                UserType = UserType.GeneralAdmin,
+                PhoneNumber = "05360596086",
+                Id = Guid.NewGuid(),
+
+            }) ;
+
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             modelBuilder.Entity<User>()
                 .HasOne(u => u.DepartmentUser)
@@ -64,6 +78,25 @@ namespace MultiTenantJobTracking.DataAccess.Context
               .HasOne(u => u.Licence)
               .WithOne(du => du.Tenant)
               .HasForeignKey<Licence>(du => du.Id);
+
+
+
+            modelBuilder.Entity<User>()
+            .HasOne(u => u.TenantAdmin)
+            .WithOne(du => du.User)
+            .HasForeignKey<TenantUser>(du => du.Id);
+            modelBuilder.Entity<TenantUser>()
+              .HasKey(du => new { du.Id, du.TenantId });
+
+
+
+            modelBuilder.Entity<User>()
+            .HasOne(u => u.DepartmentAdmin)
+            .WithOne(du => du.User)
+            .HasForeignKey<DepartmentAdmin>(du => du.Id);
+          
+            modelBuilder.Entity<DepartmentAdmin>()
+           .HasKey(du => new { du.Id, du.DepartmentId });
 
             base.OnModelCreating(modelBuilder);
         }

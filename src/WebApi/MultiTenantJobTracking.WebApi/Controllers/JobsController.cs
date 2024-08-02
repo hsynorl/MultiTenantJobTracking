@@ -43,7 +43,7 @@ namespace MultiTenantJobTracking.WebApi.Controllers
             return Ok(result);
         }
         [HttpPut("update-job-status")]
-        [Authorize(nameof(UserType.User))]
+        [Authorize(Roles = nameof(UserType.User))]
         public async Task<ActionResult> UpdateJobStatus(UpdateStatusJobCommand updateStatusJobCommand)
         {
 

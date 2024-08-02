@@ -30,7 +30,7 @@ namespace MultiTenantJobTracking.WebApi.Controllers
 
 
         [HttpPost("create-department")]
-        [Authorize(nameof(UserType.TenantAdmin))]
+        [Authorize(Roles = nameof(UserType.TenantAdmin))]
         public async Task<IActionResult> CreateDepartment(CreateDepartmentCommand createDepartmentCommand)
         {
 

@@ -14,16 +14,16 @@ namespace MultiTenantJobTracking.Business.Mapping
     {
         public UserJobProfile()
         {
-            CreateMap<CreateUserJobCommand, UserJob>();  
+            CreateMap<CreateUserJobCommand, UserJob>();
             CreateMap<UserJob, JobViewModel>()
-                .ForMember(p=>p.JobStatus,y=>y.MapFrom(z=>z.Job.JobStatus))
-                .ForMember(p=>p.Description,y=>y.MapFrom(z=>z.Job.Description))
-                .ForMember(p=>p.DeadLine,y=>y.MapFrom(z=>z.Job.DeadLine))
-                .ForMember(p=>p.CreateDate,y=>y.MapFrom(z=>z.Job.CreateDate))
-                .ForMember(p=>p.Title,y=>y.MapFrom(z=>z.Job.Title))
-                .ForMember(p=>p.JobId,y=>y.MapFrom(z=>z.JobId))
+                .ForPath(p => p.JobStatus, y => y.MapFrom(z => z.Job.JobStatus))
+                .ForPath(p => p.Description, y => y.MapFrom(z => z.Job.Description))
+                .ForPath(p => p.DeadLine, y => y.MapFrom(z => z.Job.DeadLine))
+                .ForPath(p => p.CreateDate, y => y.MapFrom(z => z.Job.CreateDate))
+                .ForPath(p => p.Title, y => y.MapFrom(z => z.Job.Title))
+                .ForPath(p => p.JobId, y => y.MapFrom(z => z.JobId)).ReverseMap();
                 
-                ;  
+                
         }
     }
 }

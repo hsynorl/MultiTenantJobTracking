@@ -20,7 +20,7 @@ namespace MultiTenantJobTracking.WebApi.Controllers
         }
 
         [HttpPost]
-        [Authorize(nameof(UserType.GeneralAdmin))]
+        [Authorize(Roles=nameof(UserType.GeneralAdmin))]
 
         public async Task<IActionResult> CreateTenant(CreateTenantCommand createTenantCommand) {
 

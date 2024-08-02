@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using MultiTenantJobTracking.Business.Services.Abstract;
 using MultiTenantJobTracking.Common.CustomExceptions;
 using MultiTenantJobTracking.Common.Models.Commands;
@@ -27,14 +28,14 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
             return result > 0;
         }
 
-        public async Task<JobViewModel> GetUserJobsByUserId(GetUserJobsByUserIdQuery getUserJobsByUserIdQuery)
+        public async Task<List<JobViewModel>> GetUserJobsByUserId(GetUserJobsByUserIdQuery getUserJobsByUserIdQuery)
         {
-            var result=await userJobRepository.GetList(p=>p.UserId== getUserJobsByUserIdQuery.UserId);
+            var result=await userJobRepository.AsQueryable().Include(p=>p.Job).Where(p=>p.UserId== getUserJobsByUserIdQuery.UserId).ToListAsync();
             if (result.Count<1)
             {
                 throw new NotFoundException("Kayıt bulunamadı");
             }
-            var userJobs=mapper.Map<JobViewModel>(result);
+            var userJobs=mapper.Map<List<JobViewModel>>(result);
             return userJobs;
         }
     }

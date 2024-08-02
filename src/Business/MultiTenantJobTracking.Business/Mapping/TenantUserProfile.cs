@@ -13,7 +13,9 @@ namespace MultiTenantJobTracking.Business.Mapping
     {
         public TenantUserProfile()
         {
-            CreateMap<CreateTenantCommand, TenantUser>();
+            CreateMap<CreateTenantUserCommand, TenantUser>()
+                .ForMember(p=>p.Id,y=>y.MapFrom(z=>z.UserId))
+                .ForMember(p=>p.TenantId,y=>y.MapFrom(z=>z.TenantId));
         }
     }
 }

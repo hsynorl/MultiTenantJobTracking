@@ -9,7 +9,7 @@ namespace MultiTenantJobTracking.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(nameof(UserType.TenantAdmin))]
+    [Authorize]
     public class DepartmentAdminsController : ControllerBase
     {
         private readonly IDepartmentAdminService departmentAdminService;
@@ -20,6 +20,8 @@ namespace MultiTenantJobTracking.WebApi.Controllers
         }
 
         [HttpPost("create-department-admin")]
+        [Authorize(Roles = nameof(UserType.TenantAdmin))]
+
         public async Task<IActionResult> CreateDepartmentAdmin(CreateDepartmentAdminCommand createDepartmentAdminCommand)
         {
             var result=await departmentAdminService.CreateDepartmentAdmin(createDepartmentAdminCommand);

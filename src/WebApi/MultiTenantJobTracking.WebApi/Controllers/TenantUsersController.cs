@@ -19,7 +19,7 @@ namespace MultiTenantJobTracking.WebApi.Controllers
             this.tenantUserService = tenantUserService;
         }
         [HttpPost("create-tenant-user")]
-        [Authorize(nameof(UserType.GeneralAdmin))]
+        [Authorize(Roles = nameof(UserType.GeneralAdmin))]
         public async Task<IActionResult> CreateTenantUser(CreateTenantUserCommand createTenantUserCommand)
         {
             var result=await tenantUserService.CreateTenantUser(createTenantUserCommand);

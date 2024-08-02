@@ -45,20 +45,17 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
             modelBuilder.Entity("MultiTenantJobTracking.Entities.Concrete.DepartmentAdmin", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("DepartmentId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
+                    b.HasKey("Id", "DepartmentId");
 
                     b.HasIndex("DepartmentId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("Id")
+                        .IsUnique();
 
                     b.ToTable("DepartmentAdmins");
                 });
@@ -195,20 +192,17 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
             modelBuilder.Entity("MultiTenantJobTracking.Entities.Concrete.TenantUser", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("TenantId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
+                    b.HasKey("Id", "TenantId");
 
-                    b.HasKey("Id");
+                    b.HasIndex("Id")
+                        .IsUnique();
 
                     b.HasIndex("TenantId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("TenantUsers");
                 });
@@ -226,9 +220,6 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -248,6 +239,18 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("8829f8a0-b286-46c8-ad7a-d73ba2e7135f"),
+                            EmailAddress = "admin@gmail.com",
+                            FirstName = "Hüseyin",
+                            LastName = "ORAL",
+                            Password = "admin",
+                            PhoneNumber = "05360596086",
+                            UserType = 0
+                        });
                 });
 
             modelBuilder.Entity("MultiTenantJobTracking.Entities.Concrete.UserJob", b =>
@@ -291,8 +294,8 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
                         .IsRequired();
 
                     b.HasOne("MultiTenantJobTracking.Entities.Concrete.User", "User")
-                        .WithMany("DepartmentAdmins")
-                        .HasForeignKey("UserId")
+                        .WithOne("DepartmentAdmin")
+                        .HasForeignKey("MultiTenantJobTracking.Entities.Concrete.DepartmentAdmin", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -371,15 +374,15 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
 
             modelBuilder.Entity("MultiTenantJobTracking.Entities.Concrete.TenantUser", b =>
                 {
-                    b.HasOne("MultiTenantJobTracking.Entities.Concrete.Tenant", "Tenant")
-                        .WithMany("TenantAdmins")
-                        .HasForeignKey("TenantId")
+                    b.HasOne("MultiTenantJobTracking.Entities.Concrete.User", "User")
+                        .WithOne("TenantAdmin")
+                        .HasForeignKey("MultiTenantJobTracking.Entities.Concrete.TenantUser", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MultiTenantJobTracking.Entities.Concrete.User", "User")
-                        .WithMany("TenantAdmin")
-                        .HasForeignKey("UserId")
+                    b.HasOne("MultiTenantJobTracking.Entities.Concrete.Tenant", "Tenant")
+                        .WithMany("TenantAdmins")
+                        .HasForeignKey("TenantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -433,7 +436,8 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
 
             modelBuilder.Entity("MultiTenantJobTracking.Entities.Concrete.User", b =>
                 {
-                    b.Navigation("DepartmentAdmins");
+                    b.Navigation("DepartmentAdmin")
+                        .IsRequired();
 
                     b.Navigation("DepartmentUser")
                         .IsRequired();
@@ -442,7 +446,8 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
 
                     b.Navigation("JobLogs");
 
-                    b.Navigation("TenantAdmin");
+                    b.Navigation("TenantAdmin")
+                        .IsRequired();
 
                     b.Navigation("UserJobs");
                 });

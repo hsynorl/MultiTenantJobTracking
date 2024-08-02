@@ -50,7 +50,6 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     EmailAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
                     UserType = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -153,12 +152,11 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TenantUsers", x => x.Id);
+                    table.PrimaryKey("PK_TenantUsers", x => new { x.Id, x.TenantId });
                     table.ForeignKey(
                         name: "FK_TenantUsers_Tenants_TenantId",
                         column: x => x.TenantId,
@@ -166,8 +164,8 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_TenantUsers_Users_UserId",
-                        column: x => x.UserId,
+                        name: "FK_TenantUsers_Users_Id",
+                        column: x => x.Id,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -203,12 +201,11 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DepartmentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    DepartmentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DepartmentAdmins", x => x.Id);
+                    table.PrimaryKey("PK_DepartmentAdmins", x => new { x.Id, x.DepartmentId });
                     table.ForeignKey(
                         name: "FK_DepartmentAdmins_Departments_DepartmentId",
                         column: x => x.DepartmentId,
@@ -216,8 +213,8 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_DepartmentAdmins_Users_UserId",
-                        column: x => x.UserId,
+                        name: "FK_DepartmentAdmins_Users_Id",
+                        column: x => x.Id,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -247,15 +244,21 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "EmailAddress", "FirstName", "LastName", "Password", "PhoneNumber", "UserType" },
+                values: new object[] { new Guid("8829f8a0-b286-46c8-ad7a-d73ba2e7135f"), "admin@gmail.com", "Hüseyin", "ORAL", "admin", "05360596086", 0 });
+
             migrationBuilder.CreateIndex(
                 name: "IX_DepartmentAdmins_DepartmentId",
                 table: "DepartmentAdmins",
                 column: "DepartmentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DepartmentAdmins_UserId",
+                name: "IX_DepartmentAdmins_Id",
                 table: "DepartmentAdmins",
-                column: "UserId");
+                column: "Id",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Departments_TenantId",
@@ -294,14 +297,15 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_TenantUsers_Id",
+                table: "TenantUsers",
+                column: "Id",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TenantUsers_TenantId",
                 table: "TenantUsers",
                 column: "TenantId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TenantUsers_UserId",
-                table: "TenantUsers",
-                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserJobs_JobId",
