@@ -36,7 +36,7 @@ Teknoloji ve Araçlar:
 *Projeyi yerel bir ortamda çalıştırabilmek için aşağıdaki adımları izleyiniz:*
 
 - Projeyi GitHub reposundan klonlayın.
-- Dependency'leri yüklemek için dotnet restore komutunu kullanın.
-- docker-compose up komutunu kullanarak tüm servisleri başlatın.
+- ****docker-compose build**** komutu ile container'ları build edin.
+- ****docker-compose up**** komutunu kullanarak tüm servisleri başlatın.
 - Swagger UI üzerinden API'yi test edin,
         adres: http://localhost:65507/swagger
