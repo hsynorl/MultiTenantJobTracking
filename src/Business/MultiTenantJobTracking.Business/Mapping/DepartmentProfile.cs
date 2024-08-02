@@ -18,7 +18,10 @@ namespace MultiTenantJobTracking.Business.Mapping
                 .ForMember(p => p.TenantId, y => y.MapFrom(z => z.TenantId))
                 .ForMember(p => p.Name, y => y.MapFrom(z => z.Name));
 
-            CreateMap<Department,DepartmentViewModel>().ReverseMap();
+            CreateMap<Department,DepartmentViewModel>()
+                .ForMember(p=>p.Id,y=>y.MapFrom(z=> z.Id))  
+                .ForMember(p=>p.Name,y=>y.MapFrom(z=> z.Name))  
+                .ReverseMap();
 
         }
     }

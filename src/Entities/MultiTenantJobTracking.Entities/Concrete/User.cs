@@ -17,7 +17,7 @@ namespace MultiTenantJobTracking.Entities.Concrete
         public string EmailAddress { get; set; }
         public UserType UserType { get; set; }
 
-        public virtual TenantUser TenantAdmin { get; set; }
+        public virtual TenantUser TenantUser { get; set; }
         public virtual ICollection< JobLog>  JobLogs { get; set; }
         public virtual DepartmentAdmin  DepartmentAdmin { get; set; }
         public virtual ICollection< UserJob>  UserJobs { get; set; }

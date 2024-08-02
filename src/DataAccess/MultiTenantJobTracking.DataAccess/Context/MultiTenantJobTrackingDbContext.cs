@@ -82,7 +82,7 @@ namespace MultiTenantJobTracking.DataAccess.Context
 
 
             modelBuilder.Entity<User>()
-            .HasOne(u => u.TenantAdmin)
+            .HasOne(u => u.TenantUser)
             .WithOne(du => du.User)
             .HasForeignKey<TenantUser>(du => du.Id);
             modelBuilder.Entity<TenantUser>()

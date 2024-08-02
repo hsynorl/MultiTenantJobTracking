@@ -9,6 +9,8 @@ namespace MultiTenantJobTracking.Business.Services.Abstract
         Task<bool> CreateTenantAdminUser(CreateTenantAdminUserCommand createTenantAdminUserCommand);
         Task<bool> CreateDepartmentAdminUser(CreateDepartmentAdminUserCommand createDepartmentAdminUserCommand);
         Task<LoginViewModel> Login(LoginCommand loginCommand);
+        Task<List<UserViewModel>> GetUsersWithoutDepartments(Guid TenantId);
+
         
     }
 

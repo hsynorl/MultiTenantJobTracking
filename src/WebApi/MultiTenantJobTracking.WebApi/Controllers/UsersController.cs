@@ -20,7 +20,7 @@ namespace MultiTenantJobTracking.WebApi.Controllers
             this.userService = userService;
         }
         [HttpPost("create-user")]
-        [Authorize(Roles = $"{nameof(UserType.TenantAdmin)},{nameof(UserType.DepartmanAdmin)}")]
+        [Authorize(Roles = nameof(UserType.TenantAdmin))]
         public async Task<IActionResult> CreateUser(CreateUserCommand createUserCommand)
         {
             var result = await userService.CreateUser(createUserCommand);
@@ -39,6 +39,13 @@ namespace MultiTenantJobTracking.WebApi.Controllers
         public async Task<IActionResult> CreateDepartmentAdminUser(CreateDepartmentAdminUserCommand createDepartmentAdminUserCommand)
         {
             var result = await userService.CreateDepartmentAdminUser(createDepartmentAdminUserCommand);
+            return Ok(result);
+        }
+        [HttpGet("get-users-without-departments")]
+        [Authorize(Roles = nameof(UserType.TenantAdmin))]
+        public async Task<IActionResult> GetUsersWithoutDepartments([FromQuery] Guid TenantId)
+        {
+            var result = await userService.GetUsersWithoutDepartments(TenantId);
             return Ok(result);
         }
 

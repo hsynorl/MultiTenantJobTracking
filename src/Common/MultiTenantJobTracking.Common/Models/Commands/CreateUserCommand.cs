@@ -14,6 +14,7 @@ namespace MultiTenantJobTracking.Common.Models.Commands
         public string PhoneNumber { get; set; }
         public string Password { get; set; }
         public string EmailAddress { get; set; }
-        
+
+        public Guid TenantId { get; set; }
     }
 }

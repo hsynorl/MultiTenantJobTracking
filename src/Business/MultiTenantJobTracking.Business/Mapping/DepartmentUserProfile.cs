@@ -14,10 +14,10 @@ namespace MultiTenantJobTracking.Business.Mapping
     {
         public DepartmentUserProfile()
         {
-            CreateMap<UserViewModel, DepartmentUser>()
-                .ForMember(p=>p.User.Id,y=>y.MapFrom(z=>z.Id))
-                .ForMember(p=>p.User.FirstName,y=>y.MapFrom(z=>z.FirstName))
-                .ForMember(p=>p.User.LastName,y=>y.MapFrom(z=>z.LastName))
+            CreateMap<DepartmentUser,UserViewModel>()
+                .ForMember(p=>p.UserId,y=>y.MapFrom(z=>z.Id))
+                .ForMember(p=>p.FirstName,y=>y.MapFrom(z=>z.User.FirstName))
+                .ForMember(p=>p.LastName,y=>y.MapFrom(z=>z.User.LastName))
                 .ReverseMap();
             CreateMap<DepartmentUser, DepartmentUserViewModel>().ReverseMap();
             CreateMap<CreateDepartmentUserCommand, DepartmentUser>()

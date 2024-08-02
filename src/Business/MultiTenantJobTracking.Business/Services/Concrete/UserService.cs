@@ -17,16 +17,19 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
 {
     public class UserService : IUserService
     {
-
+        private readonly IDepartmentAdminService departmentAdminService;
+        private readonly ITenantUserService tenantUserService;
         private readonly IUserRepository userRepository;
         private readonly IMapper mapper;
         readonly IConfiguration configuration;
 
-        public UserService(IUserRepository userRepository, IMapper mapper, IConfiguration configuration)
+        public UserService(IUserRepository userRepository, IMapper mapper, IConfiguration configuration, ITenantUserService tenantUserService, IDepartmentAdminService departmentAdminService)
         {
             this.userRepository = userRepository;
             this.mapper = mapper;
             this.configuration = configuration;
+            this.tenantUserService = tenantUserService;
+            this.departmentAdminService = departmentAdminService;
         }
 
         public async Task<bool> CreateDepartmentAdminUser(CreateDepartmentAdminUserCommand createDepartmentAdminUserCommand)
@@ -37,9 +40,16 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
             {
                 throw new ExistingRecordException("Bu email adresine sahip bir kullanıcı var");
             }
+            
             var user = mapper.Map<User>(createDepartmentAdminUserCommand);
+            user.UserType = UserType.DepartmanAdmin;
             var result = await userRepository.AddAsync(user);
-            return result > 0;
+            if (result > 0)
+            {
+                var deartmentAdminResult = await departmentAdminService.CreateDepartmentAdmin(new() { DepartmentId = createDepartmentAdminUserCommand.DepartmentId, UserId = user.Id });
+                return deartmentAdminResult;
+            }
+            return false;
         }
 
         public async Task<bool> CreateTenantAdminUser(CreateTenantAdminUserCommand createTenantAdminUserCommand)
@@ -50,8 +60,14 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
                 throw new ExistingRecordException("Bu email adresine sahip bir kullanıcı var");
             }
             var user = mapper.Map<User>(createTenantAdminUserCommand);
+            user.UserType=UserType.TenantAdmin;
             var result = await userRepository.AddAsync(user);
-            return result > 0;
+            if (result > 0)
+            {
+                var tenantAdminResult = await tenantUserService.CreateTenantUser(new() { TenantId = createTenantAdminUserCommand.TenantId, UserId = user.Id });
+                return tenantAdminResult;
+            }
+            return false;
         }
 
         public async Task<bool> CreateUser(CreateUserCommand createUserCommand)
@@ -62,8 +78,14 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
                 throw new ExistingRecordException("Bu email adresine sahip bir kullanıcı var");
             }
             var user = mapper.Map<User>(createUserCommand);
+            user.UserType = UserType.User;
             var result = await userRepository.AddAsync(user);
-            return result > 0;
+            if (result>0)
+            {
+                var tenantUserResult=await tenantUserService.CreateTenantUser(new() { TenantId=createUserCommand.TenantId , UserId=user.Id});
+                return tenantUserResult;
+            }
+            return false;
         }
 
         public async Task<LoginViewModel> Login(LoginCommand loginCommand)
@@ -85,7 +107,7 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
         private async Task<User> GetUserAsync(string emailAddress)
         {
             return await userRepository.AsQueryable()
-                .Include(p => p.TenantAdmin)
+                .Include(p => p.TenantUser)
                     .ThenInclude(p => p.Tenant)
                     .ThenInclude(p => p.Licence)
                 .Include(p => p.DepartmentUser)
@@ -109,7 +131,7 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
         {
             var licence = user.UserType switch
             {
-                UserType.TenantAdmin => user.TenantAdmin?.Tenant?.Licence,
+                UserType.TenantAdmin => user.TenantUser?.Tenant?.Licence,
                 _ => user.DepartmentUser?.Department?.Tenant?.Licence,
             };
             if (licence is null)
@@ -157,6 +179,20 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
             );
 
             return (new JwtSecurityTokenHandler().WriteToken(token), expiry);
+        }
+
+        public async Task<List<UserViewModel>> GetUsersWithoutDepartments(Guid TenantId)
+        {
+            var users=await userRepository.AsQueryable().Where(p=>p.TenantUser.Tenant.Id == TenantId&& p.UserType==UserType.User).ToListAsync();
+            var withoutDepartmentUsers = users
+       .Where(p => p.DepartmentUser == null)
+       .ToList();
+            if (withoutDepartmentUsers.Count<1)
+            {
+                throw new NotFoundException("Her hangi bir department'a üye olmayan kullanıcı bulunamadı");
+            }
+            var userViewModels = mapper.Map<List<UserViewModel>>(withoutDepartmentUsers);
+            return userViewModels;  
         }
     }
 }
