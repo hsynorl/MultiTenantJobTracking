@@ -1,5 +1,5 @@
 # Multi-Tenant İş Takip Sistemi
-Proje Açıklaması
+
 Bu proje, multi-tenant destekli bir iş takip sistemidir. Sistem, farklı kullanıcı rolleri ve yetkileri ile işlerin oluşturulması, yönetilmesi ve takibini sağlar. Sistem ayrıca kullanıcı bazlı lisans yönetimi ve lisans süresi dolan kullanıcıların sisteme erişimini engelleme özelliklerini içerir.
 
 ***Sistem Özellikleri:***
@@ -9,6 +9,7 @@ Bu proje, multi-tenant destekli bir iş takip sistemidir. Sistem, farklı kullan
 - Tenant Admin: Kullanıcıları yönetebilir, departmanlar ve departman yöneticileri oluşturabilir.
 - Departman Admin: Departmanına özel işler açabilir ve yönetebilir.
 - Kullanıcılar: Atanan işleri görüntüleyebilir, durumlarını güncelleyebilir ve yorum ekleyebilir.
+
 **İş Yönetimi:**
 
 - İşler, başlık, açıklama, oluşturulma ve bitiş tarihleri, atanmış kullanıcı ve durum gibi detaylara sahiptir.
