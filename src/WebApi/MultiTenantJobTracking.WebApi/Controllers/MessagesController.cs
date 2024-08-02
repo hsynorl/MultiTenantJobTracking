@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MultiTenantJobTracking.Business.Services.Abstract;
 using MultiTenantJobTracking.Common.Models.Commands;
+using MultiTenantJobTracking.Common.Models.Queries;
 
 namespace MultiTenantJobTracking.WebApi.Controllers
 {
@@ -25,10 +26,14 @@ namespace MultiTenantJobTracking.WebApi.Controllers
             return Ok(result);
         }
 
-        [HttpPost("create-message")]
-        public async Task<IActionResult> GetChats(CreateMessageCommand createMessageCommand)
+        [HttpPost("get-chat")]
+        public async Task<IActionResult> GetChats([FromQuery]Guid SenderId, [FromQuery] Guid ReceiverId)
         {
-            var result = await messageService.CreateMessage(createMessageCommand);
+            var result = await messageService.GetChat(new GetChatQuery
+            {
+                ReceiverId= ReceiverId,
+                SenderId= SenderId
+            });
             return Ok(result);
         }
     }
