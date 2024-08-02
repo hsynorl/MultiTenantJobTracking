@@ -20,12 +20,12 @@ namespace MultiTenantJobTracking.Business.Mapping
                 .ForMember(p=>p.Content,y=>y.MapFrom(z=>z.Content))
                 .ForMember(p=>p.SendDate,y=>y.MapFrom(z=>DateTime.Now))
                 .ReverseMap();
-                CreateMap<MessageViewModel,Message>()
-                .ForMember(p=>p.SenderUserId,y=>y.MapFrom(z=>z.SenderId))
-                .ForMember(p=>p.ReceiverUserId,y=>y.MapFrom(z=>z.ReceiverId))
+                CreateMap<Message, MessageViewModel>()
+                .ForMember(p=>p.SenderId,y=>y.MapFrom(z=>z.SenderUserId))
+                .ForMember(p=>p.ReceiverId,y=>y.MapFrom(z=>z.ReceiverUserId))
 
-                .ForMember(p=>p.SenderUser.FirstName,y=>y.MapFrom(z=>z.SenderName))
-                .ForMember(p=>p.ReceiverUser.FirstName,y=>y.MapFrom(z=>z.ReceiverName))
+                .ForMember(p=>p.SenderName,y=>y.MapFrom(z=>z.SenderUser.FirstName))
+                .ForMember(p=>p.ReceiverName,y=>y.MapFrom(z=>z.ReceiverUser.FirstName))
                 
                 .ForMember(p=>p.Content,y=>y.MapFrom(z=>z.Content))
                 .ReverseMap();
