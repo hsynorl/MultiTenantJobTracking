@@ -29,6 +29,7 @@ namespace MultiTenantJobTracking.WebApi.Controllers
         }
         
         [HttpGet("get-department-user")]
+        [Authorize(Roles = $"{nameof(UserType.User)},{nameof(UserType.DepartmanAdmin)},{nameof(UserType.TenantAdmin)}")]
         public async Task<IActionResult> GetUserDepartment([FromQuery] Guid UserId)
         {
             var result = await departmentUserService.GetUserDepartment(UserId);

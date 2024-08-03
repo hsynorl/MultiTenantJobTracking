@@ -22,13 +22,14 @@ namespace MultiTenantJobTracking.WebApi.Controllers
         }
 
         [HttpGet("get-job-comments-by-job-id")]
+        [Authorize(Roles = $"{nameof(UserType.User)},{nameof(UserType.DepartmanAdmin)},{nameof(UserType.TenantAdmin)}")]
         public async Task<IActionResult> GetJobCommentsByJobId(Guid JobId)
         {
             var result = await jobCommentService.GetJobCommentsByJobId(JobId);
             return Ok(result);
         }
         [HttpPost("create-job-comment")]
-
+        [Authorize(Roles = $"{nameof(UserType.User)},{nameof(UserType.DepartmanAdmin)}")]
         public async Task<IActionResult> CreateJobComment(CreateJobCommentCommand createJobCommentCommand)
         {
             var result = await jobCommentService.CreateJobComment(createJobCommentCommand);
