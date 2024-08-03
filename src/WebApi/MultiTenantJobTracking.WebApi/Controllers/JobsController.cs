@@ -27,7 +27,7 @@ namespace MultiTenantJobTracking.WebApi.Controllers
             return Ok(result);
         }
         [HttpPost("crate-job")]
-        [Authorize(Roles = nameof(UserType.DepartmanAdmin))]
+        [Authorize(Roles = nameof(UserType.TenantAdmin))]
         
         public async Task<ActionResult> CreateJob(CreateJobCommand createJobCommand)
         {

@@ -40,18 +40,12 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
             {
                 throw new ExistingRecordException("Bu email adresine sahip bir kullanıcı var");
             }
-            
+
             var user = mapper.Map<User>(createDepartmentAdminUserCommand);
             user.UserType = UserType.DepartmanAdmin;   
             var result = await userRepository.AddAsync(user);
-            if (result > 0)
-            {
-                var departmentAdminResult = await departmentUserService.CreateDepartmentAdmin(new() { DepartmentId = createDepartmentAdminUserCommand.DepartmentId, UserId = user.Id });
-                var tenantUserResult = await tenantUserService.CreateTenantUser(new() { TenantId =createDepartmentAdminUserCommand.TenantId, UserId = user.Id });
 
-                return tenantUserResult && departmentAdminResult;
-            }
-            return false;
+            return result>0;
         }
 
         public async Task<bool> CreateTenantAdminUser(CreateTenantAdminUserCommand createTenantAdminUserCommand)
@@ -64,12 +58,8 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
             var user = mapper.Map<User>(createTenantAdminUserCommand);
             user.UserType=UserType.TenantAdmin;
             var result = await userRepository.AddAsync(user);
-            if (result > 0)
-            {
-                var tenantAdminResult = await tenantUserService.CreateTenantUser(new() { TenantId = createTenantAdminUserCommand.TenantId, UserId = user.Id });
-                return tenantAdminResult;
-            }
-            return false;
+
+            return result>0;
         }
 
         public async Task<bool> CreateUser(CreateUserCommand createUserCommand)
@@ -82,12 +72,7 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
             var user = mapper.Map<User>(createUserCommand);
             user.UserType = UserType.User;
             var result = await userRepository.AddAsync(user);
-            if (result>0)
-            {
-                var tenantUserResult=await tenantUserService.CreateTenantUser(new() { TenantId=createUserCommand.TenantId , UserId=user.Id});
-                return tenantUserResult;
-            }
-            return false;
+            return result>0;
         }
 
         public async Task<LoginViewModel> Login(LoginCommand loginCommand)
@@ -187,6 +172,7 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
             return (new JwtSecurityTokenHandler().WriteToken(token), expiry);
         }
 
+        //TODO değiştirlicek
         public async Task<List<UserViewModel>> GetUsersWithoutDepartments(Guid TenantId)
         {
             var users=await userRepository.AsQueryable().Where(p=>p.TenantUser.Tenant.Id == TenantId&& p.UserType==UserType.User).ToListAsync();

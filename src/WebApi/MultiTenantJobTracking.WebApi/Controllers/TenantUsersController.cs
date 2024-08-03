@@ -18,11 +18,15 @@ namespace MultiTenantJobTracking.WebApi.Controllers
         {
             this.tenantUserService = tenantUserService;
         }
-        [HttpPost("create-tenant-user")]
+        [HttpPost("create-tenant-admin")]
         [Authorize(Roles = nameof(UserType.GeneralAdmin))]
-        public async Task<IActionResult> CreateTenantUser(CreateTenantUserCommand createTenantUserCommand)
+        public async Task<IActionResult> CreateTenantUser([FromQuery]Guid TenantId, [FromQuery]Guid UserId)
         {
-            var result=await tenantUserService.CreateTenantUser(createTenantUserCommand);
+            var result=await tenantUserService.CreateTenantUser(new CreateTenantUserCommand
+            {
+                TenantId=TenantId,
+                UserId=UserId
+            });
             return Ok(result);
         }
     }

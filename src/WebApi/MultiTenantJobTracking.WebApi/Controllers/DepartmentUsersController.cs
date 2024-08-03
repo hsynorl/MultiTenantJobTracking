@@ -28,6 +28,15 @@ namespace MultiTenantJobTracking.WebApi.Controllers
             return Ok(result);
         }
 
+        [HttpPost("create-department-admin")]
+        [Authorize(Roles = nameof(UserType.TenantAdmin))]
+        public async Task<IActionResult> CreateDepartmentAdmin(CreateDepartmentAdminCommand createDepartmentAdminCommand)
+        {
+            var result = await departmentUserService.CreateDepartmentAdmin(createDepartmentAdminCommand);
+            return Ok(result);
+        }
+
+
         [HttpGet("get-department-user")]
         [Authorize(Roles = $"{nameof(UserType.User)},{nameof(UserType.DepartmanAdmin)},{nameof(UserType.TenantAdmin)}")]
         public async Task<IActionResult> GetUserDepartment([FromQuery] Guid UserId)
