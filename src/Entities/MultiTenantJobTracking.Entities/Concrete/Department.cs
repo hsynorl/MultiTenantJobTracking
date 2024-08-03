@@ -7,7 +7,7 @@ namespace MultiTenantJobTracking.Entities.Concrete
         public Guid TenantId{ get; set; }
         public string  Name{ get; set; }
         public virtual  Tenant  Tenant { get; set; }
-        public virtual ICollection<DepartmentAdmin> DepartmentAdmins { get; set; }
+        public virtual ICollection<DepartmentUser>DepartmentAdmin { get; set; }
 
     }
 

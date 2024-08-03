@@ -14,8 +14,8 @@ namespace MultiTenantJobTracking.DataAccess.DesignTime
             string connectionString = "Server=localhost;Database=MultiTenantJobTrackingDb;User Id=sa;Password=og~8O+nwAT%5c0a8V8G]G+tEi;TrustServerCertificate=True;";
 
             dbContextOptionsBuilder.UseSqlServer(connectionString);
-            var configuration = new ConfigurationBuilder().Build(); 
-            return new MultiTenantJobTrackingDbContext(dbContextOptionsBuilder.Options, configuration);
+            var configuration = new ConfigurationBuilder().Build();
+            return new MultiTenantJobTrackingDbContext(dbContextOptionsBuilder.Options);
         }
     }
 }

@@ -13,23 +13,14 @@ namespace MultiTenantJobTracking.DataAccess.Context
 {
     public class MultiTenantJobTrackingDbContext: DbContext
     {
-        IConfiguration configuration;
-        public MultiTenantJobTrackingDbContext(IConfiguration configuration)
-        {
-            configuration = configuration;
-            Database.Migrate();
-        }
-
-        public MultiTenantJobTrackingDbContext(DbContextOptions<MultiTenantJobTrackingDbContext> options, IConfiguration configuration)
+        public MultiTenantJobTrackingDbContext(DbContextOptions<MultiTenantJobTrackingDbContext> options)
             : base(options)
         {
-            configuration = configuration;
             Database.Migrate();
         }
 
 
         public DbSet<Department> Departments { get; set; }
-        public DbSet<DepartmentAdmin> DepartmentAdmins { get; set; }
         public DbSet<DepartmentUser> DepartmentUsers{ get; set; }
         public DbSet<Job> Jobs{ get; set; }
         public DbSet<JobComment> JobComments{ get; set; }
@@ -40,14 +31,14 @@ namespace MultiTenantJobTracking.DataAccess.Context
         public DbSet<UserJob> UserJobs { get; set; }
         public DbSet<Message> Messages { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                var connectionString = configuration.GetConnectionString("sqlServer");
-                optionsBuilder.UseSqlServer(connectionString);
-            }
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    if (!optionsBuilder.IsConfigured)
+        //    {
+        //        var connectionString = configuration.GetConnectionString("sqlServer");
+        //        optionsBuilder.UseSqlServer(connectionString);
+        //    }
+        //}
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -74,13 +65,10 @@ namespace MultiTenantJobTracking.DataAccess.Context
             modelBuilder.Entity<DepartmentUser>()
                 .HasKey(du => new { du.Id, du.DepartmentId });
 
-
             modelBuilder.Entity<Tenant>()
               .HasOne(u => u.Licence)
               .WithOne(du => du.Tenant)
               .HasForeignKey<Licence>(du => du.Id);
-
-
 
             modelBuilder.Entity<User>()
             .HasOne(u => u.TenantUser)
@@ -88,18 +76,6 @@ namespace MultiTenantJobTracking.DataAccess.Context
             .HasForeignKey<TenantUser>(du => du.Id);
             modelBuilder.Entity<TenantUser>()
               .HasKey(du => new { du.Id, du.TenantId });
-
-
-
-            modelBuilder.Entity<User>()
-            .HasOne(u => u.DepartmentAdmin)
-            .WithOne(du => du.User)
-            .HasForeignKey<DepartmentAdmin>(du => du.Id);
-          
-            modelBuilder.Entity<DepartmentAdmin>()
-           .HasKey(du => new { du.Id, du.DepartmentId });
-
-
 
             modelBuilder.Entity<Message>()
                 .HasOne(m => m.ReceiverUser)

@@ -21,7 +21,6 @@ namespace MultiTenantJobTracking.Business.Extentions
             services.AddAutoMapper(assm);
 
 
-            services.AddScoped<IDepartmentAdminService, DepartmentAdminService>();
             services.AddScoped<IDepartmentService, DepartmentService>();
             services.AddScoped<IDepartmentUserService, DepartmentUserService>();
             services.AddScoped<IJobCommentService, JobCommentService>();

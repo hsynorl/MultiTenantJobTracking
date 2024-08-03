@@ -17,19 +17,19 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
 {
     public class UserService : IUserService
     {
-        private readonly IDepartmentAdminService departmentAdminService;
+        private readonly IDepartmentUserService departmentUserService;
         private readonly ITenantUserService tenantUserService;
         private readonly IUserRepository userRepository;
         private readonly IMapper mapper;
         readonly IConfiguration configuration;
 
-        public UserService(IUserRepository userRepository, IMapper mapper, IConfiguration configuration, ITenantUserService tenantUserService, IDepartmentAdminService departmentAdminService)
+        public UserService(IUserRepository userRepository, IMapper mapper, IConfiguration configuration, ITenantUserService tenantUserService, IDepartmentUserService departmentUserService)
         {
             this.userRepository = userRepository;
             this.mapper = mapper;
             this.configuration = configuration;
             this.tenantUserService = tenantUserService;
-            this.departmentAdminService = departmentAdminService;
+            this.departmentUserService = departmentUserService;
         }
 
         public async Task<bool> CreateDepartmentAdminUser(CreateDepartmentAdminUserCommand createDepartmentAdminUserCommand)
@@ -42,11 +42,11 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
             }
             
             var user = mapper.Map<User>(createDepartmentAdminUserCommand);
-            user.UserType = UserType.DepartmanAdmin;
+            user.UserType = UserType.DepartmanAdmin;   
             var result = await userRepository.AddAsync(user);
             if (result > 0)
             {
-                var departmentAdminResult = await departmentAdminService.CreateDepartmentAdmin(new() { DepartmentId = createDepartmentAdminUserCommand.DepartmentId, UserId = user.Id });
+                var departmentAdminResult = await departmentUserService.CreateDepartmentAdmin(new() { DepartmentId = createDepartmentAdminUserCommand.DepartmentId, UserId = user.Id });
                 var tenantUserResult = await tenantUserService.CreateTenantUser(new() { TenantId =createDepartmentAdminUserCommand.TenantId, UserId = user.Id });
 
                 return tenantUserResult && departmentAdminResult;
@@ -131,6 +131,10 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
         }
         private void ValidateLicence(User user)
         {
+            if (user.DepartmentUser is null && user.UserType==UserType.User)
+            {
+                throw new NotFoundException("Kullanıcı bir department'a ait değil");
+            }
             var licence = user.UserType switch
             {
                 UserType.TenantAdmin => user.TenantUser?.Tenant?.Licence,

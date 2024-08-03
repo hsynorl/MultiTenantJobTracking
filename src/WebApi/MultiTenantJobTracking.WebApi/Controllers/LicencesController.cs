@@ -23,9 +23,9 @@ namespace MultiTenantJobTracking.WebApi.Controllers
 
         [HttpPost("create-licence")]
         [Authorize(Roles = $"{nameof(UserType.TenantAdmin)},{nameof(UserType.GeneralAdmin)}")]
-        public async Task<IActionResult> CreateLicence(CreateLicenceCommand createLicenceCommand)
+        public async Task<IActionResult> CreateLicence([FromQuery]Guid TenantId, [FromQuery]LicenceTime licenceTime)
         {
-            var result=await licenceService.CreateLicence(createLicenceCommand);    
+            var result=await licenceService.CreateLicence(new CreateLicenceCommand { LicenceTime=licenceTime,TenantId=TenantId});    
             return Ok(result);
         }
         [HttpPost("renew-licence")]

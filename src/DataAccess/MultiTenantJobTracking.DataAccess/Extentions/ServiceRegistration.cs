@@ -28,7 +28,6 @@ namespace MultiTenantJobTracking.DataAccess.Extentions
             services.AddScoped<ITenantUserRepository,TenantUserRepository>();   
             services.AddScoped<IUserRepository,UserRepository>();   
             services.AddScoped<IUserJobRepository,UserJobRepository>();   
-            services.AddScoped<IDepartmentAdminRepository,DepartmentAdminRepository>();   
             services.AddScoped<IDepartmentUserRepository,DepartmentUserRepository>();   
             services.AddScoped<IDepartmentRepository,DepartmentRepository>();   
             services.AddScoped<ILicenceRepository,LicenceRepository>();   

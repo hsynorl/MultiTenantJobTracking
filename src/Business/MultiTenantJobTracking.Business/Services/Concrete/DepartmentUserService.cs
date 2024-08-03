@@ -5,6 +5,7 @@ using MultiTenantJobTracking.Common.CustomExceptions;
 using MultiTenantJobTracking.Common.Models.Commands;
 using MultiTenantJobTracking.Common.Models.ViewModels;
 using MultiTenantJobTracking.DataAccess.Repositories.Abstract;
+using MultiTenantJobTracking.DataAccess.Repositories.Concrete;
 using MultiTenantJobTracking.Entities.Concrete;
 
 namespace MultiTenantJobTracking.Business.Services.Concrete
@@ -46,6 +47,13 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
             }
             var users = mapper.Map<List<UserViewModel>>(result);
             return users;
+        }
+        public async Task<bool> CreateDepartmentAdmin(CreateDepartmentAdminCommand createDepartmentAdminCommand)
+        {
+            var departmentAdmin = mapper.Map<DepartmentUser>(createDepartmentAdminCommand);
+            departmentAdmin.User = null;
+            var result = await departmentUserRepository.AddAsync(departmentAdmin);
+            return result > 0;
         }
     }
 }

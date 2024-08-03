@@ -19,7 +19,6 @@ namespace MultiTenantJobTracking.Entities.Concrete
 
         public virtual TenantUser TenantUser { get; set; }
         public virtual ICollection< JobLog>  JobLogs { get; set; }
-        public virtual DepartmentAdmin  DepartmentAdmin { get; set; }
         public virtual ICollection< UserJob>  UserJobs { get; set; }
         public virtual ICollection< JobComment>  JobComments { get; set; }
         public virtual  DepartmentUser  DepartmentUser{ get; set; }

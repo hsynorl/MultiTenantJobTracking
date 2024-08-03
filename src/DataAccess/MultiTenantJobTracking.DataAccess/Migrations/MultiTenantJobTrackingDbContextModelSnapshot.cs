@@ -42,24 +42,6 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
                     b.ToTable("Departments");
                 });
 
-            modelBuilder.Entity("MultiTenantJobTracking.Entities.Concrete.DepartmentAdmin", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("DepartmentId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id", "DepartmentId");
-
-                    b.HasIndex("DepartmentId");
-
-                    b.HasIndex("Id")
-                        .IsUnique();
-
-                    b.ToTable("DepartmentAdmins");
-                });
-
             modelBuilder.Entity("MultiTenantJobTracking.Entities.Concrete.DepartmentUser", b =>
                 {
                     b.Property<Guid>("Id")
@@ -271,7 +253,7 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("0263447b-0447-4e98-9282-e11e508478f3"),
+                            Id = new Guid("9a73a328-385d-401c-b37d-03df6b2850a3"),
                             EmailAddress = "admin@gmail.com",
                             FirstName = "Hüseyin",
                             LastName = "ORAL",
@@ -313,29 +295,10 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
                     b.Navigation("Tenant");
                 });
 
-            modelBuilder.Entity("MultiTenantJobTracking.Entities.Concrete.DepartmentAdmin", b =>
-                {
-                    b.HasOne("MultiTenantJobTracking.Entities.Concrete.Department", "Department")
-                        .WithMany("DepartmentAdmins")
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MultiTenantJobTracking.Entities.Concrete.User", "User")
-                        .WithOne("DepartmentAdmin")
-                        .HasForeignKey("MultiTenantJobTracking.Entities.Concrete.DepartmentAdmin", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Department");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("MultiTenantJobTracking.Entities.Concrete.DepartmentUser", b =>
                 {
                     b.HasOne("MultiTenantJobTracking.Entities.Concrete.Department", "Department")
-                        .WithMany()
+                        .WithMany("DepartmentAdmin")
                         .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -459,7 +422,7 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
 
             modelBuilder.Entity("MultiTenantJobTracking.Entities.Concrete.Department", b =>
                 {
-                    b.Navigation("DepartmentAdmins");
+                    b.Navigation("DepartmentAdmin");
                 });
 
             modelBuilder.Entity("MultiTenantJobTracking.Entities.Concrete.Job", b =>
@@ -483,9 +446,6 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
 
             modelBuilder.Entity("MultiTenantJobTracking.Entities.Concrete.User", b =>
                 {
-                    b.Navigation("DepartmentAdmin")
-                        .IsRequired();
-
                     b.Navigation("DepartmentUser")
                         .IsRequired();
 

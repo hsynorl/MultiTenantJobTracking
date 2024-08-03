@@ -224,30 +224,6 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DepartmentAdmins",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DepartmentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DepartmentAdmins", x => new { x.Id, x.DepartmentId });
-                    table.ForeignKey(
-                        name: "FK_DepartmentAdmins_Departments_DepartmentId",
-                        column: x => x.DepartmentId,
-                        principalTable: "Departments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_DepartmentAdmins_Users_Id",
-                        column: x => x.Id,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "DepartmentUsers",
                 columns: table => new
                 {
@@ -274,18 +250,7 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "EmailAddress", "FirstName", "LastName", "Password", "PhoneNumber", "UserType" },
-                values: new object[] { new Guid("0263447b-0447-4e98-9282-e11e508478f3"), "admin@gmail.com", "Hüseyin", "ORAL", "admin", "05360596086", 0 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DepartmentAdmins_DepartmentId",
-                table: "DepartmentAdmins",
-                column: "DepartmentId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DepartmentAdmins_Id",
-                table: "DepartmentAdmins",
-                column: "Id",
-                unique: true);
+                values: new object[] { new Guid("9a73a328-385d-401c-b37d-03df6b2850a3"), "admin@gmail.com", "Hüseyin", "ORAL", "admin", "05360596086", 0 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Departments_TenantId",
@@ -358,9 +323,6 @@ namespace MultiTenantJobTracking.DataAccess.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "DepartmentAdmins");
-
             migrationBuilder.DropTable(
                 name: "DepartmentUsers");
 
