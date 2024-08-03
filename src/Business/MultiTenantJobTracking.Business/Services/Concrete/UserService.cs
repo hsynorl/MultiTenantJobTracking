@@ -172,19 +172,5 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
             return (new JwtSecurityTokenHandler().WriteToken(token), expiry);
         }
 
-        //TODO değiştirlicek
-        public async Task<List<UserViewModel>> GetUsersWithoutDepartments(Guid TenantId)
-        {
-            var users=await userRepository.AsQueryable().Where(p=>p.TenantUser.Tenant.Id == TenantId&& p.UserType==UserType.User).ToListAsync();
-            var withoutDepartmentUsers = users
-       .Where(p => p.DepartmentUser == null)
-       .ToList();
-            if (withoutDepartmentUsers.Count<1)
-            {
-                throw new NotFoundException("Her hangi bir department'a üye olmayan kullanıcı bulunamadı");
-            }
-            var userViewModels = mapper.Map<List<UserViewModel>>(withoutDepartmentUsers);
-            return userViewModels;  
-        }
     }
 }

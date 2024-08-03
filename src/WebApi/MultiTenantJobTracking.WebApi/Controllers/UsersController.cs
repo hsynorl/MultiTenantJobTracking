@@ -41,15 +41,7 @@ namespace MultiTenantJobTracking.WebApi.Controllers
             var result = await userService.CreateDepartmentAdminUser(createDepartmentAdminUserCommand);
             return Ok(result);
         }
-        [HttpGet("get-users-without-departments")]
-        [Authorize(Roles = nameof(UserType.TenantAdmin))]
-        public async Task<IActionResult> GetUsersWithoutDepartments([FromQuery] Guid TenantId)
-        {
-            var result = await userService.GetUsersWithoutDepartments(TenantId);
-            return Ok(result);
-        }
-
-
+       
         [HttpPost("login")]
         [AllowAnonymous]
         public async Task<IActionResult> Login(LoginCommand loginCommand)
