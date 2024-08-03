@@ -37,6 +37,7 @@ Teknoloji ve Araçlar:
 *Projeyi yerel bir ortamda çalıştırabilmek için aşağıdaki adımları izleyiniz:*
 
 - Projeyi GitHub reposundan klonlayın.
+- ****docker network create net_multitenantjobtracking**** bir network oluşturun.
 - ****docker-compose build**** komutu ile container'ları build edin.
 - ****docker-compose up**** komutunu kullanarak tüm servisleri başlatın.
 - Swagger UI üzerinden API'yi test edin,
