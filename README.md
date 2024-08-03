@@ -5,7 +5,7 @@ Bu proje, multi-tenant destekli bir iş takip sistemidir. Sistem, farklı kullan
 ***Sistem Özellikleri:***
 
 **Kullanıcı Rolleri ve Yetkilendirmeler:**
-- Genel Admin: Yalnızca yeni kiracılar oluşturabilir.
+- Genel Admin: Yalnızca yeni tenant oluşturabilir.
 - Tenant Admin: Kullanıcıları yönetebilir, departmanlar ve departman yöneticileri oluşturabilir.
 - Departman Admin: Departmanına özel işler açabilir ve yönetebilir.
 - Kullanıcılar: Atanan işleri görüntüleyebilir, durumlarını güncelleyebilir ve yorum ekleyebilir.
@@ -18,7 +18,7 @@ Bu proje, multi-tenant destekli bir iş takip sistemidir. Sistem, farklı kullan
 
 **Tenant Yönetimi:**
 
-- Veri izolasyonu ile her kiracının verileri birbirinden bağımsız tutulur.
+- Veri izolasyonu ile her tenant'ın verilerini birbirinden bağımsız tutulur.
 - Kullanıcı lisansları, belirlenen tarih aralıklarında geçerlidir ve süresi dolan lisanslar erişimi engeller.
 
 Teknoloji ve Araçlar:
