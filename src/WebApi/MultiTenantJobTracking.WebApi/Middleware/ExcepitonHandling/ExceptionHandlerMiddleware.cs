@@ -21,11 +21,22 @@ namespace MultiTenantJobTracking.WebApi.Middleware.ExcepitonHandling
 
                 await next.Invoke(context);
             }
+            catch (ExistingRecordException ex)
+            {
+                await WriteResponse(context, HttpStatusCode.BadRequest, ex.Message);
+            }
             catch (InvalidCredentialsException ex)
             {
                 await WriteResponse(context, HttpStatusCode.BadRequest, ex.Message);
             }
-
+            catch (NotFoundException ex)
+            {
+                await WriteResponse(context, HttpStatusCode.BadRequest, ex.Message);
+            }
+            catch (LicenseExpiredException ex)
+            {
+                await WriteResponse(context, HttpStatusCode.BadRequest, ex.Message);
+            }
 
 
 

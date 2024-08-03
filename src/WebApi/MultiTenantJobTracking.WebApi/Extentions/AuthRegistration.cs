@@ -8,7 +8,7 @@ namespace MultiTenantJobTracking.WebApi.Extentions
     public static class AuthRegistration
     {
 
-        public static IServiceCollection ConfigureAuth(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection ConfigureAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddSwaggerGen(option =>
             {
@@ -37,6 +37,7 @@ namespace MultiTenantJobTracking.WebApi.Extentions
         }
     });
             });
+
             var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["AuthConfig:Secret"]));
             services.AddAuthentication(options =>
             {

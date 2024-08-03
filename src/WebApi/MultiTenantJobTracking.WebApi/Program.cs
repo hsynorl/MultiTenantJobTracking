@@ -19,7 +19,7 @@ namespace MultiTenantJobTracking.WebApi
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
 
-            builder.Services.ConfigureAuth(builder.Configuration);
+            builder.Services.ConfigureAuthentication(builder.Configuration);
 
             var app = builder.Build();
 
