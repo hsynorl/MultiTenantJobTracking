@@ -35,14 +35,16 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
         public async Task<List<MessageViewModel>> GetChat(GetChatQuery getChatQuery)
         {
             var result = await messageRepository.AsQueryable()
-                .Include(p => p.SenderUser)
-                .Include(p => p.ReceiverUser)
-                .Where( p=>
-                ( p.SenderUserId == getChatQuery.SenderId && p.ReceiverUserId == getChatQuery.ReceiverId) 
-                ||
-                (p.SenderUserId == getChatQuery.ReceiverId && p.ReceiverUserId == getChatQuery.ReceiverId) 
-                )
-                .OrderBy(p=>p.SendDate).ToListAsync();
+       .Include(p => p.SenderUser)
+       .Include(p => p.ReceiverUser)
+       .Where(p =>
+       (p.SenderUserId == getChatQuery.SenderId && p.ReceiverUserId == getChatQuery.ReceiverId)
+       ||
+       (p.SenderUserId == getChatQuery.ReceiverId && p.ReceiverUserId == getChatQuery.SenderId)
+       )
+       .OrderBy(p => p.SendDate)
+       .ToListAsync();
+
             if (result.Count < 1)
             {
                 throw new NotFoundException("Mesaj bulunamadı");
