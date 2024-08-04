@@ -20,14 +20,14 @@ namespace MultiTenantJobTracking.WebApi.Controllers
             this.jobService = jobService;
         }
         [HttpGet("get-jobs-by-user-id")]
-        [Authorize(Roles = nameof(UserType.User))]
+        [Authorize(Roles = $"{nameof(UserType.User)},{nameof(UserType.DepartmanAdmin)},{nameof(UserType.TenantAdmin)}")]
         public async Task<ActionResult> GetJobsByUserId([FromQuery] Guid UserId)
         {
             var result = await jobService.GetJobsByUserId(UserId);
             return Ok(result);
         }
         [HttpPost("crate-job")]
-        [Authorize(Roles = nameof(UserType.TenantAdmin))]
+        [Authorize(Roles = nameof(UserType.DepartmanAdmin))]
         
         public async Task<ActionResult> CreateJob(CreateJobCommand createJobCommand)
         {

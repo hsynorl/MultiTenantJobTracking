@@ -26,12 +26,5 @@ namespace MultiTenantJobTracking.WebApi.Controllers
             var result = await userJobService.CreateUserJob(createUserJobCommand);
             return Ok(result);
         }
-        [HttpGet("get-user-jobs-by-user-id")]
-        [Authorize (Roles=nameof(UserType.User))]
-        public async Task<IActionResult> GetUserJobsByUserId([FromQuery] Guid UserId)
-        {
-            var result = await userJobService.GetUserJobsByUserId(new GetUserJobsByUserIdQuery { UserId=UserId});
-            return Ok(result);
-        }
     }
 }

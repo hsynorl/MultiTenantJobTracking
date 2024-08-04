@@ -12,6 +12,5 @@ namespace MultiTenantJobTracking.Business.Services.Abstract
     public interface IUserJobService
     {
         Task<bool> CreateUserJob(CreateUserJobCommand createUserJobCommand);
-        Task<List<JobViewModel>> GetUserJobsByUserId(GetUserJobsByUserIdQuery getUserJobsByUserIdQuery);
     }
 }

@@ -28,16 +28,6 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
             return result > 0;
         }
 
-        public async Task<List<JobViewModel>> GetUserJobsByUserId(GetUserJobsByUserIdQuery getUserJobsByUserIdQuery)
-        {
-            var result=await userJobRepository.AsQueryable().Include(p=>p.Job).Where(p=>p.UserId== getUserJobsByUserIdQuery.UserId).ToListAsync();
-            if (result.Count<1)
-            {
-                throw new NotFoundException("Kayıt bulunamadı");
-            }
-            var userJobs=mapper.Map<List<JobViewModel>>(result);
-            return userJobs;
-        }
     }
 
 
