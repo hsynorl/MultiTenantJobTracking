@@ -1,13 +1,14 @@
 ﻿using MultiTenantJobTracking.Common.Models.Commands;
 using MultiTenantJobTracking.Common.Models.Queries;
 using MultiTenantJobTracking.Common.Models.ViewModels;
+using MultiTenantJobTracking.Common.Results;
 
 namespace MultiTenantJobTracking.Business.Services.Abstract
 {
     public interface IDepartmentService
     {
-        Task<bool> CreateDepartment(CreateDepartmentCommand createDepartmentCommand);
-        Task<List<DepartmentViewModel>> GetDepartmentsByTenantId(GetDepartmentsQuery getDepartmentsQuery);
+        Task<IResult> CreateDepartment(CreateDepartmentCommand createDepartmentCommand);
+        Task<IDataResult<List<DepartmentViewModel>>> GetDepartmentsByTenantId(GetDepartmentsQuery getDepartmentsQuery);
 
     }
 }
