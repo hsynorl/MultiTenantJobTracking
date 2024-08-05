@@ -5,6 +5,7 @@ using Microsoft.OpenApi.Extensions;
 using MultiTenantJobTracking.Business.Services.Abstract;
 using MultiTenantJobTracking.Common.Enums;
 using MultiTenantJobTracking.Common.Models.Commands;
+using MultiTenantJobTracking.WebApi.Services;
 using System.Security.Claims;
 
 namespace MultiTenantJobTracking.WebApi.Controllers
@@ -15,25 +16,19 @@ namespace MultiTenantJobTracking.WebApi.Controllers
     public class JobsController : ControllerBase
     {
         private readonly IJobService jobService;
+        private readonly UserHelper userHelper;
 
-        public JobsController(IJobService jobService)
+        public JobsController(IJobService jobService, UserHelper userHelper)
         {
             this.jobService = jobService;
+            this.userHelper = userHelper;
         }
         [HttpGet("get-jobs-by-user-id")]
         [Authorize(Roles = $"{nameof(UserType.User)},{nameof(UserType.DepartmanAdmin)},{nameof(UserType.TenantAdmin)}")]
         public async Task<ActionResult> GetJobsByUserId()
         {
-            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-            if (userIdClaim == null)
-            {
-                return Unauthorized();
-            }
-            var userId = Guid.Parse(userIdClaim.Value);
-
+            var userId=userHelper.GetUserId();
             var result = await jobService.GetJobsByUserId(userId);
-
-            //var result = await jobService.GetJobsByUserId(UserId);
             return Ok(result);
         }
         [HttpPost("crate-job")]
