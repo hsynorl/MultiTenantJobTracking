@@ -42,7 +42,7 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
             }
 
             var user = mapper.Map<User>(createDepartmentAdminUserCommand);
-            user.UserType = UserType.DepartmanAdmin;   
+        //    user.UserType = UserType.DepartmanAdmin;   
             var result = await userRepository.AddAsync(user);
 
             return result>0;
@@ -56,7 +56,7 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
                 throw new ExistingRecordException("Bu email adresine sahip bir kullanıcı var");
             }
             var user = mapper.Map<User>(createTenantAdminUserCommand);
-            user.UserType=UserType.TenantAdmin;
+          //  user.UserType=UserType.TenantAdmin;
             var result = await userRepository.AddAsync(user);
 
             return result>0;
@@ -70,7 +70,7 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
                 throw new ExistingRecordException("Bu email adresine sahip bir kullanıcı var");
             }
             var user = mapper.Map<User>(createUserCommand);
-            user.UserType = UserType.User;
+           // user.UserType = UserType.User;
             var result = await userRepository.AddAsync(user);
             return result>0;
         }

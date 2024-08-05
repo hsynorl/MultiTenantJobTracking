@@ -17,17 +17,13 @@ namespace MultiTenantJobTracking.Business.Mapping
                 CreateMap<CreateMessageCommand,Message>()
                 .ForMember(p=>p.ReceiverUserId,y=>y.MapFrom(z=>z.ReceiverId))
                 .ForMember(p=>p.SenderUserId,y=>y.MapFrom(z=>z.SenderId))
-                .ForMember(p=>p.Content,y=>y.MapFrom(z=>z.Content))
                 .ForMember(p=>p.SendDate,y=>y.MapFrom(z=>DateTime.Now))
                 .ReverseMap();
                 CreateMap<Message, MessageViewModel>()
                 .ForMember(p=>p.SenderId,y=>y.MapFrom(z=>z.SenderUserId))
                 .ForMember(p=>p.ReceiverId,y=>y.MapFrom(z=>z.ReceiverUserId))
-
                 .ForMember(p=>p.SenderName,y=>y.MapFrom(z=>z.SenderUser.FirstName))
                 .ForMember(p=>p.ReceiverName,y=>y.MapFrom(z=>z.ReceiverUser.FirstName))
-                
-                .ForMember(p=>p.Content,y=>y.MapFrom(z=>z.Content))
                 .ReverseMap();
         }
     }

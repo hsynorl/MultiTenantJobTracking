@@ -67,10 +67,15 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
             var result = await jobRepository.UpdateAsync(job);
             return result > 0;
         }
-
+        
         public async Task<bool> UpdateJobStatus(UpdateStatusJobCommand updateStatusJobCommand)
         {
             var updateJob = await jobRepository.GetSingleAsync(p => p.Id == updateStatusJobCommand.JobId);
+            if (updateJob is null)
+            {
+                //TODO bad request değilde result olarak dön
+                throw new NotFoundException();
+            }
             updateJob.JobStatus = updateStatusJobCommand.JobStatus;
             var result = await jobRepository.UpdateAsync(updateJob);
             if( result > 0)

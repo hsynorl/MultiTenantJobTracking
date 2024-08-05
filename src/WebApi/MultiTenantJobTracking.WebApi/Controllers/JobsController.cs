@@ -5,6 +5,7 @@ using Microsoft.OpenApi.Extensions;
 using MultiTenantJobTracking.Business.Services.Abstract;
 using MultiTenantJobTracking.Common.Enums;
 using MultiTenantJobTracking.Common.Models.Commands;
+using System.Security.Claims;
 
 namespace MultiTenantJobTracking.WebApi.Controllers
 {
@@ -21,14 +22,23 @@ namespace MultiTenantJobTracking.WebApi.Controllers
         }
         [HttpGet("get-jobs-by-user-id")]
         [Authorize(Roles = $"{nameof(UserType.User)},{nameof(UserType.DepartmanAdmin)},{nameof(UserType.TenantAdmin)}")]
-        public async Task<ActionResult> GetJobsByUserId([FromQuery] Guid UserId)
+        public async Task<ActionResult> GetJobsByUserId()
         {
-            var result = await jobService.GetJobsByUserId(UserId);
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (userIdClaim == null)
+            {
+                return Unauthorized();
+            }
+            var userId = Guid.Parse(userIdClaim.Value);
+
+            var result = await jobService.GetJobsByUserId(userId);
+
+            //var result = await jobService.GetJobsByUserId(UserId);
             return Ok(result);
         }
         [HttpPost("crate-job")]
-        [Authorize(Roles = nameof(UserType.DepartmanAdmin))]
-        
+        [Authorize(Roles = $"{nameof(UserType.DepartmanAdmin)},{nameof(UserType.TenantAdmin)}")]
+
         public async Task<ActionResult> CreateJob(CreateJobCommand createJobCommand)
         {
             var result = await jobService.CreateJob(createJobCommand);

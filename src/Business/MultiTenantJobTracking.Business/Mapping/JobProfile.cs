@@ -14,7 +14,9 @@ namespace MultiTenantJobTracking.Business.Mapping
                 .ForMember(p=>p.Id,y=>y.MapFrom(z=>z.JobId));
             CreateMap<UpdateStatusJobCommand, Job>()
                 .ForMember(p => p.Id, y => y.MapFrom(z => z.JobId));
-            CreateMap<Job, JobViewModel>().ReverseMap();
+            CreateMap<Job, JobViewModel>()
+                .ForMember(p=>p.JobId,y=>y.MapFrom(z=>z.Id))
+                .ReverseMap();
 
         }
     }

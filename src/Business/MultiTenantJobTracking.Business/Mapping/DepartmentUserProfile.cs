@@ -23,9 +23,8 @@ namespace MultiTenantJobTracking.Business.Mapping
             CreateMap<CreateDepartmentUserCommand, DepartmentUser>()
                 .ForMember(p=>p.Id,y=>y.MapFrom(z=>z.UserId));
 
-            CreateMap<CreateDepartmentAdminCommand,DepartmentUser>()
-             .ForMember(p => p.Id, y => y.MapFrom(z => z.UserId))
-             .ForMember(p => p.DepartmentId, y => y.MapFrom(z => z.DepartmentId));
+            CreateMap<CreateDepartmentAdminCommand, DepartmentUser>()
+             .ForMember(p => p.Id, y => y.MapFrom(z => z.UserId));
         }
     }
 }
