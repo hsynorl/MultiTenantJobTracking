@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using MultiTenantJobTracking.Client.Models;
 using MultiTenantJobTracking.Client.Services.Abstraction;
+using MultiTenantJobTracking.Common.Models.Commands;
 using System.Diagnostics;
+using System.Reflection;
 
 namespace MultiTenantJobTracking.Client.Controllers
 {
@@ -16,16 +18,23 @@ namespace MultiTenantJobTracking.Client.Controllers
             this.userService = userService;
         }
 
-        public async Task<IActionResult> Login()
+        public IActionResult Login()
         {
-            var result = await userService.Login(new()
-            {
-                EmailAddress = "string",
-                Password="string"
-            
-            }) ;
-            var sdasd = result;
             return View();
         }
+        public async Task<IActionResult> Submit(LoginCommand loginCommand)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await userService.Login(loginCommand);
+                if (result is null)
+                {
+                    return RedirectToAction("Login");
+                }
+                return RedirectToAction("Index", "Home");
+            }
+            return RedirectToAction("Login");
+        }
+
     }
 }
