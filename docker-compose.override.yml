@@ -2,10 +2,11 @@ version: '3.4'
 
 services:
   multitenantjobtracking.webapi:
+    container_name: c_webapi
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
-      - "80"
+      - "8083:80" 
     networks:
       - net_multitenantjobtracking   
    
@@ -23,9 +24,20 @@ services:
     networks:
       - net_multitenantjobtracking   
    
+  multitenantjobtracking.client:
+    container_name: c_client
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "8080:80" 
+    networks:
+      - net_multitenantjobtracking   
+   
+
 networks:
   net_multitenantjobtracking:
     driver: bridge
     external: true
 volumes:
   sqlserver-volume:
+

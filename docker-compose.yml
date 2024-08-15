@@ -8,6 +8,12 @@ services:
       dockerfile: src/WebApi/MultiTenantJobTracking.WebApi/Dockerfile
 
 
+  multitenantjobtracking.client:
+    image: ${DOCKER_REGISTRY-}multitenantjobtrackingclient
+    build:
+      context: .
+      dockerfile: src/Client/MultiTenantJobTracking.Client/Dockerfile
+
 networks:
   net_multitenantjobtracking:
     driver: bridge
