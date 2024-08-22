@@ -8,5 +8,6 @@ namespace MultiTenantJobTracking.Client.Services.Abstraction
     {
         Task<IDataResult<LoginViewModel>> Login(LoginCommand loginCommand);   
         Task<IResponseResult> Logout();
+        Task<IResponseResult> CreateUser(CreateUserCommand createUserCommand);
     }
 }

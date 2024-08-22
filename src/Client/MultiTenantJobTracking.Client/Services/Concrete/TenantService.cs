@@ -1,5 +1,6 @@
 ﻿using MultiTenantJobTracking.Client.Services.Abstraction;
 using MultiTenantJobTracking.Common.Models.Commands;
+using MultiTenantJobTracking.Common.Models.ViewModels;
 using MultiTenantJobTracking.Common.Results;
 
 namespace MultiTenantJobTracking.Client.Services.Concrete
@@ -14,6 +15,11 @@ namespace MultiTenantJobTracking.Client.Services.Concrete
         }
 
         public Task<IResponseResult> CreateTenant(CreateTenantCommand createTenantCommand)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IDataResult<TenantViewModel>> GetTenantByTenantId(Guid TenantId)
         {
             throw new NotImplementedException();
         }

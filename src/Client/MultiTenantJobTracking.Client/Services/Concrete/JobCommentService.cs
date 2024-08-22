@@ -1,4 +1,5 @@
 ﻿using MultiTenantJobTracking.Client.Services.Abstraction;
+using MultiTenantJobTracking.Common.Models.Commands;
 using MultiTenantJobTracking.Common.Models.ViewModels;
 using MultiTenantJobTracking.Common.Results;
 
@@ -13,7 +14,12 @@ namespace MultiTenantJobTracking.Client.Services.Concrete
             _httpClient = httpClient;
         }
 
-        public Task<IDataResult<List<JobCommentViewModel>>> GetJobComments()
+        public Task<IResponseResult> CreateJobComment(CreateJobCommentCommand createJobCommand)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IDataResult<List<JobCommentViewModel>>> GetJobCommentsByJobId(Guid jobId)
         {
             throw new NotImplementedException();
         }

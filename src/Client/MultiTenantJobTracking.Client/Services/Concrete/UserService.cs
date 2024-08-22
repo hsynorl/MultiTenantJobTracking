@@ -15,6 +15,13 @@ namespace MultiTenantJobTracking.Client.Services.Concrete
             _httpClient = httpClient;
         }
 
+        public async Task<IResponseResult> CreateUser(CreateUserCommand createUserCommand)
+        {
+            var response = await _httpClient.PostAsJsonAsync("/Users/create-user", createUserCommand);
+            var responseViewModel=await response.Content.ReadFromJsonAsync<Result>();
+            return responseViewModel;
+        }
+
         public async Task<IDataResult<LoginViewModel>> Login(LoginCommand loginCommand)
         {
             var response = await _httpClient.PostAsJsonAsync("Users/login", loginCommand);

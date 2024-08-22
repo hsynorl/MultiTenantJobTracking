@@ -19,6 +19,11 @@ namespace MultiTenantJobTracking.Client.Services.Concrete
             {
                 throw new NotImplementedException();
             }
+
+            public Task<IResponseResult> RenewLicense(RenewLicenceCommand renewLicenceCommand)
+            {
+                throw new NotImplementedException();
+            }
         }
     }
     }

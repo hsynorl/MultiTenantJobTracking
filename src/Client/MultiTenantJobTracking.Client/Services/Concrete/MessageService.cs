@@ -1,5 +1,7 @@
 ﻿using MultiTenantJobTracking.Client.Services.Abstraction;
 using MultiTenantJobTracking.Common.Models.Commands;
+using MultiTenantJobTracking.Common.Models.Queries;
+using MultiTenantJobTracking.Common.Models.ViewModels;
 using MultiTenantJobTracking.Common.Results;
 
 namespace MultiTenantJobTracking.Client.Services.Concrete
@@ -14,6 +16,11 @@ namespace MultiTenantJobTracking.Client.Services.Concrete
         }
 
         public Task<IResponseResult> CreateMessage(CreateMessageCommand createMessageCommand)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IDataResult<List<MessageViewModel>>> GetChat(GetChatQuery getChatQuery)
         {
             throw new NotImplementedException();
         }
