@@ -1,6 +1,7 @@
 ﻿using MultiTenantJobTracking.Common.Models.Commands;
 using MultiTenantJobTracking.Common.Models.Queries;
 using MultiTenantJobTracking.Common.Models.ViewModels;
+using MultiTenantJobTracking.Common.Results;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace MultiTenantJobTracking.Business.Services.Abstract
 {
     public interface IMessageService
     {
-        Task<bool> CreateMessage(CreateMessageCommand createMessageCommand);
-        Task<List<MessageViewModel>> GetChat(GetChatQuery getChatQuery);
+        Task<IResponseResult> CreateMessage(CreateMessageCommand createMessageCommand);
+        Task<IDataResult<List<MessageViewModel>>> GetChat(GetChatQuery getChatQuery);
     }
 }

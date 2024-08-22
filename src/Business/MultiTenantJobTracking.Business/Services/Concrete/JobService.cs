@@ -4,6 +4,7 @@ using MultiTenantJobTracking.Business.Services.Abstract;
 using MultiTenantJobTracking.Common.CustomExceptions;
 using MultiTenantJobTracking.Common.Models.Commands;
 using MultiTenantJobTracking.Common.Models.ViewModels;
+using MultiTenantJobTracking.Common.Results;
 using MultiTenantJobTracking.DataAccess.Repositories.Abstract;
 using MultiTenantJobTracking.Entities.Concrete;
 using System;
@@ -29,52 +30,62 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
             this.userJobRepository = userJobRepository;
         }
 
-        public async Task<bool> CreateJob(CreateJobCommand createJobCommand)
+        public async Task<IResponseResult> CreateJob(CreateJobCommand createJobCommand)
         {
             var job = mapper.Map<Job>(createJobCommand);
             var result=await jobRepository.AddAsync(job);
-            return result > 0;
-
+            if (result > 0)
+            {
+                return new SuccessResult();
+            }
+            return new ErrorResult();
         }
 
-        public async Task<bool> DeleteJob(DeleteJobCommand deleteJobCommand)
+        public async Task<IResponseResult> DeleteJob(DeleteJobCommand deleteJobCommand)
         {
             var deleteJob = await jobRepository.GetSingleAsync(p => p.Id == deleteJobCommand.JobId);
             var job = mapper.Map<Job>(deleteJob);
             var result=await jobRepository.DeleteAsync(job);
-            return result > 0;
+            if (result > 0)
+            {
+                return new SuccessResult();
+            }
+            return new ErrorResult();
         }
 
-        public async Task<List<JobViewModel>> GetJobsByUserId(Guid userId)
+        public async Task<IDataResult<List<JobViewModel>>> GetJobsByUserId(Guid userId)
         {
             var result = await userJobRepository.AsQueryable().Include(p => p.Job).Where(p => p.UserId == userId).ToListAsync();
             if (result.Count < 1)
             {
-                throw new NotFoundException("Kullanıcıya atanmış iş bulunmadı");
+                return new ErrorDataResult<List<JobViewModel>>("Kullanıcıya atanmış iş bulunmadı");
             }
             var jobs=mapper.Map<List<JobViewModel>>(result);  
-            return jobs;    
+            return new SuccessDataResult<List<JobViewModel>>(jobs);    
         }
 
-        public async Task<bool> UpdateJob(UpdateJobCommand updateJobCommand)
+        public async Task<IResponseResult> UpdateJob(UpdateJobCommand updateJobCommand)
         {
             var updateJob = await jobRepository.GetSingleAsync(p => p.Id == updateJobCommand.JobId);
             if (updateJob is null)
             {
-                throw new NotFoundException();
+                return new ErrorResult("İş bulunamadı");
             }
             var job = mapper.Map<Job>(updateJobCommand);
             var result = await jobRepository.UpdateAsync(job);
-            return result > 0;
+            if (result > 0)
+            {
+                return new SuccessResult();
+            }
+            return new ErrorResult();
         }
         
-        public async Task<bool> UpdateJobStatus(UpdateStatusJobCommand updateStatusJobCommand)
+        public async Task<IResponseResult> UpdateJobStatus(UpdateStatusJobCommand updateStatusJobCommand)
         {
             var updateJob = await jobRepository.GetSingleAsync(p => p.Id == updateStatusJobCommand.JobId);
             if (updateJob is null)
             {
-                //TODO bad request değilde result olarak dön
-                throw new NotFoundException();
+                return new ErrorResult("İş bulunamadı");
             }
             updateJob.JobStatus = updateStatusJobCommand.JobStatus;
             var result = await jobRepository.UpdateAsync(updateJob);
@@ -86,9 +97,9 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
                     JobStatus = updateStatusJobCommand.JobStatus,
                     UserId = updateStatusJobCommand.UserId
                 });
-                return logResult;
+                return new SuccessResult();
             }
-            return false;   
+            return new ErrorResult();   
         }
     }
 }

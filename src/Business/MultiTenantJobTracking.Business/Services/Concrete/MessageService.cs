@@ -5,6 +5,7 @@ using MultiTenantJobTracking.Common.CustomExceptions;
 using MultiTenantJobTracking.Common.Models.Commands;
 using MultiTenantJobTracking.Common.Models.Queries;
 using MultiTenantJobTracking.Common.Models.ViewModels;
+using MultiTenantJobTracking.Common.Results;
 using MultiTenantJobTracking.DataAccess.Repositories.Abstract;
 using MultiTenantJobTracking.Entities.Concrete;
 using System;
@@ -25,14 +26,18 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
             this.mapper = mapper;
         }
 
-        public async Task<bool> CreateMessage(CreateMessageCommand createMessageCommand)
+        public async Task<IResponseResult> CreateMessage(CreateMessageCommand createMessageCommand)
         {
             var message=mapper.Map<Message>(createMessageCommand);
             var result=await messageRepository.AddAsync(message);
-            return result > 0;
+            if (result > 0)
+            {
+                return new SuccessResult();
+            }
+            return new ErrorResult();
         }
 
-        public async Task<List<MessageViewModel>> GetChat(GetChatQuery getChatQuery)
+        public async Task<IDataResult<List<MessageViewModel>>> GetChat(GetChatQuery getChatQuery)
         {
             var result = await messageRepository.AsQueryable()
        .Include(p => p.SenderUser)
@@ -47,10 +52,10 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
 
             if (result.Count < 1)
             {
-                throw new NotFoundException("Mesaj bulunamadı");
+                return new ErrorDataResult<List<MessageViewModel>>("Mesaj bulunamadı");   
             }
             var messages = mapper.Map<List<MessageViewModel>>(result);
-            return messages;
+            return new SuccessDataResult<List<MessageViewModel>>(messages);
         }
     }
 }

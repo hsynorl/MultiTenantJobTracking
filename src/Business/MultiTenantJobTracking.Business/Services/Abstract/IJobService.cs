@@ -1,15 +1,16 @@
 ﻿using MultiTenantJobTracking.Common.Models.Commands;
 using MultiTenantJobTracking.Common.Models.ViewModels;
+using MultiTenantJobTracking.Common.Results;
 
 namespace MultiTenantJobTracking.Business.Services.Abstract
 {
     public interface IJobService
     {
-        Task<bool> CreateJob(CreateJobCommand createJobCommand);
-        Task<bool> UpdateJob(UpdateJobCommand updateJobCommand);
-        Task<bool> DeleteJob(DeleteJobCommand deleteJobCommand);
-        Task<bool> UpdateJobStatus(UpdateStatusJobCommand updateStatusJobCommand);
-        Task<List<JobViewModel>> GetJobsByUserId(Guid userId);
+        Task<IResponseResult> CreateJob(CreateJobCommand createJobCommand);
+        Task<IResponseResult> UpdateJob(UpdateJobCommand updateJobCommand);
+        Task<IResponseResult> DeleteJob(DeleteJobCommand deleteJobCommand);
+        Task<IResponseResult> UpdateJobStatus(UpdateStatusJobCommand updateStatusJobCommand);
+        Task<IDataResult<List<JobViewModel>>> GetJobsByUserId(Guid userId);
     }
 
 }

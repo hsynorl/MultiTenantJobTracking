@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MultiTenantJobTracking.Business.Services.Abstract;
 using MultiTenantJobTracking.Common.Models.Commands;
+using MultiTenantJobTracking.Common.Results;
 using MultiTenantJobTracking.DataAccess.Repositories.Abstract;
 using MultiTenantJobTracking.Entities.Concrete;
 using System;
@@ -22,11 +23,15 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
             this.tenantUserRepository = tenantUserRepository;
         }
 
-        public async Task<bool> CreateTenantUser(CreateTenantUserCommand createTenantCommand)
+        public async Task<IResponseResult> CreateTenantUser(CreateTenantUserCommand createTenantCommand)
         {
             var tenantUser = mapper.Map<TenantUser>(createTenantCommand);
             var result=await tenantUserRepository.AddAsync(tenantUser);
-            return result > 0;
+            if (result > 0)
+            {
+                return new SuccessResult();
+            }
+            return new ErrorResult();
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace MultiTenantJobTracking.Common.Results
 {
-    public class Result : IResult
+    public class Result : IResponseResult
     {
         public Result(bool success,string message):this(success)
         {

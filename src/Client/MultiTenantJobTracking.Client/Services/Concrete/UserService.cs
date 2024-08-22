@@ -1,6 +1,7 @@
 ﻿using MultiTenantJobTracking.Client.Services.Abstraction;
 using MultiTenantJobTracking.Common.Models.Commands;
 using MultiTenantJobTracking.Common.Models.ViewModels;
+using MultiTenantJobTracking.Common.Results;
 using System.Net.Http.Json;
 
 namespace MultiTenantJobTracking.Client.Services.Concrete
@@ -14,25 +15,18 @@ namespace MultiTenantJobTracking.Client.Services.Concrete
             _httpClient = httpClient;
         }
 
-        public async Task<LoginViewModel> Login(LoginCommand loginCommand)
+        public async Task<IDataResult<LoginViewModel>> Login(LoginCommand loginCommand)
         {
             var response = await _httpClient.PostAsJsonAsync("Users/login", loginCommand);
-
-            if (response.IsSuccessStatusCode)
-            {
-                var loginViewModel = await response.Content.ReadFromJsonAsync<LoginViewModel>();
-
-                if (loginViewModel != null && !String.IsNullOrEmpty(loginViewModel.Token))
-                {
-                    return loginViewModel;
-                }
-            }
-            return null;
+            var loginViewModel = await response.Content.ReadFromJsonAsync<DataResult<LoginViewModel>>();
+            return loginViewModel;
         }
-
-        public Task<bool> Logout()
+        public async Task<IResponseResult> Logout()
         {
-            throw new NotImplementedException();
+            return new ErrorResult();
+
         }
     }
+
+
 }

@@ -1,4 +1,5 @@
 ﻿using MultiTenantJobTracking.Common.Models.Commands ;
+using MultiTenantJobTracking.Common.Results;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace MultiTenantJobTracking.Business.Services.Abstract
 {
     public interface ITenantUserService
     {
-        public Task<bool> CreateTenantUser(CreateTenantUserCommand createTenantCommand);
+        public Task<IResponseResult> CreateTenantUser(CreateTenantUserCommand createTenantCommand);
     }
 }

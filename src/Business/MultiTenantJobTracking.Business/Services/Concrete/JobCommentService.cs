@@ -3,6 +3,7 @@ using MultiTenantJobTracking.Business.Services.Abstract;
 using MultiTenantJobTracking.Common.CustomExceptions;
 using MultiTenantJobTracking.Common.Models.Commands;
 using MultiTenantJobTracking.Common.Models.ViewModels;
+using MultiTenantJobTracking.Common.Results;
 using MultiTenantJobTracking.DataAccess.Repositories.Abstract;
 using MultiTenantJobTracking.Entities.Concrete;
 using System.Collections.Generic;
@@ -20,22 +21,26 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
             this.jobCommentRepository = jobCommentRepository;
         }
 
-        public async Task<bool> CreateJobComment(CreateJobCommentCommand createJobCommand)
+        public async Task<IResponseResult> CreateJobComment(CreateJobCommentCommand createJobCommand)
         {
             var jobComment = mapper.Map<JobComment>(createJobCommand);
             var result=await jobCommentRepository.AddAsync(jobComment);
-            return result > 0;
+            if (result>0)
+            {
+                return new SuccessResult();
+            }
+            return new ErrorResult();
         }
 
-        public async Task<List<JobCommentViewModel>> GetJobCommentsByJobId(Guid jobId)
+        public async Task<IDataResult<List<JobCommentViewModel>>> GetJobCommentsByJobId(Guid jobId)
         {
             var result = await jobCommentRepository.GetList(p => p.JobId == jobId);
             if (result.Count<1)
             {
-                throw new NotFoundException("Seçilen işe ait yorum bulunamadı");
+                return new ErrorDataResult<List<JobCommentViewModel>>("Seçilen işe ait yorum bulunamadı");    
             }
             var jobComments = mapper.Map<List<JobCommentViewModel>>(result);
-            return jobComments; 
+            return new SuccessDataResult<List<JobCommentViewModel>>(jobComments); 
         }
     }
 

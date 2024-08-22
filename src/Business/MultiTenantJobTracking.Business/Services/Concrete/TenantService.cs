@@ -3,6 +3,7 @@ using MultiTenantJobTracking.Business.Services.Abstract;
 using MultiTenantJobTracking.Common.CustomExceptions;
 using MultiTenantJobTracking.Common.Models.Commands;
 using MultiTenantJobTracking.Common.Models.ViewModels;
+using MultiTenantJobTracking.Common.Results;
 using MultiTenantJobTracking.DataAccess.Repositories.Abstract;
 using MultiTenantJobTracking.Entities.Concrete;
 using System;
@@ -26,28 +27,32 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
 
       
 
-        public async Task<bool> CreateTenant(CreateTenantCommand createTenantCommand)
+        public async Task<IResponseResult> CreateTenant(CreateTenantCommand createTenantCommand)
         {
             var existTenant=await tenantRepository.GetSingleAsync(p=>p.Name==createTenantCommand.Name);
             if (existTenant is not null)
             {
-                throw new ExistingRecordException("Aynı isime sahip tenant var");
+                return new ErrorResult("Aynı isime sahip tenant var");
             }
             var tenant=mapper.Map<Tenant>(createTenantCommand);
             tenant.CreateDate = DateTime.Now;
             var result=await tenantRepository.AddAsync(tenant);
-            return result > 0;
+            if (result > 0)
+            {
+                return new SuccessResult();
+            }
+            return new ErrorResult();
         }
 
-        public async Task<TenantViewModel> GetTenantByTenantId(Guid TenantId)
+        public async Task<IDataResult<TenantViewModel>> GetTenantByTenantId(Guid TenantId)
         {
             var result=await tenantRepository.GetSingleAsync(p=>p.Id==TenantId);
             if (result is null)
             {
-                throw new NotFoundException("Kayıt bulunamadı");
+                return new ErrorDataResult<TenantViewModel>("Kayıt bulunamadı");
             }
             var tenant=mapper.Map<TenantViewModel>(result);
-            return tenant;
+            return new SuccessDataResult<TenantViewModel>(tenant);
         }
     }
 

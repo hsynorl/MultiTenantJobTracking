@@ -7,6 +7,7 @@ using MultiTenantJobTracking.Common.CustomExceptions;
 using MultiTenantJobTracking.Common.Enums;
 using MultiTenantJobTracking.Common.Models.Commands;
 using MultiTenantJobTracking.Common.Models.ViewModels;
+using MultiTenantJobTracking.Common.Results;
 using MultiTenantJobTracking.DataAccess.Repositories.Abstract;
 using MultiTenantJobTracking.Entities.Concrete;
 using System.IdentityModel.Tokens.Jwt;
@@ -32,50 +33,61 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
             this.departmentUserService = departmentUserService;
         }
 
-        public async Task<bool> CreateDepartmentAdminUser(CreateDepartmentAdminUserCommand createDepartmentAdminUserCommand)
+        public async Task<IResponseResult> CreateDepartmentAdminUser(CreateDepartmentAdminUserCommand createDepartmentAdminUserCommand)
         {
 
             var existEmail = await userRepository.GetSingleAsync(p => p.EmailAddress == createDepartmentAdminUserCommand.EmailAddress);
             if (existEmail is not null)
             {
-                throw new ExistingRecordException("Bu email adresine sahip bir kullanıcı var");
+                return new ErrorResult("Bu email adresine sahip bir kullanıcı var");
             }
 
             var user = mapper.Map<User>(createDepartmentAdminUserCommand);
         //    user.UserType = UserType.DepartmanAdmin;   
             var result = await userRepository.AddAsync(user);
 
-            return result>0;
+            if (result > 0)
+            {
+                return new SuccessResult();
+            }
+            return new ErrorResult();
         }
 
-        public async Task<bool> CreateTenantAdminUser(CreateTenantAdminUserCommand createTenantAdminUserCommand)
+        public async Task<IResponseResult> CreateTenantAdminUser(CreateTenantAdminUserCommand createTenantAdminUserCommand)
         {
             var existEmail = await userRepository.GetSingleAsync(p => p.EmailAddress == createTenantAdminUserCommand.EmailAddress);
             if (existEmail is not null)
             {
-                throw new ExistingRecordException("Bu email adresine sahip bir kullanıcı var");
+                return new ErrorResult("Bu email adresine sahip bir kullanıcı var");
             }
             var user = mapper.Map<User>(createTenantAdminUserCommand);
           //  user.UserType=UserType.TenantAdmin;
             var result = await userRepository.AddAsync(user);
-
-            return result>0;
+            if (result > 0)
+            {
+                return new SuccessResult();
+            }
+            return new ErrorResult();
         }
 
-        public async Task<bool> CreateUser(CreateUserCommand createUserCommand)
+        public async Task<IResponseResult> CreateUser(CreateUserCommand createUserCommand)
         {
             var existEmail=await userRepository.GetSingleAsync(p=>p.EmailAddress==createUserCommand.EmailAddress);
             if (existEmail is not null )
             {
-                throw new ExistingRecordException("Bu email adresine sahip bir kullanıcı var");
+                return new ErrorResult("Bu email adresine sahip bir kullanıcı var");
             }
             var user = mapper.Map<User>(createUserCommand);
            // user.UserType = UserType.User;
             var result = await userRepository.AddAsync(user);
-            return result>0;
+            if (result > 0)
+            {
+                return new SuccessResult();
+            }
+            return new ErrorResult();
         }
 
-        public async Task<LoginViewModel> Login(LoginCommand loginCommand)
+        public async Task<IDataResult<LoginViewModel>> Login(LoginCommand loginCommand)
         {
 
             var user = await GetUserAsync(loginCommand.EmailAddress);
@@ -83,12 +95,12 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
 
             if (user.UserType != UserType.GeneralAdmin)
             {
-                ValidateLicence(user);
+              ValidateLicence(user);
             }
 
             var loginViewModel = CreateLoginViewModel(user);
 
-            return loginViewModel;
+            return new SuccessDataResult<LoginViewModel>(loginViewModel);
 
         }
         private async Task<User> GetUserAsync(string emailAddress)

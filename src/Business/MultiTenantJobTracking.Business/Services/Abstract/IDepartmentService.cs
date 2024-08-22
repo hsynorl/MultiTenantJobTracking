@@ -7,7 +7,7 @@ namespace MultiTenantJobTracking.Business.Services.Abstract
 {
     public interface IDepartmentService
     {
-        Task<IResult> CreateDepartment(CreateDepartmentCommand createDepartmentCommand);
+        Task<IResponseResult> CreateDepartment(CreateDepartmentCommand createDepartmentCommand);
         Task<IDataResult<List<DepartmentViewModel>>> GetDepartmentsByTenantId(GetDepartmentsQuery getDepartmentsQuery);
 
     }

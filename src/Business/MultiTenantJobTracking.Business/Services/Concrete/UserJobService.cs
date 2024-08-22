@@ -5,6 +5,7 @@ using MultiTenantJobTracking.Common.CustomExceptions;
 using MultiTenantJobTracking.Common.Models.Commands;
 using MultiTenantJobTracking.Common.Models.Queries;
 using MultiTenantJobTracking.Common.Models.ViewModels;
+using MultiTenantJobTracking.Common.Results;
 using MultiTenantJobTracking.DataAccess.Repositories.Abstract;
 using MultiTenantJobTracking.Entities.Concrete;
 
@@ -21,11 +22,16 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
             this.mapper = mapper;
         }
 
-        public async Task<bool> CreateUserJob(CreateUserJobCommand createUserJobCommand)
+        public async Task<IResponseResult> CreateUserJob(CreateUserJobCommand createUserJobCommand)
         {
             var userJob = mapper.Map<UserJob>(createUserJobCommand);
             var result=await userJobRepository.AddAsync(userJob);
-            return result > 0;
+            if (result > 0)
+            {
+                return new SuccessResult();
+            }
+            return new ErrorResult();
+
         }
 
     }

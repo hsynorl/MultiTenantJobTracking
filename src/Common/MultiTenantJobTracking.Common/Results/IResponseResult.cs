@@ -1,6 +1,6 @@
 ﻿namespace MultiTenantJobTracking.Common.Results
 {
-    public interface IResult  
+    public interface IResponseResult  
     {
         bool Success { get;  }
         string Message{ get;  }

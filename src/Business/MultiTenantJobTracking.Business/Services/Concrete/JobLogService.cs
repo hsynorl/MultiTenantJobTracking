@@ -5,6 +5,7 @@ using MultiTenantJobTracking.Common.Enums;
 using MultiTenantJobTracking.Common.Models.Commands;
 using MultiTenantJobTracking.Common.Models.Queries;
 using MultiTenantJobTracking.Common.Models.ViewModels;
+using MultiTenantJobTracking.Common.Results;
 using MultiTenantJobTracking.DataAccess.Repositories.Abstract;
 using MultiTenantJobTracking.Entities.Concrete;
 using System.Collections.Generic;
@@ -28,29 +29,28 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
             jobLog.CreateDate = DateTime.Now;
             var result=await jobLogRepository.AddAsync(jobLog);
             return result > 0;
-
         }
 
-        public async Task<List<GetJobLogsViewModel>> GetJobLogsByJobId(GetJobLogsByJobIdQuery getJobLogsByJobIdQuery)
+        public async Task<IDataResult<List<GetJobLogsViewModel>>> GetJobLogsByJobId(GetJobLogsByJobIdQuery getJobLogsByJobIdQuery)
         {
             var jobLogs=await jobLogRepository.GetList(p=>p.JobId==getJobLogsByJobIdQuery.JobId);
             if (jobLogs.Count<1)
-            { 
-                    throw new NotFoundException("İşe ait kayıt bulunamadı");
+             { 
+                return new ErrorDataResult<List<GetJobLogsViewModel>>("İşe ait kayıt bulunamadı");
              }
             var result=mapper.Map<List<GetJobLogsViewModel>>(jobLogs);
-            return result;
+            return new SuccessDataResult<List<GetJobLogsViewModel>>(result);
         }
 
-        public async Task<List<GetJobLogsViewModel>> GetJobLogsByUserId(GetJobLogsByUserIdQuery getJobLogsByUserIdQuery)
+        public async Task<IDataResult<List<GetJobLogsViewModel>>> GetJobLogsByUserId(GetJobLogsByUserIdQuery getJobLogsByUserIdQuery)
         {
             var jobLogs = await jobLogRepository.GetList(p => p.UserId == getJobLogsByUserIdQuery.UserId);
             if (jobLogs.Count < 1)
             {
-                throw new NotFoundException("Kullanıcıya ait iş kaydı bulunamadı");
+                return new ErrorDataResult<List<GetJobLogsViewModel>>("Kullanıcıya ait iş kaydı bulunamadı");
             }
             var result = mapper.Map<List<GetJobLogsViewModel>>(jobLogs);
-            return result;
+            return new SuccessDataResult<List<GetJobLogsViewModel>>(result);
         }
 
     }

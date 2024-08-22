@@ -4,6 +4,7 @@ using MultiTenantJobTracking.Business.Services.Abstract;
 using MultiTenantJobTracking.Common.CustomExceptions;
 using MultiTenantJobTracking.Common.Models.Commands;
 using MultiTenantJobTracking.Common.Models.ViewModels;
+using MultiTenantJobTracking.Common.Results;
 using MultiTenantJobTracking.DataAccess.Repositories.Abstract;
 using MultiTenantJobTracking.DataAccess.Repositories.Concrete;
 using MultiTenantJobTracking.Entities.Concrete;
@@ -21,38 +22,46 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
             this.mapper = mapper;
         }
 
-        public async Task<bool> CreateDepartmentUser(CreateDepartmentUserCommand createDepartmentUserCommand)
+        public async Task<IResponseResult> CreateDepartmentUser(CreateDepartmentUserCommand createDepartmentUserCommand)
         {
             var departmentUser = mapper.Map<DepartmentUser>(createDepartmentUserCommand);
             var result=await departmentUserRepository.AddAsync(departmentUser);
-            return result > 0;
+            if (result > 0)
+            {
+                return new SuccessResult();
+            }
+            return new ErrorResult();
         }
-        public async Task<DepartmentViewModel> GetUserDepartment(Guid UserId)
+        public async Task<IDataResult<DepartmentViewModel>> GetUserDepartment(Guid UserId)
         {
             var result=await departmentUserRepository.AsQueryable().Include(p=>p.Department).FirstOrDefaultAsync(p=>p.Id==UserId);
             if (result is null)
             {
-                throw new NotFoundException();
+                return new ErrorDataResult<DepartmentViewModel>();
             }
             var departmentViewModel=mapper.Map<DepartmentViewModel>(result.Department);    
-            return departmentViewModel;
+            return new SuccessDataResult<DepartmentViewModel>(departmentViewModel);
         }
 
-        public async Task<List<UserViewModel>> GetUsersByDepartmentId(Guid DepartmentId)
+        public async Task<IDataResult<List<UserViewModel>>> GetUsersByDepartmentId(Guid DepartmentId)
         {
             var result = await departmentUserRepository.AsQueryable().Include(p => p.User).Where(p => p.DepartmentId == DepartmentId).ToListAsync();;
             if (result.Count<1)
             {
-                throw new NotFoundException();
+                return new ErrorDataResult<List<UserViewModel>>();
             }
             var users = mapper.Map<List<UserViewModel>>(result);
-            return users;
+            return new SuccessDataResult<List<UserViewModel>>(users);
         }
-        public async Task<bool> CreateDepartmentAdmin(CreateDepartmentAdminCommand createDepartmentAdminCommand)
+        public async Task<IResponseResult> CreateDepartmentAdmin(CreateDepartmentAdminCommand createDepartmentAdminCommand)
         {
             var departmentAdmin = mapper.Map<DepartmentUser>(createDepartmentAdminCommand);
             var result = await departmentUserRepository.AddAsync(departmentAdmin);
-            return result > 0;
+            if (result>0)
+            {
+                return new SuccessResult();
+            }
+            return new ErrorResult();
         }
     }
 }

@@ -21,7 +21,7 @@ namespace MultiTenantJobTracking.Business.Services.Concrete
             this.mapper = mapper;
         }
 
-        public async Task<IResult> CreateDepartment(CreateDepartmentCommand createDepartmentCommand)
+        public async Task<IResponseResult> CreateDepartment(CreateDepartmentCommand createDepartmentCommand)
         {
             var existDepartment=await departmentRepository.GetSingleAsync(p=>p.Name==createDepartmentCommand.Name); 
             if (existDepartment is not null)
