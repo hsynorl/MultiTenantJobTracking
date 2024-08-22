@@ -5,6 +5,6 @@ namespace MultiTenantJobTracking.Client.Services.Abstraction
 {
     public interface ITenantService
     {
-        Task<IResponseResult> CreateTenant(CreateTenantCommand createTenantCommand)
+        Task<IResponseResult> CreateTenant(CreateTenantCommand createTenantCommand);
     }
 }

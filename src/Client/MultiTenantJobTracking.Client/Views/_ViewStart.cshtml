@@ -1,11 +1,48 @@
 ﻿@{
     Layout = "_Layout";
 }
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - MultiTenantJobTracking.Client</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/MultiTenantJobTracking.Client.styles.css" asp-append-version="true" />
-</head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<link href="~/css/sidebars.css" rel="stylesheet">
+<link href="~/css/modals.css" rel="stylesheet">
+
+<link rel="stylesheet" href="~/EmployeeManagementSystem.Client.styles.css" asp-append-version="true" />
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+
+@if (TempData["ToastMessage"] == null)
+{
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var toastEl = document.getElementById('myToast');
+            var toast = new bootstrap.Toast(toastEl);
+            toast.show();
+        });
+    </script>
+
+    <div id="myToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="50000">
+        <div class="toast-header">
+            <strong class="me-auto">İşlem Durumu</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            @TempData["ToastMessage"]
+        </div>
+    </div>
+
+    <style>
+        #myToast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+            color: white;
+            background-color: @(TempData["IsError"] != null && (bool)TempData["IsError"] ? "#e75573" : "#09bf8c");
+        }
+    </style>
+}

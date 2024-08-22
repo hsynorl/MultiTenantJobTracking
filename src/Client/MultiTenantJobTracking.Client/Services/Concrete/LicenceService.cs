@@ -20,5 +20,5 @@ namespace MultiTenantJobTracking.Client.Services.Concrete
                 throw new NotImplementedException();
             }
         }
-
+    }
     }
